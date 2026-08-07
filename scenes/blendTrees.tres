@@ -1,0 +1,43 @@
+[gd_resource type="AnimationNodeBlendTree" format=3 uid="uid://checslueeeyub"]
+
+[ext_resource type="AnimationNodeBlendSpace2D" uid="uid://blkvwohmbgjbu" path="res://scenes/mvtBlend.tres" id="1_ksgpb"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g2els"]
+animation = &"telekinesisHolding"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_qhqgy"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:mixamorig_Head", "Armature/Skeleton3D:mixamorig_LeftArm", "Armature/Skeleton3D:mixamorig_LeftForeArm", "Armature/Skeleton3D:mixamorig_LeftHand", "Armature/Skeleton3D:mixamorig_LeftHandIndex1", "Armature/Skeleton3D:mixamorig_LeftHandIndex2", "Armature/Skeleton3D:mixamorig_LeftHandIndex3", "Armature/Skeleton3D:mixamorig_LeftShoulder", "Armature/Skeleton3D:mixamorig_Neck", "Armature/Skeleton3D:mixamorig_RightArm", "Armature/Skeleton3D:mixamorig_RightForeArm", "Armature/Skeleton3D:mixamorig_RightHand", "Armature/Skeleton3D:mixamorig_RightHandIndex1", "Armature/Skeleton3D:mixamorig_RightHandIndex2", "Armature/Skeleton3D:mixamorig_RightHandIndex3", "Armature/Skeleton3D:mixamorig_RightShoulder", "Armature/Skeleton3D:mixamorig_Spine", "Armature/Skeleton3D:mixamorig_Spine1", "Armature/Skeleton3D:mixamorig_Spine2"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dqkch"]
+animation = &"telekinesisDrop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qlg0r"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tuyoq"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fjrip"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_smehm"]
+states/Movement/node = ExtResource("1_ksgpb")
+states/Movement/position = Vector2(480, 121)
+states/Start/position = Vector2(292, 121)
+states/telekinesisDrop/node = SubResource("AnimationNodeAnimation_dqkch")
+states/telekinesisDrop/position = Vector2(480, 238)
+transitions = ["Start", "Movement", SubResource("AnimationNodeStateMachineTransition_qlg0r"), "Movement", "telekinesisDrop", SubResource("AnimationNodeStateMachineTransition_tuyoq"), "telekinesisDrop", "Movement", SubResource("AnimationNodeStateMachineTransition_fjrip")]
+graph_offset = Vector2(-37, -38)
+
+[resource]
+graph_offset = Vector2(-125.400024, -57.2818)
+nodes/output/position = Vector2(540, 80)
+nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_smehm")
+nodes/StateMachine/position = Vector2(40, 80)
+nodes/HoldBlend/node = SubResource("AnimationNodeBlend2_qhqgy")
+nodes/HoldBlend/position = Vector2(340, 80)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_g2els")
+nodes/Animation/position = Vector2(60, 280)
+node_connections = [&"output", 0, &"HoldBlend", &"HoldBlend", 0, &"StateMachine", &"HoldBlend", 1, &"Animation"]

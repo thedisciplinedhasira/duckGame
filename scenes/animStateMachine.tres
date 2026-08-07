@@ -1,0 +1,37 @@
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://uvo1wniio5wi"]
+
+[ext_resource type="AnimationNodeBlendSpace2D" uid="uid://blkvwohmbgjbu" path="res://scenes/mvtBlend.tres" id="1_tduf4"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fjrip"]
+animation = &"telekinesisDrop"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_smehm"]
+animation = &"telekinesisHolding"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g2els"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qhqgy"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dqkch"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qlg0r"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tuyoq"]
+switch_mode = 2
+advance_mode = 0
+
+[resource]
+states/End/position = Vector2(973, 100)
+states/Movement/node = ExtResource("1_tduf4")
+states/Movement/position = Vector2(414, 100)
+states/telekinesisDrop/node = SubResource("AnimationNodeAnimation_fjrip")
+states/telekinesisDrop/position = Vector2(541, 229)
+states/telekinesisHolding/node = SubResource("AnimationNodeAnimation_smehm")
+states/telekinesisHolding/position = Vector2(700, 100)
+transitions = ["Start", "Movement", SubResource("AnimationNodeStateMachineTransition_g2els"), "Movement", "telekinesisHolding", SubResource("AnimationNodeStateMachineTransition_qhqgy"), "telekinesisHolding", "telekinesisDrop", SubResource("AnimationNodeStateMachineTransition_dqkch"), "telekinesisDrop", "Movement", SubResource("AnimationNodeStateMachineTransition_qlg0r"), "Movement", "telekinesisDrop", SubResource("AnimationNodeStateMachineTransition_tuyoq")]
+graph_offset = Vector2(-23, 43)
