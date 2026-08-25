@@ -1,8 +1,10 @@
-# res://crosshair.gd (Crosshair Autoload Script)
-extends CanvasLayer # Change root to CanvasLayer if you put it on top
 
-@onready var dot = $Dot
-@onready var reticle = $Reticle
+extends CanvasLayer 
+
+#@onready var dot = $Dot
+#@onready var reticle = $Reticle
+@onready var dot: TextureRect = $Dot
+@onready var reticle: TextureRect = $Reticle
 
 func set_state_default():
 	dot.visible = true

@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://bjkfjk005l26k"]
+
+[ext_resource type="Script" uid="uid://b6cn48awqheps" path="res://UI/settings_menu.gd" id="1_77no7"]
+
+[node name="SettingsMenu" type="Control" unique_id=1297675168]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_77no7")
+
+[node name="Background" type="PanelContainer" parent="." unique_id=853746796]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -187.5
+offset_top = 223.0
+offset_right = 187.5
+offset_bottom = 470.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background" unique_id=1492003595]
+layout_mode = 2
+
+[node name="ResolutionRow" type="HBoxContainer" parent="Background/VBoxContainer" unique_id=1797325370]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/ResolutionRow" unique_id=1850400000]
+layout_mode = 2
+text = "RESOLUTION:"
+
+[node name="ResolutionOption" type="OptionButton" parent="Background/VBoxContainer/ResolutionRow" unique_id=1712004970]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PresetRow" type="HBoxContainer" parent="Background/VBoxContainer" unique_id=1842277317]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/PresetRow" unique_id=593610295]
+layout_mode = 2
+text = "Graphics Preset:"
+
+[node name="PresetOption" type="OptionButton" parent="Background/VBoxContainer/PresetRow" unique_id=680742380]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ModeRow" type="HBoxContainer" parent="Background/VBoxContainer" unique_id=1951649584]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/ModeRow" unique_id=684579577]
+layout_mode = 2
+text = "Window Mode:"
+
+[node name="WindowModeOption" type="OptionButton" parent="Background/VBoxContainer/ModeRow" unique_id=481732358]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSyncCheck" type="CheckBox" parent="Background/VBoxContainer" unique_id=1766704038]
+layout_mode = 2
+text = "Enable V-Sync"
+
+[node name="AutoDetectButton" type="Button" parent="Background/VBoxContainer" unique_id=86604926]
+layout_mode = 2
+text = "Auto Detect"
+
+[node name="CloseButton" type="Button" parent="Background/VBoxContainer" unique_id=1235233338]
+layout_mode = 2
+text = "Close"

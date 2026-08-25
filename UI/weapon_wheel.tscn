@@ -1,0 +1,75 @@
+[gd_scene format=4 uid="uid://b55ny2uwrs7n4"]
+
+[ext_resource type="Shader" uid="uid://bk8an1yb8jjre" path="res://Ring.gdshader" id="1_jsmtd"]
+[ext_resource type="Texture2D" uid="uid://ch08b2n44w8tt" path="res://UI/UIElements/hover.png" id="2_m7dcl"]
+[ext_resource type="Script" uid="uid://cirh2ihen62ft" path="res://UI/weapon_wheel.gd" id="2_xqp5f"]
+[ext_resource type="Texture2D" uid="uid://do4nh48ce5r0d" path="res://UI/UIElements/hovering.png" id="2_yl02s"]
+[ext_resource type="Texture2D" uid="uid://bi88kvhww68bo" path="res://UI/UIElements/telekinesis.png" id="3_470tc"]
+[ext_resource type="Texture2D" uid="uid://dh44o7mdjex7k" path="res://UI/UIElements/placeholder.png" id="4_inh8t"]
+[ext_resource type="AudioStream" uid="uid://cguc4xxt408n2" path="res://sounds/menuPopup.mp3" id="6_470tc"]
+[ext_resource type="FontFile" uid="uid://dpjthwy70s54p" path="res://fonts/Haltto-Bold.otf" id="6_inh8t"]
+[ext_resource type="AudioStream" uid="uid://ceu6bwxcmaeta" path="res://sounds/menuHover.wav" id="7_m7dcl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nrnh6"]
+shader = ExtResource("1_jsmtd")
+shader_parameter/segment_count = 5
+shader_parameter/selected_index = -1
+shader_parameter/outer_radius = 0.44800001802012
+shader_parameter/thickness = 0.23400000948506
+shader_parameter/gap_width = 0.008
+shader_parameter/segment_colors = PackedVector4Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/selected_border_color = Color(0.99999994, 0.9172606, 0.60530186, 1)
+shader_parameter/unselected_alpha = 0.15600000741
+shader_parameter/selected_alpha = 0.818000038855
+shader_parameter/aspect_ratio = 1.0
+
+[node name="WeaponWheel" type="CanvasLayer" unique_id=249968041]
+scale = Vector2(1.04, 1.04)
+transform = Transform2D(1.04, 0, 0, 1.04, 0, 0)
+script = ExtResource("2_xqp5f")
+ability_icons = Array[Texture2D]([ExtResource("2_m7dcl"), ExtResource("3_470tc"), ExtResource("4_inh8t"), ExtResource("2_yl02s"), ExtResource("3_470tc")])
+ability_names = Array[String](["Hovering", "Telekinesis"])
+custom_font = ExtResource("6_inh8t")
+font_color = Color(0.92535293, 0.9253528, 0.9253529, 1)
+outline_size = 2
+
+[node name="CenterControl" type="Control" parent="." unique_id=1573097207]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.538513
+offset_top = -19.038452
+offset_right = 8.461487
+offset_bottom = 20.961548
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="RingBackground" type="ColorRect" parent="CenterControl" unique_id=19969929]
+material = SubResource("ShaderMaterial_nrnh6")
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.92316
+offset_top = -181.69237
+offset_right = 141.30774
+offset_bottom = 137.53853
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.8, 0.67058825, 0.5294118, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="PopupSound" type="AudioStreamPlayer" parent="." unique_id=693887593]
+stream = ExtResource("6_470tc")
+volume_db = -24.572
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=657413284]
+stream = ExtResource("7_m7dcl")
+volume_db = -14.856

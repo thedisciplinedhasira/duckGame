@@ -12,11 +12,11 @@ animation = &"strafeL"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dqkch"]
 animation = &"strafeR"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qlg0r"]
-animation = &"running"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2bc6x"]
 animation = &"backwardMoving"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qlg0r"]
+animation = &"running"
 
 [resource]
 min_space = Vector2(-8, -5)
@@ -25,17 +25,17 @@ blend_point_0/node = SubResource("AnimationNodeAnimation_3vyb7")
 blend_point_0/pos = Vector2(0, 0)
 blend_point_0/name = &"idle"
 blend_point_1/node = SubResource("AnimationNodeAnimation_g2els")
-blend_point_1/pos = Vector2(0, 5)
+blend_point_1/pos = Vector2(0, 4)
 blend_point_1/name = &"walking"
 blend_point_2/node = SubResource("AnimationNodeAnimation_qhqgy")
-blend_point_2/pos = Vector2(-5, 3)
+blend_point_2/pos = Vector2(-5, 4)
 blend_point_2/name = &"strafeL"
 blend_point_3/node = SubResource("AnimationNodeAnimation_dqkch")
-blend_point_3/pos = Vector2(5, 3)
+blend_point_3/pos = Vector2(5, 4)
 blend_point_3/name = &"strafeR"
-blend_point_4/node = SubResource("AnimationNodeAnimation_qlg0r")
-blend_point_4/pos = Vector2(0, 8)
-blend_point_4/name = &"running"
-blend_point_5/node = SubResource("AnimationNodeAnimation_2bc6x")
-blend_point_5/pos = Vector2(0, -5)
-blend_point_5/name = &"backwardMoving"
+blend_point_4/node = SubResource("AnimationNodeAnimation_2bc6x")
+blend_point_4/pos = Vector2(0, -5)
+blend_point_4/name = &"backwardMoving"
+blend_point_5/node = SubResource("AnimationNodeAnimation_qlg0r")
+blend_point_5/pos = Vector2(0, 7)
+blend_point_5/name = &"running"

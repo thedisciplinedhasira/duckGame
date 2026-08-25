@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://dsaghc5c3or21"]
+
+[ext_resource type="Script" uid="uid://db177hmysqlf3" path="res://UI/dialogue_ui.gd" id="1_odgyn"]
+[ext_resource type="Texture2D" uid="uid://bgoeyakj3i37s" path="res://UI/UIElements/Asset 2.png" id="2_dckty"]
+[ext_resource type="FontFile" uid="uid://dpjthwy70s54p" path="res://fonts/Haltto-Bold.otf" id="3_5n7m2"]
+[ext_resource type="AudioStream" uid="uid://bu27gjty24mpb" path="res://sounds/achievementSound.mp3" id="5_pwv0c"]
+
+[node name="DialogueUI" type="CanvasLayer" unique_id=1610807460]
+script = ExtResource("1_odgyn")
+
+[node name="Background" type="Control" parent="." unique_id=1386001129]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Background" unique_id=792479789]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 89.01503
+offset_top = -176.0
+offset_right = 443.6817
+offset_bottom = -43.0
+grow_vertical = 0
+texture = ExtResource("2_dckty")
+expand_mode = 1
+
+[node name="TextLabel" type="RichTextLabel" parent="Background/TextureRect" unique_id=250697175]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.46500003
+anchor_top = 0.263
+anchor_right = 0.46500003
+anchor_bottom = 0.263
+offset_left = 0.064941406
+offset_top = 0.020992279
+offset_right = 157.06496
+offset_bottom = 61.020992
+theme_override_colors/default_color = Color(0.2988641, 0.2936858, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_5n7m2")
+fit_content = true
+
+[node name="NotoficationSound" type="AudioStreamPlayer" parent="." unique_id=139583418]
+stream = ExtResource("5_pwv0c")
+volume_db = 0.446
+
+[node name="NotificationPanel" type="Control" parent="." unique_id=1683436666]
+visible = false
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -119.0
+offset_right = 119.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="NotificationPanel" unique_id=368903249]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.9004517, 0.6520586, 0.23215234, 1)
+theme_override_fonts/font = ExtResource("3_5n7m2")
+theme_override_font_sizes/font_size = 24

@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ch5oekat2pw08"]
+
+[ext_resource type="Shader" uid="uid://cdjfweq6i2fmp" path="res://GrassNewShader.gdshader" id="1_djato"]
+[ext_resource type="Texture2D" uid="uid://bxceqhai62dpo" path="res://grassNew/grassScatter.png" id="2_6p48k"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_630qr"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_djato")
+shader_parameter/albedo_texture = ExtResource("2_6p48k")
+shader_parameter/wind_noise = SubResource("NoiseTexture2D_630qr")
+shader_parameter/push_radius = 1.5
+shader_parameter/push_strength = 1.0

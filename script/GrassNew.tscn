@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dempue1j1m1vk"]
+
+[ext_resource type="Script" uid="uid://gmlsb3djemd0" path="res://script/character_manager.gd" id="3_1f2to"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nrnh6"]
+
+[node name="Node3D" type="Node3D" unique_id=1796369617]
+
+[node name="Terrain" type="MeshInstance3D" parent="." unique_id=1561105356]
+transform = Transform3D(2.02, 0, 0, 0, 2.02, 0, 0, 0, 2.02, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_nrnh6")
+
+[node name="characterManager" type="Node3D" parent="." unique_id=1753805328]
+script = ExtResource("3_1f2to")

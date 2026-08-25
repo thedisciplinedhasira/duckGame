@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://j612ifwg2ev7"]
+
+[ext_resource type="Script" uid="uid://q3bknrs88x0y" path="res://UI/main_menu.gd" id="1_f40uw"]
+[ext_resource type="Texture2D" uid="uid://ctgps05l0uinb" path="res://UI/UIElements/Screenshot 2026-08-18 160140.png" id="1_p8ccj"]
+[ext_resource type="Texture2D" uid="uid://cd311fg88rrp4" path="res://UI/UIElements/buttons/normal.png" id="2_4cwpn"]
+[ext_resource type="Texture2D" uid="uid://bad02emqaharw" path="res://UI/UIElements/buttons/click.png" id="3_f40uw"]
+[ext_resource type="Texture2D" uid="uid://36ufl6nckyk6" path="res://UI/UIElements/buttons/hover.png" id="4_8ctay"]
+[ext_resource type="AudioStream" uid="uid://dlxd1o6liende" path="res://sounds/ambient.mp3" id="6_8ctay"]
+
+[node name="MainMenu" type="Control" unique_id=180949025]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f40uw")
+
+[node name="Background" type="TextureRect" parent="." unique_id=699342272]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_p8ccj")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1544505754]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.015686275, 0.015686275, 0.015686275, 0.41960785)
+
+[node name="MenuContainer" type="VBoxContainer" parent="." unique_id=320811120]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.707
+anchor_top = 0.23
+anchor_right = 0.707
+anchor_bottom = 0.23
+offset_left = -83.46399
+offset_top = 139.95999
+offset_right = 163.53601
+offset_bottom = 421.96
+theme_override_constants/separation = 15
+
+[node name="PlayButton" type="TextureButton" parent="MenuContainer" unique_id=378046810]
+layout_mode = 2
+texture_normal = ExtResource("2_4cwpn")
+texture_pressed = ExtResource("3_f40uw")
+texture_hover = ExtResource("4_8ctay")
+
+[node name="ComicButton" type="TextureButton" parent="MenuContainer" unique_id=1055904121]
+layout_mode = 2
+texture_normal = ExtResource("2_4cwpn")
+texture_pressed = ExtResource("3_f40uw")
+texture_hover = ExtResource("4_8ctay")
+
+[node name="SettingsButton" type="TextureButton" parent="MenuContainer" unique_id=1565724304]
+layout_mode = 2
+texture_normal = ExtResource("2_4cwpn")
+texture_pressed = ExtResource("3_f40uw")
+texture_hover = ExtResource("4_8ctay")
+
+[node name="QuitButton" type="TextureButton" parent="MenuContainer" unique_id=1409180167]
+layout_mode = 2
+texture_normal = ExtResource("2_4cwpn")
+texture_pressed = ExtResource("3_f40uw")
+texture_hover = ExtResource("4_8ctay")
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="." unique_id=889550176]
+stream = ExtResource("6_8ctay")
+volume_db = -4.674
