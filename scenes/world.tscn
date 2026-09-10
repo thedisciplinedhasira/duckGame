@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b76pvlff1igx7" path="res://scenes/player.tscn" id="4_i7141"]
 [ext_resource type="Texture2D" uid="uid://cc2bcmfxqq6h7" path="res://environment/textues/grass.PNG" id="6_qfnet"]
 [ext_resource type="Texture2D" uid="uid://clhswnjb03j3e" path="res://environment/textues/ground.PNG" id="7_i7141"]
-[ext_resource type="PackedScene" uid="uid://2r0vgnumhsim" path="res://environment/grass/newgrass/grassNew.glb" id="7_o8fc1"]
+[ext_resource type="PackedScene" path="res://environment/grass/newgrass/grassNew.glb" id="7_o8fc1"]
 [ext_resource type="Material" uid="uid://byvlbo8kwrnfu" path="res://grassNew/new_grassshader_material.tres" id="7_pm21f"]
 [ext_resource type="PackedScene" uid="uid://lsfqhgndd47b" path="res://environment/trees/treeBlack.glb" id="8_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://da32sb6mrky2q" path="res://environment/stone/ethioStones/ethioston.glb" id="9_w7kh3"]
@@ -41,8 +41,8 @@
 [ext_resource type="Texture2D" uid="uid://preyo5iftaxt" path="res://models/crt_monitor_1.png" id="42_eo1xk"]
 [ext_resource type="Texture2D" uid="uid://31miajnqo1gn" path="res://models/crt_monitor_2.jpg" id="43_18clu"]
 [ext_resource type="Texture2D" uid="uid://i6lfk87f3juk" path="res://models/crt_monitor_3.png" id="44_4wdv8"]
-[ext_resource type="Script" uid="uid://dxf7t8jxiais1" path="res://scenes/trigger_zone.gd" id="45_18clu"]
-[ext_resource type="PackedScene" uid="uid://7ub4fsqh3uth" path="res://scenes/RetroScreenMinigame.tscn" id="45_eo1xk"]
+[ext_resource type="Script" path="res://scenes/trigger_zone.gd" id="45_18clu"]
+[ext_resource type="PackedScene" uid="uid://7ub4fsqh3uth" path="res://scenes/potionArea.tscn" id="45_eo1xk"]
 
 [sub_resource type="Sky" id="Sky_2lf6f"]
 sky_material = ExtResource("1_xo05s")

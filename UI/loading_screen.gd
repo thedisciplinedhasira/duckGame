@@ -1,7 +1,8 @@
 extends Control
 
 @onready var video_player: VideoStreamPlayer = $VideoStreamPlayer
-var target_scene: String = "res://scenes/DimensionManager.tscn"
+var target_scene: String = "res://scenes/test_tutorial.scn"
+
 
 func _ready() -> void:
 	# 1. Tell Godot to start loading your heavy scene in the background

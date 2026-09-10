@@ -1,45 +1,45 @@
 extends Area2D
 
-@onready var label: Label = get_node_or_null("Label") 
-@export var is_tutorial_exit: bool = false 
+@export var return_marker_group: String = "" 
+@onready var label: Label = get_node_or_null("Label")
 
 func _ready() -> void:
 	if label:
 		label.visible = false
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
-
-# Our backup check: Constantly scans for the player's class type
-func _physics_process(_delta: float) -> void:
-	if label and not label.visible:
-		for body in get_overlapping_bodies():
-			if body is CharacterBody2D: # <-- Bulletproof check!
-				_on_body_entered(body)
+		
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+	if not body_exited.is_connected(_on_body_exited):
+		body_exited.connect(_on_body_exited)
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is CharacterBody2D: # (or body.is_in_group("player"))
+	if body is CharacterBody2D or body.is_in_group("player_2d"):
 		if label:
 			label.visible = true
 			
 		var manager = get_tree().get_first_node_in_group("dimension_manager")
 		if manager:
-			manager.can_switch_to_3d = true
-			
-			# If we are in the exit area...
-			if is_tutorial_exit:
-				manager.use_tutorial_spawn = true
-				manager.use_tutorial_gate_spawn = false
-			# If we are in the start area...
-			else:
-				manager.use_tutorial_spawn = false
-				manager.use_tutorial_gate_spawn = true
+			# Optional: ensure player can swap back
+			if "can_switch_to_3d" in manager:
+				manager.can_switch_to_3d = true
+				
+			if manager.get("active_gate") != null:
+				# If there is a custom group (like exitArea), change the gate's destination
+				if return_marker_group != "":
+					var target = get_tree().get_first_node_in_group(return_marker_group) as Node3D
+					if target:
+						manager.active_gate.return_3d_marker = target
+				# If blank (like startArea), reset to the gate's default original marker
+				else:
+					var original = manager.active_gate.get("original_marker")
+					if original:
+						manager.active_gate.return_3d_marker = original
+
 func _on_body_exited(body: Node2D) -> void:
-	if body is CharacterBody2D:
+	if body is CharacterBody2D or body.is_in_group("player_2d"):
 		if label:
 			label.visible = false
 			
 		var manager = get_tree().get_first_node_in_group("dimension_manager")
-		if manager:
+		if manager and "can_switch_to_3d" in manager:
 			manager.can_switch_to_3d = false
-			if is_tutorial_exit:
-				manager.use_tutorial_spawn = false

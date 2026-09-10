@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://do1r22h2vr14q" path="res://UI/UIElements/newButtons/Asset 13.png" id="18_saki1"]
 [ext_resource type="Texture2D" uid="uid://4e44y70jijs2" path="res://UI/UIElements/mainMenuButtons/Asset 15.png" id="19_cwv5u"]
 [ext_resource type="PackedScene" uid="uid://bjkfjk005l26k" path="res://UI/settings_menu.tscn" id="20_c2iqt"]
+[ext_resource type="Shader" uid="uid://dnj04efmt5ouu" path="res://UI/CRTandFisheye.gdshader" id="21_27vi8"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_saki1"]
 particle_flag_disable_z = true
@@ -30,6 +31,14 @@ gravity = Vector3(0, -5, 0)
 scale_min = 0.5
 scale_max = 0.79999995
 turbulence_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xmcc3"]
+shader = ExtResource("21_27vi8")
+shader_parameter/curvature = 9.0000004275
+shader_parameter/scanline_count = 450.0
+shader_parameter/vignette_strength = 0.6270000297825
+shader_parameter/zoom = 1.010000000475
+shader_parameter/border_smoothing = 0.01
 
 [node name="MainMenu" type="Control" unique_id=180949025]
 layout_mode = 3
@@ -142,3 +151,17 @@ texture = ExtResource("19_cwv5u")
 [node name="SettingsMenu" parent="." unique_id=1297675168 instance=ExtResource("20_c2iqt")]
 visible = false
 layout_mode = 1
+
+[node name="PostProcessing" type="CanvasLayer" parent="." unique_id=1531995806]
+layer = 100
+
+[node name="CRTEffect" type="ColorRect" parent="PostProcessing" unique_id=1480661398]
+material = SubResource("ShaderMaterial_xmcc3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.18431373)
+metadata/_edit_use_anchors_ = true

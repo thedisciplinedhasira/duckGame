@@ -1,115 +1,92 @@
 extends Node
 
-# --- UI & Video References ---
 @onready var video_player = $CanvasLayer/VideoStreamPlayer
-
-# --- World References ---
 @onready var world_3d: Node3D = $World3D
-@onready var world_2d: Node2D = $tutorial2D 
+@onready var world_2d: Node2D = $World2D # Add an empty Node2D named World2D to your scene
 
-# --- Player References ---
 @export var player_3d: CharacterBody3D
-@export var player_2d: CharacterBody2D
 
-# --- Spawn Markers ---
-@export var spawn_3d_marker: Marker3D 
-@export var tutorial_gate_3d_marker: Marker3D # <-- Marker in front of 3D gate
-@export var tutorial_spawn_3d_marker: Marker3D # <-- Marker on the hill (Exit)
+var active_gate = null
+var current_2d_scene_instance: Node2D = null
 
-# --- Exit Triggers & Puzzles ---
-@export var tutorial_boost_box_2d: StaticBody2D 
-
-# --- State Variables ---
-var use_tutorial_spawn: bool = false
-var use_tutorial_gate_spawn: bool = false
-var can_swap_to_2d: bool = false 
-
-var spawn_2d_pos: Vector2 
 var is_in_2d: bool = false
-var is_transitioning: bool = false 
-var can_switch_to_3d: bool = false 
-var is_boost_box_placed: bool = false 
+var is_transitioning: bool = false
 
 func _ready():
-	if player_2d:
-		spawn_2d_pos = player_2d.global_position
-		
 	activate_3d()
 
-func _unhandled_input(event):
-	if event.is_action_pressed("swap_dimension"):
-		if not is_transitioning:
-			if not is_in_2d and can_swap_to_2d:
-				execute_dimension_swap()
-			elif is_in_2d and can_switch_to_3d:
-				execute_dimension_swap()
-				
-func execute_dimension_swap():
-	is_transitioning = true
-	is_in_2d = !is_in_2d
+func set_active_gate(gate):
+	active_gate = gate
 
-	if is_in_2d:
-		can_switch_to_3d = false 
-		
+func clear_active_gate(gate):
+	if active_gate == gate:
+		active_gate = null
+
+func _unhandled_input(event):
+	if event.is_action_pressed("swap_dimension") and not is_transitioning:
+		if not is_in_2d and active_gate and active_gate.target_2d_scene:
+			execute_dimension_swap(true)
+		elif is_in_2d:
+			execute_dimension_swap(false)
+
+func execute_dimension_swap(to_2d: bool):
+	is_transitioning = true
+	is_in_2d = to_2d
+
 	if video_player:
 		video_player.visible = true
 		video_player.play()
 		await video_player.finished
-	
+
 	if is_in_2d:
+		# 1. Lock the 3D player using your custom script method
+		if player_3d and player_3d.has_method("set_input_locked"):
+			player_3d.set_input_locked(true)
+
+		# 2. Spawn the 2D map
+		current_2d_scene_instance = active_gate.target_2d_scene.instantiate()
+		world_2d.add_child(current_2d_scene_instance)
+
 		activate_2d()
 		await get_tree().process_frame
-		
-# 3. Now it is safe to teleport the player
+
+		# 3. Handle 2D Camera
+		var player_2d = get_tree().get_first_node_in_group("player_2d")
 		if player_2d:
-			player_2d.global_position = spawn_2d_pos
-			player_2d.velocity = Vector2.ZERO
-			
-			var cam2d = player_2d.get_node_or_null("Camera2D") 
+			var cam2d = player_2d.get_node_or_null("Camera2D")
 			if cam2d:
 				cam2d.make_current()
-				cam2d.reset_smoothing() # <-- THE MAGIC TELEPORT FIX!
-				
-			# --- THE GHOST CAMERA TEST ---
-			# Let's ask the engine EXACTLY which camera is in control
-			var active_cam = get_viewport().get_camera_2d()
-			if active_cam:
-				print(">>> REAL ACTIVE CAMERA IS: ", active_cam.get_path())
-			else:
-				print(">>> WARNING: NO 2D CAMERA IS ACTIVE!")
-								
+				cam2d.reset_smoothing()
 	else:
-		# 1. Grab the correct marker BEFORE we turn off the 2D world!
-		var target_marker = spawn_3d_marker # Default fallback
+		var target_marker = active_gate.return_3d_marker if active_gate else null
 		
-		if use_tutorial_spawn:
-			target_marker = tutorial_spawn_3d_marker
-		elif use_tutorial_gate_spawn:
-			target_marker = tutorial_gate_3d_marker
-			
-		# 2. Waking up 3D first (This triggers the 2D body_exited signal)
 		activate_3d()
+
+		# 1. Delete 2D Map
+		if current_2d_scene_instance:
+			current_2d_scene_instance.queue_free()
+			current_2d_scene_instance = null
+
 		await get_tree().process_frame
-		
-		# 3. Teleport using the marker we safely saved in step 1
+
+		# 2. Teleport & Unlock 3D Player
 		if target_marker and player_3d:
 			player_3d.global_position = target_marker.global_position
-			player_3d.velocity = Vector3.ZERO 
-			player_3d.set_input_locked(false)
+			player_3d.velocity = Vector3.ZERO
 			
-			var cam3d = player_3d.get_node_or_null("Camera3D") 
+			if player_3d.has_method("set_input_locked"):
+				player_3d.set_input_locked(false)
+			
+			# Target the specific camera path from your player script
+			var cam3d = player_3d.get_node_or_null("cameraMount/Camera3D")
 			if cam3d:
 				cam3d.make_current()
-			
-		# 4. Safely reset the triggers for the next swap
-		use_tutorial_spawn = false 
-		use_tutorial_gate_spawn = false 
-		
+
 	if video_player:
 		video_player.visible = false
-	
+
 	is_transitioning = false
-	
+
 func activate_3d():
 	world_3d.visible = true
 	world_3d.process_mode = Node.PROCESS_MODE_INHERIT

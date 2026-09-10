@@ -1,0 +1,1273 @@
+[gd_scene format=3 uid="uid://bwkoeo3usek0n"]
+
+[ext_resource type="Script" uid="uid://eqwgmjufhfhp" path="res://kebebeOS/os.gd" id="1_1rwfv"]
+[ext_resource type="Texture2D" uid="uid://doslvomyvwcet" path="res://kebebeOS/Folder Closed.png" id="2_6mifb"]
+[ext_resource type="Texture2D" uid="uid://ddh1uqkfh4u46" path="res://kebebeOS/Internet Shortcut.png" id="3_3nfli"]
+[ext_resource type="Script" uid="uid://sjg40fas7pym" path="res://kebebeOS/shortcut_redmi.gd" id="4_1rwfv"]
+[ext_resource type="Texture2D" uid="uid://cbrxe60cyw3ap" path="res://kebebeOS/Generic Text Document.png" id="4_2k28m"]
+[ext_resource type="Texture2D" uid="uid://c56cuvl562hf" path="res://kebebeOS/Default.png" id="5_jcc5o"]
+[ext_resource type="Script" uid="uid://cwl4lggxobpna" path="res://kebebeOS/start_button.gd" id="5_lgu7x"]
+[ext_resource type="Script" uid="uid://4bkbqfqolxbr" path="res://UI/kekebeExecutable.gd" id="6_hods8"]
+[ext_resource type="Texture2D" uid="uid://16o612p6fox4" path="res://kebebeOS/Programs.png" id="7_lgu7x"]
+[ext_resource type="Script" uid="uid://dp8304ao7x4pl" path="res://UI/osButton.gd" id="8_1rwfv"]
+[ext_resource type="Script" uid="uid://b5w7hgfvpsc1a" path="res://UI/fitgirl_first.gd" id="9_nvlid"]
+[ext_resource type="Texture2D" uid="uid://da46nnwgwu48t" path="res://kebebeOS/menuImage (Large).png" id="10_rb7u5"]
+[ext_resource type="Script" uid="uid://innjxd5o3c1e" path="res://UI/fitgirl_install.gd" id="11_afqs3"]
+[ext_resource type="Texture2D" uid="uid://bv73mvbm1y32v" path="res://kebebeOS/fitgirl.jpg" id="12_1nine"]
+[ext_resource type="Script" uid="uid://dyq2hvcmoe1w0" path="res://UI/fitgirl_progress.gd" id="13_yrc0x"]
+[ext_resource type="Texture2D" uid="uid://bvybe64cjb0sa" path="res://kebebeOS/Change Connection Settings.png" id="14_2k28m"]
+[ext_resource type="Texture2D" uid="uid://cdp75588k5y6e" path="res://kebebeOS/Whistler - Switch User.png" id="14_6mifb"]
+[ext_resource type="Script" uid="uid://ct88fbuwpy5ji" path="res://kebebeOS/draggable.gd" id="14_jcc5o"]
+[ext_resource type="Shader" uid="uid://dnj04efmt5ouu" path="res://UI/CRTandFisheye.gdshader" id="14_vq2s5"]
+[ext_resource type="Texture2D" uid="uid://by1hvsleepnpq" path="res://kebebeOS/Power.png" id="15_3nfli"]
+[ext_resource type="Script" uid="uid://boljjq7r6wm7j" path="res://kebebeOS/power_off.gd" id="16_hods8"]
+[ext_resource type="Script" uid="uid://b850v5r24dhqe" path="res://kebebeOS/redme.gd" id="17_1nine"]
+[ext_resource type="Script" uid="uid://fqyt41odts00" path="res://kebebeOS/welcome_message.gd" id="17_afqs3"]
+[ext_resource type="Texture2D" uid="uid://bpdg1eoqysfxh" path="res://kebebeOS/Windows Update.png" id="17_rb7u5"]
+[ext_resource type="Texture2D" uid="uid://o5n4rcwc66d6" path="res://kebebeOS/Alert.png" id="18_afqs3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvnqm"]
+bg_color = Color(0.12156863, 0.8784314, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lgu7x"]
+bg_color = Color(0.45882353, 0.45882353, 0.45882353, 0.7176471)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_size = 54
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kj2mb"]
+shader = ExtResource("14_vq2s5")
+shader_parameter/curvature = 8.00000038
+shader_parameter/scanline_count = 450.0
+shader_parameter/vignette_strength = 0.6270000297825
+shader_parameter/zoom = 1.010000000475
+shader_parameter/border_smoothing = 0.01
+
+[node name="OS" type="Control" unique_id=1013485628 node_paths=PackedStringArray("start_button", "start_menu_label", "address_bar_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1rwfv")
+start_button = NodePath("ColorRect2/TaskbarPadding/TaskbarElements/StartButton")
+start_menu_label = NodePath("StartMenu/TitleBar/adminstraor")
+address_bar_label = NodePath("FolderWindow/AddressBar/ColorRect/documentPath")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2043737826]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09019608, 0.24705882, 0.25490198, 1)
+
+[node name="DesktopPadding" type="MarginContainer" parent="." unique_id=2056145973]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="IconsColumn" type="HBoxContainer" parent="DesktopPadding" unique_id=481271741]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="ColumnLeft" type="VBoxContainer" parent="DesktopPadding/IconsColumn" unique_id=1650918162]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="ShortcutDocuments" type="VBoxContainer" parent="DesktopPadding/IconsColumn/ColumnLeft" unique_id=1034485292 node_paths=PackedStringArray("redme_window")]
+layout_mode = 2
+script = ExtResource("4_1rwfv")
+redme_window = NodePath("../../../../FolderWindow")
+
+[node name="Icon" type="TextureRect" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutDocuments" unique_id=65784163]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("2_6mifb")
+
+[node name="Label" type="Label" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutDocuments" unique_id=597303886]
+layout_mode = 2
+text = "Kekebe"
+horizontal_alignment = 1
+
+[node name="ShortcutInternet" type="VBoxContainer" parent="DesktopPadding/IconsColumn/ColumnLeft" unique_id=275495137]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutInternet" unique_id=1113763966]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("3_3nfli")
+
+[node name="Label" type="Label" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutInternet" unique_id=392974906]
+layout_mode = 2
+text = "Internet"
+horizontal_alignment = 1
+
+[node name="ShortcutRedmi" type="VBoxContainer" parent="DesktopPadding/IconsColumn/ColumnLeft" unique_id=1805023168 node_paths=PackedStringArray("redme_window")]
+layout_mode = 2
+script = ExtResource("4_1rwfv")
+redme_window = NodePath("../../../../Redme")
+
+[node name="Icon" type="TextureRect" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutRedmi" unique_id=1542626005]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("4_2k28m")
+
+[node name="Label" type="Label" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutRedmi" unique_id=636348997]
+layout_mode = 2
+text = "Redme"
+horizontal_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=351377254]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.6627451, 0.6627451, 0.6627451, 1)
+
+[node name="TaskbarPadding" type="MarginContainer" parent="ColorRect2" unique_id=1216086842]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TaskbarElements" type="HBoxContainer" parent="ColorRect2/TaskbarPadding" unique_id=51706873]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StartButton" type="Button" parent="ColorRect2/TaskbarPadding/TaskbarElements" unique_id=1249300261 node_paths=PackedStringArray("start_menu")]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "USERNAME"
+script = ExtResource("5_lgu7x")
+start_menu = NodePath("../../../../StartMenu")
+
+[node name="Spacer" type="Control" parent="ColorRect2/TaskbarPadding/TaskbarElements" unique_id=263409000]
+custom_minimum_size = Vector2(982.42, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 13.93
+
+[node name="Label" type="Label" parent="ColorRect2/TaskbarPadding/TaskbarElements" unique_id=1514278679]
+layout_mode = 2
+text = "23:34"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FolderWindow" type="Panel" parent="." unique_id=761585818]
+visible = false
+layout_mode = 0
+offset_left = 335.0
+offset_top = 60.0
+offset_right = 863.0
+offset_bottom = 520.0
+
+[node name="FileArea" type="ColorRect" parent="FolderWindow" unique_id=280728660]
+layout_mode = 0
+offset_top = 71.0
+offset_right = 528.0
+offset_bottom = 460.0
+color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+
+[node name="FileGrid" type="GridContainer" parent="FolderWindow/FileArea" unique_id=240326226]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 50.0
+offset_right = 475.0
+offset_bottom = 117.0
+theme_override_constants/h_separation = 50
+columns = 4
+
+[node name="MD5" type="VBoxContainer" parent="FolderWindow/FileArea/FileGrid" unique_id=1511185745]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/MD5" unique_id=629156313]
+custom_minimum_size = Vector2(20, 20)
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_6mifb")
+
+[node name="Label" type="Label" parent="FolderWindow/FileArea/FileGrid/MD5" unique_id=1657238794]
+layout_mode = 2
+text = "MD5"
+
+[node name="File1" type="VBoxContainer" parent="FolderWindow/FileArea/FileGrid" unique_id=1060445176]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/File1" unique_id=1416655699]
+custom_minimum_size = Vector2(20, 20)
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("5_jcc5o")
+
+[node name="Label" type="Label" parent="FolderWindow/FileArea/FileGrid/File1" unique_id=973003174]
+layout_mode = 2
+text = "fg-01.bin"
+
+[node name="File2" type="VBoxContainer" parent="FolderWindow/FileArea/FileGrid" unique_id=1796974540]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/File2" unique_id=1256075536]
+custom_minimum_size = Vector2(20, 20)
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("5_jcc5o")
+
+[node name="Label" type="Label" parent="FolderWindow/FileArea/FileGrid/File2" unique_id=770196680]
+layout_mode = 2
+text = "fg-02.bin"
+
+[node name="Duck_exe" type="VBoxContainer" parent="FolderWindow/FileArea/FileGrid" unique_id=2126168657 node_paths=PackedStringArray("fitgirl_first_window")]
+layout_mode = 2
+script = ExtResource("6_hods8")
+fitgirl_first_window = NodePath("../../../../FitgirlFirst")
+
+[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/Duck_exe" unique_id=1723509255]
+custom_minimum_size = Vector2(20, 20)
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("7_lgu7x")
+
+[node name="Label" type="Label" parent="FolderWindow/FileArea/FileGrid/Duck_exe" unique_id=1411872387]
+layout_mode = 2
+text = "KEKEBE.exe"
+
+[node name="TitleBar" type="ColorRect" parent="FolderWindow" unique_id=1043282251 node_paths=PackedStringArray("target_window")]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+color = Color(0.06666667, 0.06666667, 0.53333336, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("..")
+
+[node name="Label" type="Label" parent="FolderWindow/TitleBar" unique_id=1613547188]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Documents"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="FolderWindow/TitleBar" unique_id=1619172459]
+layout_mode = 0
+offset_left = 510.0
+offset_right = 528.0
+offset_bottom = 31.0
+text = "X"
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="AddressBar" type="ColorRect" parent="FolderWindow" unique_id=4175489]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 528.0
+offset_bottom = 71.0
+color = Color(0.6666667, 0.62352943, 0.654902, 1)
+
+[node name="ColorRect" type="ColorRect" parent="FolderWindow/AddressBar" unique_id=959740945]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 3.0
+offset_right = 524.0
+offset_bottom = 37.0
+color = Color(0.3228544, 0.31012025, 0.31967682, 1)
+
+[node name="documentPath" type="Label" parent="FolderWindow/AddressBar/ColorRect" unique_id=1763947775]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 209.0
+offset_bottom = 27.0
+text = "  HOME/USERNAME/KEKEBE/"
+
+[node name="Button" type="Button" parent="FolderWindow/AddressBar" unique_id=2024655228]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 3.0
+offset_right = 46.0
+offset_bottom = 37.0
+text = "<"
+
+[node name="FitgirlFirst" type="Panel" parent="." unique_id=267145468 node_paths=PackedStringArray("next_button", "fitgirl_install_window")]
+visible = false
+layout_mode = 0
+offset_left = 136.0
+offset_top = 169.0
+offset_right = 799.6942
+offset_bottom = 629.0
+scale = Vector2(0.785, 0.785)
+script = ExtResource("9_nvlid")
+next_button = NodePath("bottom/next")
+fitgirl_install_window = NodePath("../FitgirlInstall")
+
+[node name="Background" type="ColorRect" parent="FitgirlFirst" unique_id=1770769217]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 663.6942
+offset_bottom = 461.14642
+color = Color(0.89059, 0.89059, 0.8905901, 1)
+
+[node name="Label" type="Label" parent="FitgirlFirst/Background" unique_id=1997919178]
+layout_mode = 0
+offset_left = 310.828
+offset_top = 8.917206
+offset_right = 648.828
+offset_bottom = 105.917206
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 34
+text = "Welcome to the 
+Kekebe SetupWizard"
+
+[node name="Label2" type="Label" parent="FitgirlFirst/Background" unique_id=1426557251]
+layout_mode = 0
+offset_left = 310.82803
+offset_top = 117.197464
+offset_right = 648.828
+offset_bottom = 214.19746
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_constants/outline_size = -1
+theme_override_font_sizes/font_size = 12
+text = "This will install Kekebe's Adventure on your computer.
+
+It is recommended that you close all other applications 
+before continuing.
+
+Click Next to continue, or Cancel to exit Setup."
+
+[node name="Label3" type="Label" parent="FitgirlFirst/Background" unique_id=167059242]
+layout_mode = 0
+offset_left = 327.38852
+offset_top = 212.31207
+offset_right = 674.38855
+offset_bottom = 309.31207
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_constants/outline_size = -1
+theme_override_font_sizes/font_size = 11
+text = "If you have a low-memory machine (8 GB of RAM or less),
+YOU MUST CHECK THIS CHECKBOX.
+
+This won't allow the installer to use more than 2 GB of RAM.
+Installation will be slower, but stable."
+
+[node name="CheckBox" type="CheckBox" parent="FitgirlFirst/Background/Label3" unique_id=1986218047]
+layout_mode = 0
+offset_left = -21.65605
+offset_top = -1.2738853
+offset_right = 2.3439503
+offset_bottom = 22.726114
+
+[node name="FileArea" type="ColorRect" parent="FitgirlFirst" unique_id=627450638]
+layout_mode = 0
+offset_top = 30.573257
+offset_right = 191.08278
+offset_bottom = 460.0
+color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+
+[node name="TextureRect" type="TextureRect" parent="FitgirlFirst/FileArea" unique_id=345404846]
+layout_mode = 0
+offset_right = 300.6369
+offset_bottom = 430.33176
+texture = ExtResource("10_rb7u5")
+expand_mode = 1
+
+[node name="TitleBar" type="ColorRect" parent="FitgirlFirst" unique_id=1536374470 node_paths=PackedStringArray("target_window")]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+color = Color(0.09923058, 0.10698181, 0.13035056, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("..")
+
+[node name="Label" type="Label" parent="FitgirlFirst/TitleBar" unique_id=1009359828]
+layout_mode = 0
+offset_left = 26.75159
+offset_top = 3.8216558
+offset_right = 146.75159
+offset_bottom = 26.821655
+text = " Setup - Kekebe"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="FitgirlFirst/TitleBar" unique_id=1822804254]
+layout_mode = 0
+offset_left = 644.586
+offset_right = 662.586
+offset_bottom = 31.0
+text = "X"
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="TextureRect" type="TextureRect" parent="FitgirlFirst/TitleBar" unique_id=528026374]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 7.6433115
+offset_top = 6.3694263
+offset_right = 27.64331
+offset_bottom = 26.369427
+texture = ExtResource("7_lgu7x")
+
+[node name="bottom" type="ColorRect" parent="FitgirlFirst" unique_id=255284237]
+layout_mode = 0
+offset_top = 429.29932
+offset_right = 663.6942
+offset_bottom = 462.4204
+
+[node name="next" type="Button" parent="FitgirlFirst/bottom" unique_id=235638495]
+layout_mode = 0
+offset_left = 435.6688
+offset_top = 5.0955048
+offset_right = 533.75806
+offset_bottom = 28.025513
+icon_alignment = 1
+
+[node name="Label" type="Label" parent="FitgirlFirst/bottom/next" unique_id=107281089]
+layout_mode = 0
+offset_left = 28.025475
+offset_top = 3.9100647e-05
+offset_right = 68.025475
+offset_bottom = 23.000038
+text = "Next"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cancel" type="Button" parent="FitgirlFirst/bottom" unique_id=640634890]
+layout_mode = 0
+offset_left = 550.3185
+offset_top = 5.0955048
+offset_right = 648.4077
+offset_bottom = 28.025513
+icon_alignment = 1
+
+[node name="Label" type="Label" parent="FitgirlFirst/bottom/cancel" unique_id=1703144194]
+layout_mode = 0
+offset_left = 24.20382
+offset_top = 3.9100647e-05
+offset_right = 76.20382
+offset_bottom = 23.000038
+text = "Cancel"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FitgirlInstall" type="Panel" parent="." unique_id=1097781155 node_paths=PackedStringArray("next_button", "check_box_1", "check_box_2", "fitgirl_progress_window")]
+visible = false
+layout_mode = 0
+offset_left = 136.0
+offset_top = 169.0
+offset_right = 799.6942
+offset_bottom = 629.0
+scale = Vector2(0.785, 0.785)
+script = ExtResource("11_afqs3")
+next_button = NodePath("bottom/next")
+check_box_1 = NodePath("Background/installtion/CheckBox")
+check_box_2 = NodePath("Background/installtion/CheckBox2")
+fitgirl_progress_window = NodePath("../FitgirlProgress")
+
+[node name="Background" type="ColorRect" parent="FitgirlInstall" unique_id=1202177707]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 663.6942
+offset_bottom = 461.14642
+color = Color(0.7330056, 0.7330054, 0.733005, 1)
+
+[node name="Label2" type="Label" parent="FitgirlInstall/Background" unique_id=1337852914]
+layout_mode = 0
+offset_left = 38.216564
+offset_top = 93.840744
+offset_right = 526.2166
+offset_bottom = 190.84074
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_constants/outline_size = -1
+theme_override_font_sizes/font_size = 12
+text = "Select the components you want to install; clear the components you do not want to
+install. Click Next when you are ready to continue."
+
+[node name="installtion" type="ColorRect" parent="FitgirlInstall/Background" unique_id=443297564]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.9745
+offset_top = -74.09871
+offset_right = 271.9745
+offset_bottom = 113.16235
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.86036915, 0.8603692, 0.8603692, 1)
+
+[node name="CheckBox" type="CheckBox" parent="FitgirlInstall/Background/installtion" unique_id=319581197]
+layout_mode = 0
+offset_left = 17.834393
+offset_top = 22.929935
+offset_right = 41.834393
+offset_bottom = 46.929935
+
+[node name="maingamefiles" type="Label" parent="FitgirlInstall/Background/installtion/CheckBox" unique_id=1532395851]
+layout_mode = 0
+offset_left = -1.2738853
+offset_right = 153.72612
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "      Additional Files"
+
+[node name="CheckBox2" type="CheckBox" parent="FitgirlInstall/Background/installtion" unique_id=1093155726]
+layout_mode = 0
+offset_left = 17.834393
+offset_top = 50.95541
+offset_right = 41.834393
+offset_bottom = 74.955414
+
+[node name="maingamefiles" type="Label" parent="FitgirlInstall/Background/installtion/CheckBox2" unique_id=1756876757]
+layout_mode = 0
+offset_left = -1.2738853
+offset_right = 153.72612
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "      Update DirectX"
+
+[node name="outline" type="ColorRect" parent="FitgirlInstall" unique_id=302691169]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 663.6942
+offset_bottom = 101.91081
+color = Color(0.44291124, 0.44291067, 0.44291025, 1)
+
+[node name="TitleBar" type="ColorRect" parent="FitgirlInstall" unique_id=492264389]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.63695
+grow_horizontal = 2
+color = Color(0.81960785, 0.83137256, 0.8627451, 1)
+
+[node name="top" type="ColorRect" parent="FitgirlInstall/TitleBar" unique_id=1959902290 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 663.6942
+offset_bottom = 31.847137
+color = Color(0.099985994, 0.099985994, 0.099985994, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="FitgirlInstall/TitleBar" unique_id=429617869]
+layout_mode = 0
+offset_left = 26.75159
+offset_top = 3.8216558
+offset_right = 146.75159
+offset_bottom = 26.821655
+text = " Setup - Kekebe"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="FitgirlInstall/TitleBar" unique_id=1159497206]
+layout_mode = 0
+offset_left = 644.586
+offset_right = 662.586
+offset_bottom = 31.0
+text = "X"
+script = ExtResource("8_1rwfv")
+
+[node name="TextureRect" type="TextureRect" parent="FitgirlInstall/TitleBar" unique_id=1795855557]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 7.6433115
+offset_top = 6.3694263
+offset_right = 27.64331
+offset_bottom = 26.369427
+texture = ExtResource("7_lgu7x")
+
+[node name="ColorRect" type="TextureRect" parent="FitgirlInstall/TitleBar" unique_id=605110365]
+layout_mode = 0
+offset_left = 594.9044
+offset_top = 31.847134
+offset_right = 663.69415
+offset_bottom = 100.63687
+texture = ExtResource("12_1nine")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="FitgirlInstall/TitleBar" unique_id=244811085]
+layout_mode = 0
+offset_left = 21.656055
+offset_top = 44.586006
+offset_right = 179.65605
+offset_bottom = 68.586006
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 17
+text = "Select Components"
+
+[node name="Label3" type="Label" parent="FitgirlInstall/TitleBar" unique_id=1511351422]
+layout_mode = 0
+offset_left = 40.764336
+offset_top = 68.78981
+offset_right = 327.76434
+offset_bottom = 92.78981
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 15
+text = "Which components should be installed?"
+
+[node name="bottom" type="ColorRect" parent="FitgirlInstall" unique_id=272914879]
+layout_mode = 0
+offset_top = 429.29932
+offset_right = 663.6942
+offset_bottom = 462.4204
+
+[node name="next" type="Button" parent="FitgirlInstall/bottom" unique_id=1860313447]
+layout_mode = 0
+offset_left = 435.6688
+offset_top = 5.0955048
+offset_right = 533.75806
+offset_bottom = 28.025513
+icon_alignment = 1
+
+[node name="Label" type="Label" parent="FitgirlInstall/bottom/next" unique_id=2059457933]
+layout_mode = 0
+offset_left = 28.025475
+offset_top = 3.9100647e-05
+offset_right = 68.025475
+offset_bottom = 23.000038
+text = "Next"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cancel" type="Button" parent="FitgirlInstall/bottom" unique_id=1837530327]
+layout_mode = 0
+offset_left = 550.3185
+offset_top = 5.0955048
+offset_right = 648.4077
+offset_bottom = 28.025513
+icon_alignment = 1
+
+[node name="Label" type="Label" parent="FitgirlInstall/bottom/cancel" unique_id=772964895]
+layout_mode = 0
+offset_left = 24.20382
+offset_top = 3.9100647e-05
+offset_right = 76.20382
+offset_bottom = 23.000038
+text = "Cancel"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FitgirlProgress" type="Panel" parent="." unique_id=1092533523 node_paths=PackedStringArray("progress_bar", "progress_label", "install_timer", "open_button")]
+visible = false
+layout_mode = 0
+offset_left = 136.0
+offset_top = 169.0
+offset_right = 799.6942
+offset_bottom = 629.0
+scale = Vector2(0.785, 0.785)
+script = ExtResource("13_yrc0x")
+progress_bar = NodePath("Background/Label2/ProgressBar")
+progress_label = NodePath("Background/Label2/ProgressLabel")
+install_timer = NodePath("Background/Label2/Timer")
+open_button = NodePath("bottom/open")
+
+[node name="Background" type="ColorRect" parent="FitgirlProgress" unique_id=1032138509]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 663.6942
+offset_bottom = 461.14642
+color = Color(0.7330056, 0.7330054, 0.733005, 1)
+
+[node name="Label2" type="Label" parent="FitgirlProgress/Background" unique_id=1517291514]
+layout_mode = 0
+offset_left = 48.407646
+offset_top = 83.64966
+offset_right = 536.4077
+offset_bottom = 112.949036
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_constants/outline_size = -1
+theme_override_font_sizes/font_size = 14
+text = "Installing..."
+
+[node name="ProgressBar" type="ProgressBar" parent="FitgirlProgress/Background/Label2" unique_id=1675911793]
+layout_mode = 0
+offset_left = 2.547772
+offset_top = 25.477695
+offset_right = 584.7134
+offset_bottom = 49.681522
+theme_override_styles/fill = SubResource("StyleBoxFlat_hvnqm")
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="FitgirlProgress/Background/Label2" unique_id=1954084002]
+layout_mode = 0
+offset_left = 422.92987
+offset_right = 462.92987
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="Timer" type="Timer" parent="FitgirlProgress/Background/Label2" unique_id=680144394]
+wait_time = 0.1
+
+[node name="outline" type="ColorRect" parent="FitgirlProgress" unique_id=71721654]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 663.6942
+offset_bottom = 101.91081
+color = Color(0.44291124, 0.44291067, 0.44291025, 1)
+
+[node name="TitleBar" type="ColorRect" parent="FitgirlProgress" unique_id=1425765832]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.63695
+grow_horizontal = 2
+color = Color(0.81960785, 0.83137256, 0.8627451, 1)
+
+[node name="top" type="ColorRect" parent="FitgirlProgress/TitleBar" unique_id=1955750433 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 663.6942
+offset_bottom = 31.847137
+color = Color(0.099985994, 0.099985994, 0.099985994, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="FitgirlProgress/TitleBar" unique_id=1105371941]
+layout_mode = 0
+offset_left = 26.75159
+offset_top = 3.8216558
+offset_right = 146.75159
+offset_bottom = 26.821655
+text = " Setup - Kekebe"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="FitgirlProgress/TitleBar" unique_id=379414935]
+layout_mode = 0
+offset_left = 644.586
+offset_right = 662.586
+offset_bottom = 31.0
+text = "X"
+script = ExtResource("8_1rwfv")
+
+[node name="TextureRect" type="TextureRect" parent="FitgirlProgress/TitleBar" unique_id=1654421569]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 7.6433115
+offset_top = 6.3694263
+offset_right = 27.64331
+offset_bottom = 26.369427
+texture = ExtResource("7_lgu7x")
+
+[node name="ColorRect" type="TextureRect" parent="FitgirlProgress/TitleBar" unique_id=2102894715]
+layout_mode = 0
+offset_left = 594.9044
+offset_top = 31.847134
+offset_right = 663.69415
+offset_bottom = 100.63687
+texture = ExtResource("12_1nine")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="FitgirlProgress/TitleBar" unique_id=1592952988]
+layout_mode = 0
+offset_left = 21.656055
+offset_top = 44.586006
+offset_right = 179.65605
+offset_bottom = 68.586006
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 17
+text = "Installing....."
+
+[node name="Label3" type="Label" parent="FitgirlProgress/TitleBar" unique_id=1999961805]
+layout_mode = 0
+offset_left = 40.764336
+offset_top = 68.78981
+offset_right = 327.76434
+offset_bottom = 92.78981
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 15
+text = "Please wait, while setup installs......"
+
+[node name="bottom" type="ColorRect" parent="FitgirlProgress" unique_id=866241130]
+layout_mode = 0
+offset_top = 405.09558
+offset_right = 663.6942
+offset_bottom = 462.4204
+
+[node name="open" type="Button" parent="FitgirlProgress/bottom" unique_id=1030004133]
+layout_mode = 0
+offset_left = 545.2229
+offset_top = 17.834358
+offset_right = 643.31213
+offset_bottom = 40.764366
+icon_alignment = 1
+
+[node name="Label" type="Label" parent="FitgirlProgress/bottom/open" unique_id=708277438]
+layout_mode = 0
+offset_left = 28.025475
+offset_top = 3.9100647e-05
+offset_right = 68.025475
+offset_bottom = 23.000038
+text = "Open"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Redme" type="Panel" parent="." unique_id=949252388]
+visible = false
+layout_mode = 0
+offset_left = 436.99997
+offset_top = 101.00001
+offset_right = 784.7706
+offset_bottom = 561.0
+scale = Vector2(0.785, 0.785)
+
+[node name="TitleBar" type="ColorRect" parent="Redme" unique_id=107119606]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1.2739258
+offset_bottom = 459.87256
+grow_horizontal = 2
+color = Color(0.7254902, 0.6901961, 0.7137255, 1)
+
+[node name="top2" type="ColorRect" parent="Redme/TitleBar" unique_id=657799687 node_paths=PackedStringArray("readme_label")]
+layout_mode = 0
+offset_left = 12.738831
+offset_top = 70.063675
+offset_right = 336.30573
+offset_bottom = 456.0509
+color = Color(0.88235295, 0.8627451, 0.88235295, 1)
+script = ExtResource("17_1nine")
+readme_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="Redme/TitleBar/top2" unique_id=31729157]
+layout_mode = 0
+offset_left = 14.012817
+offset_top = 7.6433105
+offset_right = 314.64972
+offset_bottom = 385.9872
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+autowrap_mode = 2
+
+[node name="top" type="ColorRect" parent="Redme/TitleBar" unique_id=1546134267 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 349.04456
+offset_bottom = 31.847137
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="Redme/TitleBar" unique_id=577320077]
+layout_mode = 0
+offset_left = 5.0955486
+offset_top = 3.8216558
+offset_right = 100.89172
+offset_bottom = 26.821655
+text = "Readme.txt"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Redme/TitleBar" unique_id=406477226]
+layout_mode = 0
+offset_left = 329.93634
+offset_right = 347.93634
+offset_bottom = 31.0
+text = "X"
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="Label3" type="Label" parent="Redme/TitleBar" unique_id=1675441673]
+layout_mode = 0
+offset_left = 261.14648
+offset_top = 38.216564
+offset_right = 349.04462
+offset_bottom = 62.21656
+theme_override_colors/font_color = Color(0.47058824, 0.43137255, 0.45882353, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 15
+text = "Read Only"
+
+[node name="Notification" type="Panel" parent="." unique_id=1376825888]
+visible = false
+layout_mode = 0
+offset_left = 871.99994
+offset_top = 433.99997
+offset_right = 1219.7705
+offset_bottom = 627.6305
+scale = Vector2(0.785, 0.785)
+
+[node name="TitleBar" type="ColorRect" parent="Notification" unique_id=978533540]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1.2739258
+offset_bottom = 194.90443
+grow_horizontal = 2
+color = Color(0.7254902, 0.6901961, 0.7137255, 1)
+
+[node name="top" type="ColorRect" parent="Notification/TitleBar" unique_id=1765841237 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 349.04456
+offset_bottom = 31.847137
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="Notification/TitleBar" unique_id=1129003072]
+layout_mode = 0
+offset_left = 5.0955486
+offset_top = 3.8216558
+offset_right = 100.89172
+offset_bottom = 26.821655
+text = "You have a new message"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Notification/TitleBar" unique_id=776934932]
+layout_mode = 0
+offset_left = 329.93634
+offset_right = 347.93634
+offset_bottom = 31.0
+text = "X"
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="Label3" type="Label" parent="Notification/TitleBar" unique_id=2052091966]
+layout_mode = 0
+offset_left = 30.573257
+offset_top = 42.03822
+offset_right = 118.47139
+offset_bottom = 66.038216
+theme_override_colors/font_color = Color(0.47058824, 0.43137255, 0.45882353, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 15
+text = "Lorem ipsu..............."
+
+[node name="WelcomeMessage" type="Panel" parent="." unique_id=2081669124 node_paths=PackedStringArray("message_label", "ight_button", "x_button")]
+layout_mode = 0
+offset_left = 354.00012
+offset_top = 184.00002
+offset_right = 951.45215
+offset_bottom = 432.40762
+scale = Vector2(0.785, 0.785)
+script = ExtResource("17_afqs3")
+message_label = NodePath("TitleBar/Label3")
+ight_button = NodePath("Button")
+x_button = NodePath("TitleBar/Button")
+
+[node name="TitleBar" type="ColorRect" parent="WelcomeMessage" unique_id=659956568]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 101.91077
+offset_bottom = 277.70697
+grow_horizontal = 2
+color = Color(0.7254902, 0.6901961, 0.7137255, 1)
+
+[node name="top3" type="ColorRect" parent="WelcomeMessage/TitleBar" unique_id=2101857891 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_left = 22.929775
+offset_top = 56.050938
+offset_right = 681.52844
+offset_bottom = 222.9299
+color = Color(0.7581918, 0.7581918, 0.7581917, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="WelcomeMessage/TitleBar/top3" unique_id=1469401712]
+layout_mode = 0
+offset_left = 113.37563
+offset_top = 112.10192
+offset_right = 351.37564
+offset_bottom = 135.10193
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Don't show this message again"
+
+[node name="CheckBox" type="CheckBox" parent="WelcomeMessage/TitleBar/top3/Label" unique_id=1938711550]
+layout_mode = 0
+offset_left = -21.65605
+offset_right = 2.3439503
+offset_bottom = 24.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(0.9867516, 0.9867516, 0.9867516, 1)
+theme_override_colors/icon_focus_color = Color(0.5729879, 0.5729884, 0.572988, 1)
+expand_icon = true
+
+[node name="top" type="ColorRect" parent="WelcomeMessage/TitleBar" unique_id=1429106545 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_top = 3.82164
+offset_right = 699.3628
+offset_bottom = 35.668777
+color = Color(0.036794502, 0.12474897, 0.3449358, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="top2" type="ColorRect" parent="WelcomeMessage/TitleBar" unique_id=2101010067 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 699.3628
+offset_bottom = 31.847137
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="WelcomeMessage/TitleBar" unique_id=2005385165]
+layout_mode = 0
+offset_left = 28.025328
+offset_top = 3.8216558
+offset_right = 123.8215
+offset_bottom = 26.821655
+text = "Meskot XP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="WelcomeMessage/TitleBar/Label" unique_id=663465701]
+layout_mode = 0
+offset_left = -16.560509
+offset_top = -1.2739048
+offset_right = 1007.4395
+offset_bottom = 1022.7261
+scale = Vector2(0.024, 0.024)
+texture = ExtResource("17_rb7u5")
+
+[node name="Button" type="Button" parent="WelcomeMessage/TitleBar" unique_id=1869983524]
+layout_mode = 0
+offset_left = 681.5285
+offset_right = 699.5285
+offset_bottom = 31.0
+text = "X"
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="Label3" type="Label" parent="WelcomeMessage/TitleBar" unique_id=1954826742]
+layout_mode = 0
+offset_left = 81.52851
+offset_top = 77.70697
+offset_right = 555.5285
+offset_bottom = 107.70697
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 21
+text = "Meskot XP End of Support is on April 8th, 2014."
+
+[node name="TextureRect" type="TextureRect" parent="WelcomeMessage/TitleBar/Label3" unique_id=377725536]
+layout_mode = 0
+offset_left = -34.398438
+offset_top = -2.5488281
+offset_right = 2003.8164
+offset_bottom = 2035.666
+scale = Vector2(0.015, 0.015)
+texture = ExtResource("18_afqs3")
+
+[node name="Button" type="Button" parent="WelcomeMessage" unique_id=543737728]
+layout_mode = 0
+offset_left = 292.99344
+offset_top = 231.84712
+offset_right = 401.27383
+offset_bottom = 262.8471
+text = "ight"
+
+[node name="StartMenu" type="Panel" parent="." unique_id=1357609351]
+visible = false
+layout_mode = 0
+offset_top = 455.00003
+offset_right = 347.77063
+offset_bottom = 648.63055
+scale = Vector2(0.785, 0.785)
+
+[node name="TitleBar" type="ColorRect" parent="StartMenu" unique_id=449254817]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -157.96182
+offset_right = 1.2739258
+offset_bottom = 194.90442
+grow_horizontal = 2
+color = Color(0.7254902, 0.6901961, 0.7137255, 1)
+
+[node name="top4" type="ColorRect" parent="StartMenu/TitleBar" unique_id=832926058]
+layout_mode = 0
+offset_left = 94.26751
+offset_top = 63.694275
+offset_right = 349.04456
+offset_bottom = 322.29297
+color = Color(0.88497686, 0.8678303, 0.87917876, 1)
+
+[node name="top" type="ColorRect" parent="StartMenu/TitleBar" unique_id=524027028]
+layout_mode = 0
+offset_top = 2.5477905
+offset_right = 349.04456
+offset_bottom = 78.98093
+color = Color(0.07958228, 0.20790839, 0.52865696, 1)
+
+[node name="top2" type="ColorRect" parent="StartMenu/TitleBar" unique_id=1361817623]
+layout_mode = 0
+offset_right = 349.04456
+offset_bottom = 76.433136
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+
+[node name="top3" type="ColorRect" parent="StartMenu/TitleBar" unique_id=870492526]
+layout_mode = 0
+offset_top = 305.73245
+offset_right = 349.04456
+offset_bottom = 352.8662
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+
+[node name="top5" type="ColorRect" parent="StartMenu/TitleBar" unique_id=227487285]
+layout_mode = 0
+offset_top = 305.73245
+offset_right = 94.26751
+offset_bottom = 352.8662
+color = Color(0.028011724, 0.105447195, 0.30200073, 1)
+
+[node name="adminstraor" type="Label" parent="StartMenu/TitleBar" unique_id=281533115]
+layout_mode = 0
+offset_left = 78.98089
+offset_top = 28.025475
+offset_right = 243.3121
+offset_bottom = 51.025475
+text = "USERNAME"
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="StartMenu/TitleBar/adminstraor" unique_id=1778183617]
+layout_mode = 0
+offset_left = -58.598724
+offset_top = -14.012739
+offset_right = 965.40125
+offset_bottom = 1009.98724
+scale = Vector2(0.053, 0.053)
+texture = ExtResource("14_6mifb")
+
+[node name="PowerOff" type="Label" parent="StartMenu/TitleBar" unique_id=652309121]
+layout_mode = 0
+offset_left = 203.82166
+offset_top = 319.7452
+offset_right = 341.82166
+offset_bottom = 343.7452
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 15
+text = "Turn Off Computor"
+
+[node name="Button" type="Button" parent="StartMenu/TitleBar/PowerOff" unique_id=298778001 node_paths=PackedStringArray("black_screen")]
+layout_mode = 0
+offset_left = -28.025475
+offset_top = -1.2739067
+offset_right = 1003.97455
+offset_bottom = 1030.7261
+scale = Vector2(0.025, 0.025)
+theme_override_styles/hover = SubResource("StyleBoxFlat_lgu7x")
+icon = ExtResource("15_3nfli")
+script = ExtResource("16_hods8")
+black_screen = NodePath("../../../../BlackScreen")
+
+[node name="PowerOff2" type="Label" parent="StartMenu/TitleBar" unique_id=26884094]
+layout_mode = 0
+offset_left = 8.917196
+offset_top = 319.7452
+offset_right = 146.91719
+offset_bottom = 343.7452
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 15
+text = "Meskot XP"
+
+[node name="Label4" type="Label" parent="StartMenu/TitleBar" unique_id=1324111330]
+layout_mode = 0
+offset_left = 25.477722
+offset_top = 245.85986
+offset_right = 209.47772
+offset_bottom = 268.85986
+rotation = -0.5234649
+scale = Vector2(1.806, 1.806)
+theme_override_colors/font_color = Color(0.851769, 0.8517689, 0.85176885, 1)
+text = "UNDER CONSTRUCTION"
+
+[node name="Label2" type="Label" parent="StartMenu/TitleBar" unique_id=1951637599]
+layout_mode = 0
+offset_left = 26.75161
+offset_top = 247.13373
+offset_right = 210.75162
+offset_bottom = 270.13373
+rotation = -0.5234649
+scale = Vector2(1.806, 1.806)
+text = "UNDER CONSTRUCTION"
+
+[node name="TextureRect" type="TextureRect" parent="StartMenu/TitleBar/Label2" unique_id=687656104]
+layout_mode = 0
+offset_left = -19.10828
+offset_right = 1004.8917
+offset_bottom = 1024.0
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("14_2k28m")
+
+[node name="BlackScreen" type="ColorRect" parent="." unique_id=594742555]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.23753911, 0.23753914, 0.23753911, 1)
+
+[node name="PostProcessing" type="CanvasLayer" parent="." unique_id=1074681721]
+layer = 100
+
+[node name="CRTEffect" type="ColorRect" parent="PostProcessing" unique_id=110826323]
+material = SubResource("ShaderMaterial_kj2mb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.18431373)
+metadata/_edit_use_anchors_ = true

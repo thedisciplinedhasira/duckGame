@@ -25,7 +25,7 @@ grow_vertical = 2
 texture = ExtResource("2_qnjby")
 
 [node name="Dot" type="TextureRect" parent="." unique_id=2025466987]
-modulate = Color(1, 1, 1, 0.15294118)
+modulate = Color(1, 1, 1, 0.31764707)
 custom_minimum_size = Vector2(3, 3)
 custom_maximum_size = Vector2(6, 6)
 anchors_preset = 8

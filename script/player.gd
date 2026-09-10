@@ -6,11 +6,16 @@ const RUN_SPEED := 9
 #const JUMP_VELOCITY := 4.5
 const ACCEL := 15
 const ROTATION_SMOOTHING := 19 #def was 6
-const CARRY_SPEED := 2.0 
+const CARRY_SPEED := 9 
 
 @export var mouse_sensitivity := 0.002
 @export var pull_strength := 15.0
 @export var throw_strength := 25.0
+
+@export_category("Sprint Settings")
+@export var super_run_speed := 9.0 # Speed reached during super sprint
+@export var super_sprint_delay := 0.5 # Seconds of continuous running needed
+@export var super_sprint_fov := 90.0 # FOV zoom during super sprint
 
 @export_category("Telekinesis Settings")
 @export_range(30.0, 120.0) var max_head_look_angle: float = 75.0
@@ -30,12 +35,14 @@ const CARRY_SPEED := 2.0
 @onready var footstep_dust: GPUParticles3D = $FootStepsDust
 @onready var footstep_audio: AudioStreamPlayer3D = $FootstepAudio
 
+# Speedlines / Post Processing
+@onready var speedline: ColorRect = $"../speedline"
+
 # Hover effect
 @onready var tornado_vfx: Node3D = $tornadoVFX
 
 # Telekinesis effects
 @onready var telekinesis_vfx: GPUParticles3D = $cameraMount/Camera3D/HoldPosition/TelekinesisVFX
-#@onready var tele_tornado: Node3D = $"tornado fire" # Stretching tornado replacing the old beam
 
 @onready var head_look: LookAtModifier3D = %LookAtModifier3D  # survives model swaps
 
@@ -58,10 +65,18 @@ var has_telekinesis_unlocked := false
 var footstep_timer := 0.0
 const WALK_STEP_TIME := 0.4
 const RUN_STEP_TIME := 0.25
+const SUPER_RUN_STEP_TIME := 0.15
+
+# sprint / super sprint
+var sprint_timer := 0.0
+var is_super_sprinting := false
+var was_super_sprinting := false
+var current_sprint_speed := RUN_SPEED
 
 # abilities
 var is_hover_toggled := false
 var is_3d_mode := true
+var was_hovering := false
 
 enum Ability { NONE, HOVER, PERSPECTIVE, TELEKINESIS }
 var current_ability: Ability = Ability.NONE
@@ -89,16 +104,15 @@ func _ready() -> void:
 	if head_look:
 		head_look.active = false
 
+	if speedline:
+		speedline.visible = false
+
 	if tornado_vfx:
 		tornado_vfx.visible = false
-		
-	#if tele_tornado:
-		#tele_tornado.visible = false
 		
 	if telekinesis_vfx:
 		telekinesis_vfx.emitting = false
 
-	# top_level = true so the mount doesn't just follow the body's transform
 	if camera_mount:
 		camera_offset = camera_mount.position
 		camera_mount.top_level = true
@@ -113,13 +127,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-	if event.is_action_pressed("telekinesis_throw") and grabbed_object:
+	if event.is_action_pressed("telekinesis_throw") and grabbed_object and current_ability == Ability.TELEKINESIS:
 		throw_object()
 
 
 func _physics_process(delta: float) -> void:
 	if ambient_sound and ambient_sound.playing and ambient_sound.get_playback_position() >= 6.99:
-		ambient_sound.play()  # manual loop, restarts a hair before the clip ends
+		ambient_sound.play()
 
 	if camera_mount:
 		camera_mount.global_position = global_position + camera_offset
@@ -133,7 +147,6 @@ func _physics_process(delta: float) -> void:
 
 	_handle_look_rotation(delta)
 	_apply_gravity(delta)
-#	_handle_jump()
 	_handle_grab_input()
 	_handle_hold_distance_input(delta)
 	_handle_movement(delta)
@@ -166,38 +179,29 @@ func _is_hovering() -> bool:
 
 func _apply_gravity(delta: float) -> void:
 	if _is_hovering():
-		# Raycast straight down from the player to find the floor
 		var space_state = get_world_3d().direct_space_state
-		var origin = global_position + Vector3(0, 0.1, 0) # Start slightly above feet
-		var end = origin + Vector3(0, -10.0, 0) # Look up to 10 meters down
+		var origin = global_position + Vector3(0, 0.1, 0)
+		var end = origin + Vector3(0, -10.0, 0)
 		
 		var query = PhysicsRayQueryParameters3D.create(origin, end)
 		query.exclude = [self.get_rid()]
 		var result = space_state.intersect_ray(query)
 
 		if result:
-			# Spring-damper system to hover consistently at the target height
 			var current_height = origin.distance_to(result.position)
 			var height_error = hover_target_height - current_height
 			
 			var spring_force = height_error * hover_spring_strength
 			var damp_force = -velocity.y * hover_damping
 			
-			# Apply the smooth hover force
 			velocity.y += (spring_force + damp_force) * delta
 		else:
-			# If there is no floor (like hovering over a pit), act as a parachute
 			velocity.y = lerp(velocity.y, -2.0, 3.0 * delta)
 			
 	elif not is_on_floor():
 		velocity += get_gravity() * 15.0 * delta
 	else:
 		velocity.y = move_toward(velocity.y, 0.0, 20.0 * delta)
-
-
-#func _handle_jump() -> void:
-	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		#velocity.y = JUMP_VELOCITY
 
 
 func _handle_movement(delta: float) -> void:
@@ -209,12 +213,47 @@ func _handle_movement(delta: float) -> void:
 
 	var target_blend := Vector2.ZERO
 
+	# --- Super Sprint Logic ---
+	var is_moving := direction != Vector3.ZERO
+	var is_sprinting_input := Input.is_action_pressed("sprint") and is_moving and not grabbed_object and is_on_floor()
+
+	if is_sprinting_input:
+		sprint_timer += delta
+		if sprint_timer >= super_sprint_delay:
+			is_super_sprinting = true
+	else:
+		sprint_timer = 0.0
+		is_super_sprinting = false
+
+	# Smooth transition of running speed
+	if is_super_sprinting:
+		current_sprint_speed = move_toward(current_sprint_speed, super_run_speed, 10.0 * delta)
+	else:
+		current_sprint_speed = move_toward(current_sprint_speed, RUN_SPEED, 15.0 * delta)
+
+	# Update speedline visibility
+	if speedline:
+		speedline.visible = is_super_sprinting
+
+	# FOV zoom out for Super Sprint
+	if camera and not _is_hovering() and not grabbed_object:
+		if is_super_sprinting and not was_super_sprinting:
+			var fov_tween = create_tween()
+			fov_tween.tween_property(camera, "fov", super_sprint_fov, 0.4).set_trans(Tween.TRANS_SINE)
+		elif not is_super_sprinting and was_super_sprinting:
+			var fov_tween = create_tween()
+			fov_tween.tween_property(camera, "fov", 75.0, 0.3).set_trans(Tween.TRANS_SINE)
+
+	was_super_sprinting = is_super_sprinting
+	# --------------------------
+
 	if direction:
 		var target_angle := atan2(-direction.x, -direction.z)
 		rotation.y = lerp_angle(rotation.y, target_angle, ROTATION_SMOOTHING * delta)
 
-		var is_running := Input.is_action_pressed("sprint") and not grabbed_object
-		var current_speed := RUN_SPEED if is_running else WALK_SPEED
+		var current_speed := WALK_SPEED
+		if is_sprinting_input:
+			current_speed = current_sprint_speed
 		
 		if grabbed_object:
 			current_speed = CARRY_SPEED
@@ -231,7 +270,7 @@ func _handle_movement(delta: float) -> void:
 	if animation_tree:
 		animation_tree.set("parameters/StateMachine/Movement/blend_position", current_blend_position)
 
-	# footstep dust/audio, only when actually moving (not just holding sprint)
+	# Footsteps audio & particles
 	var horizontal_speed := Vector3(velocity.x, 0, velocity.z).length()
 	var is_moving_fast := Input.is_action_pressed("sprint") and horizontal_speed > WALK_SPEED + 1.0
 
@@ -243,7 +282,12 @@ func _handle_movement(delta: float) -> void:
 		if footstep_timer <= 0.0:
 			if footstep_audio:
 				footstep_audio.play()
-			footstep_timer = RUN_STEP_TIME if is_moving_fast else WALK_STEP_TIME
+			if is_super_sprinting:
+				footstep_timer = SUPER_RUN_STEP_TIME
+			elif is_moving_fast:
+				footstep_timer = RUN_STEP_TIME
+			else:
+				footstep_timer = WALK_STEP_TIME
 	else:
 		footstep_timer = 0.0
 
@@ -254,13 +298,25 @@ func _handle_hover_state() -> void:
 
 	var hovering := _is_hovering()
 
+	if camera:
+		if hovering and not was_hovering:
+			var fov_tween = create_tween()
+			fov_tween.tween_property(camera, "fov", 85.0, 0.3).set_trans(Tween.TRANS_SINE)
+		elif not hovering and was_hovering:
+			if not grabbed_object:
+				var target_fov := super_sprint_fov if is_super_sprinting else 75.0
+				var fov_tween = create_tween()
+				fov_tween.tween_property(camera, "fov", target_fov, 0.3).set_trans(Tween.TRANS_SINE)
+	
+	was_hovering = hovering
+
 	if tornado_vfx:
 		tornado_vfx.visible = hovering
 
 	if hover_audio:
 		if hovering:
 			if not hover_audio.playing or hover_audio.get_playback_position() >= 30.0:
-				hover_audio.play(5.0)  # start partway in, not from 0
+				hover_audio.play(5.0)
 		elif hover_audio.playing:
 			hover_audio.stop()
 
@@ -271,6 +327,9 @@ func _handle_hover_state() -> void:
 
 
 func _handle_grab_input() -> void:
+	if current_ability != Ability.TELEKINESIS:
+		return
+
 	if Input.is_action_just_pressed("telekinesis_grab") and not grabbed_object:
 		try_grab_object()
 	if Input.is_action_just_released("telekinesis_grab") and grabbed_object:
@@ -299,7 +358,7 @@ func _handle_hold_distance_input(delta: float) -> void:
 func try_grab_object() -> void:
 	if not (tele_ray and tele_ray.is_colliding()):
 		return
-	# Zoom the camera in slightly to create a feeling of intense focus
+
 	if camera:
 		var fov_tween = create_tween()
 		fov_tween.tween_property(camera, "fov", 65.0, 0.2).set_trans(Tween.TRANS_SINE)
@@ -311,11 +370,7 @@ func try_grab_object() -> void:
 	grabbed_object = collider
 	grabbed_object.angular_velocity = Vector3(randf_range(-15, 15), randf_range(-15, 15), randf_range(-15, 15))
 	grabbed_object.gravity_scale = 0.0
-	#grabbed_object.linear_velocity = Vector3.ZERO
-	#grabbed_object.angular_velocity = Vector3.ZERO
 
-	#var beam_origin := global_position + Vector3(0, 0.6, 0)
-	#hold_distance = clamp(beam_origin.distance_to(tele_ray.get_collision_point()), 1.5, 15.0)
 	hold_distance = clamp(camera.global_position.distance_to(tele_ray.get_collision_point()), 1.5, 15.0)
 	_set_hold_blend(1.0)
 
@@ -323,17 +378,15 @@ func try_grab_object() -> void:
 		telekinesis_vfx.emitting = true
 		telekinesis_vfx.restart()
 
-	#if tele_tornado:
-		#tele_tornado.visible = true
-
 	if head_look:
 		head_look.target_node = hold_position.get_path()
 
+
 func release_object() -> void:
-	# Reset camera FOV back to default (assuming default is 75)
 	if camera:
+		var target_fov := super_sprint_fov if is_super_sprinting else 75.0
 		var fov_tween = create_tween()
-		fov_tween.tween_property(camera, "fov", 75.0, 0.3).set_trans(Tween.TRANS_SINE)
+		fov_tween.tween_property(camera, "fov", target_fov, 0.3).set_trans(Tween.TRANS_SINE)
 		
 	if grabbed_object:
 		grabbed_object.gravity_scale = 1.0
@@ -344,20 +397,16 @@ func release_object() -> void:
 	if telekinesis_vfx:
 		telekinesis_vfx.emitting = false
 
-	#if tele_tornado:
-		#tele_tornado.visible = false
-
 	if head_look:
 		head_look.target_node = NodePath("")
 		head_look.active = false
 
 
-
 func throw_object() -> void:
-	# Reset camera FOV back to default (assuming default is 75)
 	if camera:
+		var target_fov := super_sprint_fov if is_super_sprinting else 75.0
 		var fov_tween = create_tween()
-		fov_tween.tween_property(camera, "fov", 75.0, 0.3).set_trans(Tween.TRANS_SINE)
+		fov_tween.tween_property(camera, "fov", target_fov, 0.3).set_trans(Tween.TRANS_SINE)
 	if not grabbed_object:
 		return
 
@@ -372,13 +421,9 @@ func throw_object() -> void:
 	if telekinesis_vfx:
 		telekinesis_vfx.emitting = false
 
-	#if tele_tornado:
-		#tele_tornado.visible = false
-
 	if head_look:
 		head_look.active = false
 		head_look.target_node = NodePath("")
-	
 
 	current_anim_state = "Movement"
 	_travel_animation_state("Movement")
@@ -392,7 +437,6 @@ func process_telekinesis(delta: float) -> void:
 
 	if hold_position and camera:
 		var cam_forward := -camera.global_transform.basis.z
-		# Project directly from the camera so it perfectly matches your crosshair
 		hold_position.global_position = camera.global_position + cam_forward * hold_distance
 		
 	if hold_position:
@@ -400,21 +444,14 @@ func process_telekinesis(delta: float) -> void:
 		var current_pos := grabbed_object.global_position
 		var distance_vec := target_pos - current_pos
 		
-		# Tweak these two variables to change the "weight" of the telekinesis
-		var spring_strength := 15.0 # How aggressively it pulls to the center
-		var damping := 8.0 # How much it resists swinging (prevents infinite oscillation)
+		var spring_strength := 15.0
+		var damping := 8.0
 
-		# Calculate the ideal velocity to reach the target
 		var desired_vel := distance_vec * spring_strength
 
-		# Smoothly lerp the actual velocity toward the desired velocity.
-		# This respects collisions much better and creates a natural "lag" when moving the camera fast.
 		grabbed_object.linear_velocity = grabbed_object.linear_velocity.lerp(desired_vel, damping * delta)
-		
-		# Smoothly dampen rotation so it stabilizes naturally instead of instantly freezing
 		grabbed_object.angular_velocity = grabbed_object.angular_velocity.lerp(Vector3.ZERO, 6.0 * delta)
 
-	# --- Head Look Logic ---
 	if head_look and hold_position:
 		var char_forward := -global_transform.basis.z
 		var to_target := hold_position.global_position - global_position
@@ -508,16 +545,7 @@ func toggle_perspective() -> void:
 	
 	if not is_3d_mode:
 		print("Perspective: Switched to 2D")
-		set_input_locked(true) # Lock 3D movement/camera while in 2D
+		set_input_locked(true)
 	else:
 		print("Perspective: Switched to 3D")
 		set_input_locked(false)
-
-
-
-#func _on_golem_talk_body_entered(body: Node3D) -> void:
-	#pass # Replace with function body.
-#
-#
-#func _on_golem_talk_body_exited(body: Node3D) -> void:
-	#pass # Replace with function body.

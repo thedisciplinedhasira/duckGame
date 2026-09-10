@@ -128,7 +128,7 @@ input_name = "uv"
 default_input_values = [0, 1.0, 1, 5.0]
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_d53td"]
-size = Vector2(824, 436)
+size = Vector2(855.99994, 302)
 title = "Wobble"
 attached_nodes = PackedInt32Array(17, 16, 13, 14, 26, 30, 36)
 
