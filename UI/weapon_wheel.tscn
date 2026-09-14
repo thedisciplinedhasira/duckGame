@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cguc4xxt408n2" path="res://sounds/menuPopup.mp3" id="6_470tc"]
 [ext_resource type="FontFile" uid="uid://dpjthwy70s54p" path="res://fonts/Haltto-Bold.otf" id="6_inh8t"]
 [ext_resource type="AudioStream" uid="uid://ceu6bwxcmaeta" path="res://sounds/menuHover.wav" id="7_m7dcl"]
+[ext_resource type="PackedScene" uid="uid://f2nypdc7ksxt" path="res://UI/AbilityMeter.tscn" id="11_i582j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nrnh6"]
 shader = ExtResource("1_jsmtd")
@@ -74,3 +75,13 @@ volume_db = -24.572
 [node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=657413284]
 stream = ExtResource("7_m7dcl")
 volume_db = -14.856
+
+[node name="AbilityMeter" parent="." unique_id=1069792125 instance=ExtResource("11_i582j")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 26.923079
+offset_top = -174.92307
+offset_right = 154.92308
+offset_bottom = -46.923096
+grow_vertical = 0

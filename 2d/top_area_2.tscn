@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://bl464ywb4bmin" path="res://2d/2DlevelChanger.gd" id="26_fmebu"]
 [ext_resource type="Texture2D" uid="uid://dvcbwji7tssea" path="res://2d/door_open.png" id="26_ioxeq"]
 [ext_resource type="Texture2D" uid="uid://8kep1rtvl4n3" path="res://2d/spike.png" id="26_nkgyn"]
+[ext_resource type="Texture2D" uid="uid://ca7f2bbpjocfm" path="res://2d/duck/newAnimation/5 copy.png" id="27_nkgyn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_huhsy"]
 shader = ExtResource("3_igau1")
@@ -39,52 +40,47 @@ shader = ExtResource("5_cdu6m")
 shader_parameter/wind_speed = 2.5
 shader_parameter/wind_strength = 8.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_igau1"]
-atlas = ExtResource("26_nkgyn")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7w18l"]
-atlas = ExtResource("26_nkgyn")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cdu6m"]
-atlas = ExtResource("26_nkgyn")
-region = Rect2(0, 0, 64, 64)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_8f7rv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_igau1")
+"texture": ExtResource("10_nfhdh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7w18l")
+"texture": ExtResource("11_u8nqj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cdu6m")
+"texture": ExtResource("12_ioxeq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_nkgyn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_nkgyn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_d63j1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_0vscp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_t20rj")
 }],
 "loop": 1,
 "name": &"walking",
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_t20rj"]
-size = Vector2(29.92102, 29.078918)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmebu"]
+radius = 8.9605255
+height = 38.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mq0i0"]
-size = Vector2(352.75, 12.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3mur"]
-size = Vector2(64, 10)
+size = Vector2(1235.75, 12.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ikeqq"]
 size = Vector2(96, 9)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c0hmd"]
-size = Vector2(415, 11)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rqhg"]
-size = Vector2(80, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cduek"]
 size = Vector2(46, 62.5)
@@ -202,37 +198,37 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_d63j1"]
+atlas = ExtResource("26_nkgyn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vscp"]
+atlas = ExtResource("26_nkgyn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t20rj"]
+atlas = ExtResource("26_nkgyn")
+region = Rect2(0, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_fmebu"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_nfhdh")
+"texture": SubResource("AtlasTexture_d63j1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_u8nqj")
+"texture": SubResource("AtlasTexture_0vscp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_ioxeq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_nkgyn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_d63j1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_0vscp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_t20rj")
+"texture": SubResource("AtlasTexture_t20rj")
 }],
 "loop": 1,
 "name": &"new_animation",
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_igau1"]
-height = 37.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_460be"]
+size = Vector2(30, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0vscp"]
 size = Vector2(1506, 20)
@@ -462,14 +458,15 @@ script = ExtResource("9_nfhdh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=938837574]
 process_mode = 3
-position = Vector2(98.500015, -173.5)
-scale = Vector2(0.4843751, 0.48437512)
+position = Vector2(98.500015, -180)
+scale = Vector2(0.07183898, 0.07183899)
 sprite_frames = SubResource("SpriteFrames_8f7rv")
 animation = &"walking"
+frame_progress = 0.8164838
 
-[node name="CollisionShape2D9" type="CollisionShape2D" parent="CharacterBody2D" unique_id=693541388]
-position = Vector2(99.03949, -172.53946)
-shape = SubResource("RectangleShape2D_t20rj")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1193830451]
+position = Vector2(99, -177)
+shape = SubResource("CapsuleShape2D_fmebu")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1713524262]
 position = Vector2(426, -207)
@@ -480,24 +477,12 @@ position_smoothing_enabled = true
 position = Vector2(574, 600)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=859099182]
-position = Vector2(-366.375, -241)
+position = Vector2(75.125, -241)
 shape = SubResource("RectangleShape2D_mq0i0")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Ground" unique_id=1143064640]
-position = Vector2(-78, -209)
-shape = SubResource("RectangleShape2D_l3mur")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Ground" unique_id=932967174]
 position = Vector2(-190, -321.5)
 shape = SubResource("RectangleShape2D_ikeqq")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Ground" unique_id=1624619168]
-position = Vector2(241.5, -242.5)
-shape = SubResource("RectangleShape2D_c0hmd")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="Ground" unique_id=2053136603]
-position = Vector2(618, -241)
-shape = SubResource("RectangleShape2D_8rqhg")
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="Ground" unique_id=850781613]
 position = Vector2(506, -359.75)
@@ -758,7 +743,7 @@ metadata/_edit_use_anchors_ = true
 [node name="TileMap" type="TileMap" parent="." unique_id=590997922]
 tile_set = SubResource("TileSet_obkof")
 format = 2
-layer_0/tile_data = PackedInt32Array(1441794, 1, 0, 1507330, 1, 1, 1441795, 65537, 0, 1507331, 65537, 1, 1441796, 1, 0, 1507332, 1, 1, 1441797, 65537, 0, 1507333, 65537, 1, 1441798, 1, 0, 1507334, 1, 1, 1441799, 65537, 0, 1507335, 65537, 1, 1441800, 1, 0, 1507336, 1, 1, 1441801, 65537, 0, 1507337, 65537, 1, 1441802, 1, 0, 1507338, 1, 1, 1441803, 65537, 0, 1507339, 65537, 1, 1441804, 1, 0, 1507340, 1, 1, 1441805, 65537, 0, 1507341, 65537, 1, 1441806, 1, 0, 1507342, 1, 1, 1441807, 65537, 0, 1507343, 65537, 1, 1441808, 1, 0, 1507344, 1, 1, 1441809, 65537, 0, 1507345, 65537, 1, 1441810, 1, 0, 1507346, 1, 1, 1441811, 65537, 0, 1507347, 65537, 1, 1441812, 1, 0, 1507348, 1, 1, 1441813, 65537, 0, 1507349, 65537, 1, 1441814, 1, 0, 1507350, 1, 1, 1441815, 65537, 0, 1507351, 65537, 1, 786480, 1, 0, 852016, 1, 1, 786481, 65537, 0, 852017, 65537, 1, 786482, 1, 0, 852018, 1, 1, 786483, 65537, 0, 852019, 65537, 1, 917552, 1, 1, 917553, 65537, 1, 917554, 1, 1, 917555, 65537, 1, 852014, 1, 1, 852015, 65537, 1, 917550, 1, 1, 917551, 65537, 1, 786478, 1, 0, 786479, 65537, 0, 1114133, 1, 0, 1179669, 1, 1, 1114134, 65537, 0, 1179670, 65537, 1, 1114135, 1, 0, 1179671, 1, 1, 1114136, 65537, 0, 1179672, 65537, 1, 1114137, 1, 0, 1179673, 1, 1, 1114138, 65537, 0, 1179674, 65537, 1, 1572893, 1, 0, 1638429, 1, 1, 1572894, 65537, 0, 1638430, 65537, 1, 1572895, 1, 0, 1638431, 1, 1, 1572896, 65537, 0, 1638432, 65537, 1, 1441830, 1, 0, 1507366, 1, 1, 1441831, 65537, 0, 1507367, 65537, 1, 1441832, 1, 0, 1507368, 1, 1, 1441833, 65537, 0, 1507369, 65537, 1, 1441834, 1, 0, 1507370, 1, 1, 1441835, 65537, 0, 1507371, 65537, 1, 1441836, 1, 0, 1507372, 1, 1, 1441837, 65537, 0, 1507373, 65537, 1, 1441838, 1, 0, 1507374, 1, 1, 1441839, 65537, 0, 1507375, 65537, 1, 1441840, 1, 0, 1507376, 1, 1, 1441841, 65537, 0, 1507377, 65537, 1, 1441842, 1, 0, 1507378, 1, 1, 1441843, 65537, 0, 1507379, 65537, 1, 1441844, 1, 0, 1507380, 1, 1, 1441845, 65537, 0, 1507381, 65537, 1, 1441846, 1, 0, 1507382, 1, 1, 1441847, 65537, 0, 1507383, 65537, 1, 1441848, 1, 0, 1507384, 1, 1, 1441849, 65537, 0, 1507385, 65537, 1, 1441850, 1, 0, 1507386, 1, 1, 1441851, 65537, 0, 1507387, 65537, 1, 1441852, 1, 0, 1507388, 1, 1, 1441853, 65537, 0, 1507389, 65537, 1, 1441854, 1, 0, 1507390, 1, 1, 1441855, 65537, 0, 1507391, 65537, 1, 1441874, 1, 0, 1507410, 1, 1, 1441875, 65537, 0, 1507411, 65537, 1, 1441876, 1, 0, 1507412, 1, 1, 1441877, 65537, 0, 1507413, 65537, 1, 1441878, 1, 0, 1507414, 1, 1, 1441879, 65537, 0, 1507415, 65537, 1, 1441880, 1, 0, 1507416, 1, 1, 1441881, 65537, 0, 1507417, 65537, 1, 1441882, 1, 0, 1507418, 1, 1, 1441883, 65537, 0, 1507419, 65537, 1, 1048642, 1, 1, 1048643, 65537, 1, 1048644, 65537, 1, 983106, 1, 1, 983107, 1, 1, 983108, 65537, 1, 917570, 1, 1, 917571, 1, 1, 917572, 65537, 1, 852034, 1, 0, 852035, 1, 0, 852036, 65537, 0, 1441864, 65537, 0, 1507400, 65537, 1, 1441865, 1, 0, 1507401, 1, 1, 1441866, 65537, 0, 1507402, 65537, 1, 1441867, 1, 0, 1507403, 1, 1, 1441868, 65537, 0, 1507404, 65537, 1)
+layer_0/tile_data = PackedInt32Array(1441794, 1, 0, 1507330, 1, 1, 1441795, 65537, 0, 1507331, 65537, 1, 1441796, 1, 0, 1507332, 1, 1, 1441797, 65537, 0, 1507333, 65537, 1, 1441798, 1, 0, 1507334, 1, 1, 1441799, 65537, 0, 1507335, 65537, 1, 1441800, 1, 0, 1507336, 1, 1, 1441801, 65537, 0, 1507337, 65537, 1, 1441802, 1, 0, 1507338, 1, 1, 1441803, 65537, 0, 1507339, 65537, 1, 1441804, 1, 0, 1507340, 1, 1, 1441805, 65537, 0, 1507341, 65537, 1, 1441806, 1, 0, 1507342, 1, 1, 1441807, 65537, 0, 1507343, 65537, 1, 1441808, 1, 0, 1507344, 1, 1, 1441809, 65537, 0, 1507345, 65537, 1, 1441810, 1, 0, 1507346, 1, 1, 1441811, 65537, 0, 1507347, 65537, 1, 1441812, 1, 0, 1507348, 1, 1, 1441813, 65537, 0, 1507349, 65537, 1, 1441814, 1, 0, 1507350, 1, 1, 1441815, 65537, 0, 1507351, 65537, 1, 786480, 1, 0, 852016, 1, 1, 786481, 65537, 0, 852017, 65537, 1, 786482, 1, 0, 852018, 1, 1, 786483, 65537, 0, 852019, 65537, 1, 917552, 1, 1, 917553, 65537, 1, 917554, 1, 1, 917555, 65537, 1, 852014, 1, 1, 852015, 65537, 1, 917550, 1, 1, 917551, 65537, 1, 786478, 1, 0, 786479, 65537, 0, 1114133, 1, 0, 1179669, 1, 1, 1114134, 65537, 0, 1179670, 65537, 1, 1114135, 1, 0, 1179671, 1, 1, 1114136, 65537, 0, 1179672, 65537, 1, 1114137, 1, 0, 1179673, 1, 1, 1114138, 65537, 0, 1179674, 65537, 1, 1441830, 1, 0, 1507366, 1, 1, 1441831, 65537, 0, 1507367, 65537, 1, 1441832, 1, 0, 1507368, 1, 1, 1441833, 65537, 0, 1507369, 65537, 1, 1441834, 1, 0, 1507370, 1, 1, 1441835, 65537, 0, 1507371, 65537, 1, 1441836, 1, 0, 1507372, 1, 1, 1441837, 65537, 0, 1507373, 65537, 1, 1441838, 1, 0, 1507374, 1, 1, 1441839, 65537, 0, 1507375, 65537, 1, 1441840, 1, 0, 1507376, 1, 1, 1441841, 65537, 0, 1507377, 65537, 1, 1441842, 1, 0, 1507378, 1, 1, 1441843, 65537, 0, 1507379, 65537, 1, 1441844, 1, 0, 1507380, 1, 1, 1441845, 65537, 0, 1507381, 65537, 1, 1441846, 1, 0, 1507382, 1, 1, 1441847, 65537, 0, 1507383, 65537, 1, 1441848, 1, 0, 1507384, 1, 1, 1441849, 65537, 0, 1507385, 65537, 1, 1441850, 1, 0, 1507386, 1, 1, 1441851, 65537, 0, 1507387, 65537, 1, 1441852, 1, 0, 1507388, 1, 1, 1441853, 65537, 0, 1507389, 65537, 1, 1441854, 1, 0, 1507390, 1, 1, 1441855, 65537, 0, 1507391, 65537, 1, 1441874, 65537, 0, 1507410, 65537, 1, 1441875, 65537, 0, 1507411, 65537, 1, 1441876, 1, 0, 1507412, 1, 1, 1441877, 65537, 0, 1507413, 65537, 1, 1441878, 1, 0, 1507414, 1, 1, 1441879, 65537, 0, 1507415, 65537, 1, 1441880, 1, 0, 1507416, 1, 1, 1441881, 65537, 0, 1507417, 65537, 1, 1441882, 1, 0, 1507418, 1, 1, 1441883, 65537, 0, 1507419, 65537, 1, 1048642, 1, 1, 1048643, 65537, 1, 1048644, 65537, 1, 983106, 1, 1, 983107, 1, 1, 983108, 65537, 1, 917570, 1, 1, 917571, 1, 1, 917572, 65537, 1, 852034, 1, 0, 852035, 1, 0, 852036, 65537, 0, 1507403, 1, 1, 1441865, 1, 0, 1441864, 65537, 0, 1507400, 65537, 1, 1507401, 1, 1, 1507402, 65537, 1, 1441866, 65537, 0, 1441867, 1, 0, 1441868, 65537, 0, 1507404, 65537, 1, 1441816, 1, 0, 1507352, 1, 1, 1441817, 65537, 0, 1507353, 65537, 1, 1441818, 1, 0, 1507354, 1, 1, 1441819, 65537, 0, 1507355, 65537, 1, 1441820, 1, 0, 1507356, 1, 1, 1441821, 65537, 0, 1507357, 65537, 1, 1441822, 1, 0, 1507358, 1, 1, 1441823, 65537, 0, 1507359, 65537, 1, 1441824, 1, 0, 1507360, 1, 1, 1441825, 65537, 0, 1507361, 65537, 1, 1441826, 1, 0, 1507362, 1, 1, 1441827, 65537, 0, 1507363, 65537, 1, 1441828, 1, 0, 1507364, 1, 1, 1441829, 65537, 0, 1507365, 65537, 1, 1441856, 1, 0, 1507392, 1, 1, 1441857, 65537, 0, 1507393, 65537, 1, 1441858, 1, 0, 1507394, 1, 1, 1441859, 65537, 0, 1507395, 65537, 1, 1441860, 1, 0, 1507396, 1, 1, 1441861, 65537, 0, 1507397, 65537, 1, 1441862, 1, 0, 1507398, 1, 1, 1441863, 65537, 0, 1507399, 65537, 1, 1441869, 1, 0, 1507405, 1, 1, 1441870, 65537, 0, 1507406, 65537, 1, 1441871, 1, 0, 1507407, 1, 1, 1441872, 65537, 0, 1507408, 65537, 1, 1441873, 1, 0, 1507409, 1, 1)
 
 [node name="flag" type="AnimatedSprite2D" parent="." unique_id=1834567462]
 position = Vector2(1080, 177)
@@ -771,19 +756,20 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_w0aaf")
 
 [node name="spikeThingy" type="Area2D" parent="." unique_id=201812094]
+position = Vector2(0, -31)
 script = ExtResource("25_ioxeq")
 
 [node name="spike" type="AnimatedSprite2D" parent="spikeThingy" unique_id=841405813]
-position = Vector2(494.74997, 362.5)
-scale = Vector2(0.06752872, 0.06752872)
+position = Vector2(494.74997, 367)
+scale = Vector2(0.5078138, 0.5078138)
 sprite_frames = SubResource("SpriteFrames_fmebu")
 animation = &"new_animation"
 autoplay = "new_animation"
-frame_progress = 0.4508746
+frame_progress = 0.8150328
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spikeThingy" unique_id=645827386]
-position = Vector2(495.5, 367.5)
-shape = SubResource("CapsuleShape2D_igau1")
+position = Vector2(495, 367)
+shape = SubResource("RectangleShape2D_460be")
 
 [node name="spikeThingy2" type="Area2D" parent="." unique_id=1919449854]
 position = Vector2(21, 553)

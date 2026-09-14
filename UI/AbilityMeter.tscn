@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://f2nypdc7ksxt"]
+
+[ext_resource type="Script" uid="uid://cn0pb20q3b3yb" path="res://UI/ability_meter.gd" id="1_om3gv"]
+[ext_resource type="Texture2D" uid="uid://b62p0tm4kae2w" path="res://UI/UIElements/abilityMeter/Under_2.png" id="2_kbhm6"]
+[ext_resource type="Texture2D" uid="uid://bx647pue3cu4a" path="res://UI/UIElements/abilityMeter/Progress_2.png" id="3_hfk0y"]
+[ext_resource type="Texture2D" uid="uid://by5hh0h34pwod" path="res://UI/UIElements/abilityMeter/Over.png" id="4_p3vif"]
+
+[node name="abilityMeter" type="Control" unique_id=1069792125]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 39.0
+offset_top = 501.0
+offset_right = 167.0
+offset_bottom = 629.0
+script = ExtResource("1_om3gv")
+
+[node name="MeterRing" type="ColorRect" parent="." unique_id=1731475418]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ValueLabel" type="Label" parent="." unique_id=1513624088]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 39.5
+offset_right = 20.0
+offset_bottom = 62.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1836235755]
+layout_mode = 1
+offset_right = 727.0
+offset_bottom = 727.0
+scale = Vector2(0.176, 0.176)
+value = 100.0
+fill_mode = 4
+texture_under = ExtResource("2_kbhm6")
+texture_progress = ExtResource("3_hfk0y")
+texture_progress_offset = Vector2(36.435, 33)
+
+[node name="TextureRect" type="TextureRect" parent="TextureProgressBar" unique_id=991243395]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -114.5
+offset_right = 115.0
+offset_bottom = 114.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_p3vif")
+
+[node name="IconRect" type="TextureRect" parent="." unique_id=1933846504]
+custom_minimum_size = Vector2(40, 40)
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2

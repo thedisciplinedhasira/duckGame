@@ -19,9 +19,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 Crosshair="*uid://doaq0ai5oj4do"
-DialogueUI="*uid://dsaghc5c3or21"
 DebugMenu="*uid://cggqb75a8w8r"
 SettingsManager="*uid://ce8hpw56ggpcl"
+DialogueUI="*uid://dsaghc5c3or21"
 
 [display]
 
@@ -36,7 +36,7 @@ mouse_cursor/use_occlusion_culling=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/FoliageFlow/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [input]
 

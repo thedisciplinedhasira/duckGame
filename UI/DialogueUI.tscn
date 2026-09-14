@@ -1,12 +1,27 @@
 [gd_scene format=3 uid="uid://dsaghc5c3or21"]
 
 [ext_resource type="Script" uid="uid://db177hmysqlf3" path="res://UI/dialogue_ui.gd" id="1_odgyn"]
-[ext_resource type="Texture2D" uid="uid://bgoeyakj3i37s" path="res://UI/UIElements/Asset 2.png" id="2_dckty"]
+[ext_resource type="Texture2D" uid="uid://jp3d8x1b6ial" path="res://UI/UIElements/dialogueBoxReal.png" id="2_dckty"]
+[ext_resource type="Texture2D" uid="uid://ckqynacnhq45x" path="res://UI/UIElements/kekebe.png" id="2_pwv0c"]
 [ext_resource type="FontFile" uid="uid://dpjthwy70s54p" path="res://fonts/Haltto-Bold.otf" id="3_5n7m2"]
 [ext_resource type="AudioStream" uid="uid://bu27gjty24mpb" path="res://sounds/achievementSound.mp3" id="5_pwv0c"]
+[ext_resource type="Shader" uid="uid://dnj04efmt5ouu" path="res://UI/CRTandFisheye.gdshader" id="6_lwm2g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jbl03"]
+shader = ExtResource("6_lwm2g")
+shader_parameter/curvature = 9.0000004275
+shader_parameter/scanline_count = 450.0
+shader_parameter/vignette_strength = 0.6270000297825
+shader_parameter/zoom = 1.03
+shader_parameter/border_smoothing = 0.01
 
 [node name="DialogueUI" type="CanvasLayer" unique_id=1610807460]
 script = ExtResource("1_odgyn")
+
+[node name="Kekebe" type="Sprite2D" parent="." unique_id=572878531]
+position = Vector2(255, 542.8)
+scale = Vector2(0.19686648, 0.19686648)
+texture = ExtResource("2_pwv0c")
 
 [node name="Background" type="Control" parent="." unique_id=1386001129]
 layout_mode = 3
@@ -15,16 +30,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="Background" unique_id=792479789]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 89.01503
-offset_top = -176.0
-offset_right = 443.6817
-offset_bottom = -43.0
+offset_left = 55.0
+offset_top = -516.0
+offset_right = 955.90955
+offset_bottom = -17.0
 grow_vertical = 0
 texture = ExtResource("2_dckty")
 expand_mode = 1
@@ -36,12 +52,14 @@ anchor_left = 0.46500003
 anchor_top = 0.263
 anchor_right = 0.46500003
 anchor_bottom = 0.263
-offset_left = 0.064941406
-offset_top = 0.020992279
-offset_right = 157.06496
-offset_bottom = 61.020992
-theme_override_colors/default_color = Color(0.2988641, 0.2936858, 0, 1)
+offset_left = -179.92297
+offset_top = 282.763
+offset_right = 291.07703
+offset_bottom = 343.763
+theme_override_colors/default_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_fonts/normal_font = ExtResource("3_5n7m2")
+bbcode_enabled = true
+text = "Wait so do i have things"
 fit_content = true
 
 [node name="NotoficationSound" type="AudioStreamPlayer" parent="." unique_id=139583418]
@@ -67,3 +85,17 @@ offset_bottom = 23.0
 theme_override_colors/font_color = Color(0.9004517, 0.6520586, 0.23215234, 1)
 theme_override_fonts/font = ExtResource("3_5n7m2")
 theme_override_font_sizes/font_size = 24
+
+[node name="PostProcessing" type="CanvasLayer" parent="." unique_id=546981767]
+layer = 100
+
+[node name="CRTEffect" type="ColorRect" parent="PostProcessing" unique_id=1890618474]
+material = SubResource("ShaderMaterial_jbl03")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.18431373)
+metadata/_edit_use_anchors_ = true

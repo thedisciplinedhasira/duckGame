@@ -10,3 +10,7 @@ func _on_body_entered(body: Node2D) -> void:
 			
 		# Option B: The classic arcade approach - instantly restart the current scene
 		# get_tree().reload_current_scene()
+
+
+func _on_character_body_2d_child_entered_tree(node: Node) -> void:
+	pass # Replace with function body.

@@ -30,6 +30,7 @@ var equipped_icon_rect: TextureRect
 @onready var ring_shader = $CenterControl/RingBackground 
 @onready var popup_sound = $PopupSound
 @onready var hover_sound = $HoverSound
+@onready var ability_meter: AbilityMeter = $AbilityMeter
 
 func _ready():
 	center_control.hide() 
@@ -154,15 +155,17 @@ func open_wheel():
 	if popup_sound: popup_sound.play()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
+
 func close_wheel():
 	is_open = false
 	center_control.hide() 
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if selected_weapon_index != -1:
-		# Apply the texture and reveal the HUD icon
-		equipped_icon_rect.texture = ability_icons[selected_weapon_index]
-		equipped_icon_rect.show()
-		
+		# Update the separate meter node directly
+		ability_meter.set_icon(ability_icons[selected_weapon_index])
+		if selected_weapon_index < ability_colors.size():
+			ability_meter.set_color(ability_colors[selected_weapon_index])
+			
 		weapon_selected.emit(selected_weapon_index)
 		_highlight_weapon(-1, 0.016)

@@ -244,7 +244,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vu8mj"]
-size = Vector2(29, 35)
+size = Vector2(29, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q7gf3"]
 size = Vector2(1506, 20)
@@ -807,15 +807,15 @@ position = Vector2(833, -46)
 script = ExtResource("25_oej3e")
 
 [node name="spike" type="AnimatedSprite2D" parent="spikeThingy3" unique_id=2064763728]
-position = Vector2(487, 366)
+position = Vector2(487, 363.4569)
 rotation = 3.1415927
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.5, 0.4232216)
 sprite_frames = SubResource("SpriteFrames_630qr")
 autoplay = "default"
-frame_progress = 0.7511024
+frame_progress = 0.9935391
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spikeThingy3" unique_id=1784967741]
-position = Vector2(487.5, 367.5)
+position = Vector2(487.5, 364)
 shape = SubResource("RectangleShape2D_vu8mj")
 
 [node name="spikeThingy2" type="Area2D" parent="." unique_id=440648198]

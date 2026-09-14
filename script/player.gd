@@ -1,29 +1,38 @@
 extends CharacterBody3D
 
-
-const WALK_SPEED := 4
-const RUN_SPEED := 9
-#const JUMP_VELOCITY := 4.5
-const ACCEL := 15
-const ROTATION_SMOOTHING := 19 #def was 6
-const CARRY_SPEED := 9 
+const WALK_SPEED := 4.0
+const RUN_SPEED := 9.0
+const ACCEL := 15.0
+const ROTATION_SMOOTHING := 19.0
+const CARRY_SPEED := 9.0
 
 @export var mouse_sensitivity := 0.002
 @export var pull_strength := 15.0
 @export var throw_strength := 25.0
 
 @export_category("Sprint Settings")
-@export var super_run_speed := 9.0 # Speed reached during super sprint
-@export var super_sprint_delay := 0.5 # Seconds of continuous running needed
-@export var super_sprint_fov := 90.0 # FOV zoom during super sprint
+@export var super_run_speed := 9.0
+@export var super_sprint_delay := 0.5
+@export var super_sprint_fov := 90.0
+
+@export_category("Stamina Settings")
+@export var max_stamina: float = 100.0
+@export var stamina_drain_rate: float = 25.0
+@export var stamina_regen_rate: float = 30.0
+@export var stamina_regen_delay: float = 1.5
 
 @export_category("Telekinesis Settings")
 @export_range(30.0, 120.0) var max_head_look_angle: float = 75.0
 
 @export_category("Hover Settings")
-@export var hover_target_height := 2.0 # The consistent height above the ground
-@export var hover_spring_strength := 18.0 # How hard it pushes up to maintain height
-@export var hover_damping := 5.0 # Prevents the duck from bouncing up and down infinitely
+@export var hover_target_height := 1.1
+@export var hover_spring_strength := 18.0
+@export var hover_damping := 5.0
+
+@export_group("Ability Icons")
+@export var icon_hover: Texture2D
+@export var icon_perspective: Texture2D
+@export var icon_telekinesis: Texture2D
 
 @onready var hover_audio: AudioStreamPlayer3D = $HoverAudio
 @onready var ambient_sound: AudioStreamPlayer = $AmbientSound
@@ -37,14 +46,12 @@ const CARRY_SPEED := 9
 
 # Speedlines / Post Processing
 @onready var speedline: ColorRect = $"../speedline"
-
-# Hover effect
 @onready var tornado_vfx: Node3D = $tornadoVFX
-
-# Telekinesis effects
 @onready var telekinesis_vfx: GPUParticles3D = $cameraMount/Camera3D/HoldPosition/TelekinesisVFX
 
-@onready var head_look: LookAtModifier3D = %LookAtModifier3D  # survives model swaps
+@onready var head_look: LookAtModifier3D = %LookAtModifier3D
+@onready var active_ability_icon: TextureRect = $HUD/ActiveAbilityIcon
+@onready var ability_meter: AbilityMeter = $WeaponWheel/AbilityMeter
 
 var current_blend_position := Vector2.ZERO
 var grabbed_object: RigidBody3D = null
@@ -52,28 +59,30 @@ var hold_distance := 3.0
 var hold_tween: Tween = null
 var current_anim_state := "Movement"
 
-# camera
+# Camera
 var target_yaw := 0.0
 var target_pitch := 0.0
 var camera_offset := Vector3.ZERO
 
-# input
+# Input & Unlock flags
 var is_input_locked := false
 var has_telekinesis_unlocked := false
 
-# footsteps
+# Footsteps
 var footstep_timer := 0.0
 const WALK_STEP_TIME := 0.4
 const RUN_STEP_TIME := 0.25
 const SUPER_RUN_STEP_TIME := 0.15
 
-# sprint / super sprint
+# Sprint & Stamina
 var sprint_timer := 0.0
 var is_super_sprinting := false
 var was_super_sprinting := false
 var current_sprint_speed := RUN_SPEED
+var current_stamina: float = 100.0
+var regen_delay_timer: float = 0.0
 
-# abilities
+# Abilities
 var is_hover_toggled := false
 var is_3d_mode := true
 var was_hovering := false
@@ -81,16 +90,9 @@ var was_hovering := false
 enum Ability { NONE, HOVER, PERSPECTIVE, TELEKINESIS }
 var current_ability: Ability = Ability.NONE
 
-#script
+# Script / Collectibles
 var potions_in_inventory := 0
-var magic_feathers_collected := 0 # The reward
-
-@export_group("Ability Icons")
-@export var icon_hover: Texture2D
-@export var icon_perspective: Texture2D
-@export var icon_telekinesis: Texture2D
-
-@onready var active_ability_icon: TextureRect = $HUD/ActiveAbilityIcon
+var magic_feathers_collected := 0
 
 
 func _ready() -> void:
@@ -213,17 +215,29 @@ func _handle_movement(delta: float) -> void:
 
 	var target_blend := Vector2.ZERO
 
-	# --- Super Sprint Logic ---
+	# --- Stamina & Super Sprint Logic ---
 	var is_moving := direction != Vector3.ZERO
-	var is_sprinting_input := Input.is_action_pressed("sprint") and is_moving and not grabbed_object and is_on_floor()
+	var has_stamina := current_stamina > 0.0
+	var is_sprinting_input := Input.is_action_pressed("sprint") and is_moving and not grabbed_object and is_on_floor() and has_stamina
 
 	if is_sprinting_input:
 		sprint_timer += delta
+		current_stamina = max(0.0, current_stamina - (stamina_drain_rate * delta))
+		regen_delay_timer = stamina_regen_delay
+		
 		if sprint_timer >= super_sprint_delay:
 			is_super_sprinting = true
 	else:
 		sprint_timer = 0.0
 		is_super_sprinting = false
+		
+		if regen_delay_timer > 0.0:
+			regen_delay_timer -= delta
+		elif current_stamina < max_stamina:
+			current_stamina = min(max_stamina, current_stamina + (stamina_regen_rate * delta))
+
+	if ability_meter:
+		ability_meter.update_stamina(current_stamina, max_stamina)
 
 	# Smooth transition of running speed
 	if is_super_sprinting:
@@ -231,11 +245,9 @@ func _handle_movement(delta: float) -> void:
 	else:
 		current_sprint_speed = move_toward(current_sprint_speed, RUN_SPEED, 15.0 * delta)
 
-	# Update speedline visibility
 	if speedline:
 		speedline.visible = is_super_sprinting
 
-	# FOV zoom out for Super Sprint
 	if camera and not _is_hovering() and not grabbed_object:
 		if is_super_sprinting and not was_super_sprinting:
 			var fov_tween = create_tween()
@@ -245,7 +257,6 @@ func _handle_movement(delta: float) -> void:
 			fov_tween.tween_property(camera, "fov", 75.0, 0.3).set_trans(Tween.TRANS_SINE)
 
 	was_super_sprinting = is_super_sprinting
-	# --------------------------
 
 	if direction:
 		var target_angle := atan2(-direction.x, -direction.z)
@@ -433,8 +444,6 @@ func process_telekinesis(delta: float) -> void:
 	if not grabbed_object:
 		return
 
-	var beam_origin := global_position + Vector3(0, 0.6, 0)
-
 	if hold_position and camera:
 		var cam_forward := -camera.global_transform.basis.z
 		hold_position.global_position = camera.global_position + cam_forward * hold_distance
@@ -528,6 +537,11 @@ func equip_ability(ability: Ability, icon: Texture2D, ability_name: String) -> v
 	current_ability = ability
 	print("Equipped: " + ability_name)
 
+	# Pass ability icon to central ring node
+	if ability_meter:
+		ability_meter.set_ability_icon(icon)
+
+	# Standalone fallback icon
 	if active_ability_icon:
 		active_ability_icon.texture = icon
 		active_ability_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -549,3 +563,11 @@ func toggle_perspective() -> void:
 	else:
 		print("Perspective: Switched to 3D")
 		set_input_locked(false)
+
+
+func _on_dialogue_trigger_body_exited(body: Node3D) -> void:
+	pass
+
+
+func _on_dialogue_trigger_body_entered(body: Node3D) -> void:
+	pass
