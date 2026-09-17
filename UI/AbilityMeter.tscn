@@ -44,7 +44,6 @@ layout_mode = 1
 offset_right = 727.0
 offset_bottom = 727.0
 scale = Vector2(0.176, 0.176)
-value = 100.0
 fill_mode = 4
 texture_under = ExtResource("2_kbhm6")
 texture_progress = ExtResource("3_hfk0y")

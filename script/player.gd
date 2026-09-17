@@ -8,7 +8,7 @@ const CARRY_SPEED := 9.0
 
 @export var mouse_sensitivity := 0.002
 @export var pull_strength := 15.0
-@export var throw_strength := 25.0
+@export var throw_strength := 0
 
 @export_category("Sprint Settings")
 @export var super_run_speed := 9.0
@@ -33,6 +33,15 @@ const CARRY_SPEED := 9.0
 @export var icon_hover: Texture2D
 @export var icon_perspective: Texture2D
 @export var icon_telekinesis: Texture2D
+
+@export_category("Death Settings")
+@export var death_images: Array[Texture2D]
+@export var death_layer: CanvasLayer
+@export var death_background: ColorRect
+@export var death_texture: TextureRect
+@export var respawn_button: Button
+@export var quit_button: Button
+@export var death_sound: AudioStreamPlayer
 
 @onready var hover_audio: AudioStreamPlayer3D = $HoverAudio
 @onready var ambient_sound: AudioStreamPlayer = $AmbientSound
@@ -94,6 +103,11 @@ var current_ability: Ability = Ability.NONE
 var potions_in_inventory := 0
 var magic_feathers_collected := 0
 
+# Death Trackers
+var death_count: int = 0
+var is_dead := false
+var current_respawn_pos: Vector3 = Vector3.ZERO
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -118,6 +132,17 @@ func _ready() -> void:
 	if camera_mount:
 		camera_offset = camera_mount.position
 		camera_mount.top_level = true
+
+	# Set up initial death screen state
+	if death_layer and death_background:
+		death_layer.visible = false
+		death_background.modulate.a = 0.0
+
+	# Connect death UI buttons dynamically
+	if respawn_button:
+		respawn_button.pressed.connect(_on_respawn_pressed)
+	if quit_button:
+		quit_button.pressed.connect(_on_quit_pressed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -351,9 +376,9 @@ func _handle_hold_distance_input(delta: float) -> void:
 	if not grabbed_object:
 		return
 
-	const DISTANCE_ADJUST_SPEED := 6.0
+	const DISTANCE_ADJUST_SPEED := 6.0 
 	const MIN_HOLD_DISTANCE := 1.5
-	const MAX_HOLD_DISTANCE := 15.0
+	const MAX_HOLD_DISTANCE := 25.0
 
 	if Input.is_key_pressed(KEY_Q):
 		hold_distance -= DISTANCE_ADJUST_SPEED * delta
@@ -401,6 +426,8 @@ func release_object() -> void:
 		
 	if grabbed_object:
 		grabbed_object.gravity_scale = 1.0
+		grabbed_object.linear_velocity = Vector3.ZERO
+		grabbed_object.angular_velocity = Vector3.ZERO
 		grabbed_object = null
 
 	_set_hold_blend(0.0)
@@ -494,7 +521,7 @@ func _travel_animation_state(state_name: String) -> void:
 
 
 func _update_crosshair_state() -> void:
-	if tele_ray and tele_ray.is_colliding() and tele_ray.get_collider() is RigidBody3D:
+	if current_ability == Ability.TELEKINESIS and tele_ray and tele_ray.is_colliding() and tele_ray.get_collider() is RigidBody3D:
 		Crosshair.set_state_can_interact()
 	else:
 		Crosshair.set_state_default()
@@ -507,6 +534,7 @@ func set_input_locked(locked: bool) -> void:
 		velocity.x = 0
 		velocity.z = 0
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		Crosshair.set_state_default()
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -537,11 +565,9 @@ func equip_ability(ability: Ability, icon: Texture2D, ability_name: String) -> v
 	current_ability = ability
 	print("Equipped: " + ability_name)
 
-	# Pass ability icon to central ring node
 	if ability_meter:
 		ability_meter.set_ability_icon(icon)
 
-	# Standalone fallback icon
 	if active_ability_icon:
 		active_ability_icon.texture = icon
 		active_ability_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -571,3 +597,53 @@ func _on_dialogue_trigger_body_exited(body: Node3D) -> void:
 
 func _on_dialogue_trigger_body_entered(body: Node3D) -> void:
 	pass
+
+
+func _on_kimem_body_entered(body: Node3D) -> void:
+	pass
+
+
+func die(respawn_pos: Vector3) -> void:
+	if is_dead:
+		return
+		
+	is_dead = true
+	set_input_locked(true)
+	current_respawn_pos = respawn_pos
+	
+	if grabbed_object:
+		release_object()
+		
+	is_hover_toggled = false
+	
+	if death_sound:
+		death_sound.play()
+	
+	if death_images.size() > 0 and death_texture:
+		var current_image_index = death_count % death_images.size()
+		death_texture.texture = death_images[current_image_index]
+		
+		if death_layer and death_background:
+			death_layer.visible = true
+			
+			# Fade background in over 1.5s
+			var tween = create_tween()
+			tween.tween_property(death_background, "modulate:a", 1.0, 1).set_trans(Tween.TRANS_SINE)
+			
+		death_count += 1
+
+
+func _on_respawn_pressed() -> void:
+	if death_layer and death_background:
+		var tween = create_tween()
+		tween.tween_property(death_background, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_SINE)
+		tween.finished.connect(func(): death_layer.visible = false)
+		
+	global_position = current_respawn_pos
+	velocity = Vector3.ZERO
+	is_dead = false
+	set_input_locked(false)
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

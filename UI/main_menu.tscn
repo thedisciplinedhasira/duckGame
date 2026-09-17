@@ -16,11 +16,11 @@
 [ext_resource type="Texture2D" uid="uid://cdstmuda3gm1r" path="res://UI/UIElements/mainMenuButtons/quitNormal.png" id="12_0d8gf"]
 [ext_resource type="Texture2D" uid="uid://dh7l36b5y5yte" path="res://UI/UIElements/mainMenuButtons/quitClick.png" id="13_bt32w"]
 [ext_resource type="Texture2D" uid="uid://c3k6kqsnf8xhv" path="res://UI/UIElements/mainMenuButtons/quiteHover.png" id="14_l25lq"]
-[ext_resource type="Texture2D" uid="uid://dypqa7owimclb" path="res://UI/UIElements/txt.png" id="17_t2nhh"]
 [ext_resource type="Texture2D" uid="uid://do1r22h2vr14q" path="res://UI/UIElements/newButtons/Asset 13.png" id="18_saki1"]
 [ext_resource type="Texture2D" uid="uid://4e44y70jijs2" path="res://UI/UIElements/mainMenuButtons/Asset 15.png" id="19_cwv5u"]
 [ext_resource type="PackedScene" uid="uid://bjkfjk005l26k" path="res://UI/settings_menu.tscn" id="20_c2iqt"]
 [ext_resource type="Shader" uid="uid://dnj04efmt5ouu" path="res://UI/CRTandFisheye.gdshader" id="21_27vi8"]
+[ext_resource type="Texture2D" uid="uid://cocg0xwq61xkr" path="res://UI/UIElements/gf.png" id="21_xmcc3"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_saki1"]
 particle_flag_disable_z = true
@@ -131,19 +131,13 @@ mouse_filter = 2
 texture = ExtResource("3_4cwpn")
 stretch_mode = 5
 
-[node name="Txt" type="Sprite2D" parent="." unique_id=852436068]
-visible = false
-position = Vector2(358.875, 134)
-scale = Vector2(0.33585858, 0.33585858)
-texture = ExtResource("17_t2nhh")
-
 [node name="Asset13" type="Sprite2D" parent="." unique_id=327698587]
-visible = false
-position = Vector2(411, 163)
-scale = Vector2(0.09881588, 0.09881588)
+position = Vector2(420.3447, 193)
+scale = Vector2(0.10210974, 0.10210974)
 texture = ExtResource("18_saki1")
 
 [node name="Asset15" type="Sprite2D" parent="." unique_id=743901096]
+visible = false
 position = Vector2(394.00598, 175)
 scale = Vector2(0.09314544, 0.09314542)
 texture = ExtResource("19_cwv5u")
@@ -165,3 +159,9 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0.18431373)
 metadata/_edit_use_anchors_ = true
+
+[node name="Gf" type="Sprite2D" parent="." unique_id=1256424503]
+visible = false
+position = Vector2(422.65967, 182.0625)
+scale = Vector2(0.17404559, 0.17404562)
+texture = ExtResource("21_xmcc3")

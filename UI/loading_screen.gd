@@ -1,7 +1,8 @@
 extends Control
 
 @onready var video_player: VideoStreamPlayer = $VideoStreamPlayer
-var target_scene: String = "res://scenes/test_tutorial.scn"
+var target_scene: String = "res://trial_indoor.scn"
+
 
 
 func _ready() -> void:

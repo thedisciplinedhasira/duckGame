@@ -3,8 +3,14 @@ extends Control
 @export var start_button: Button
 @export var start_menu_label: Label
 @export var address_bar_label: Label
+@onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
+
+
 
 func _ready() -> void:
+	if audio_player.stream:
+		audio_player.play()
+		
 	# 1. Fetch the system username (Checks Windows, then Linux/macOS)
 	var player_name: String = OS.get_environment("USERNAME")
 	

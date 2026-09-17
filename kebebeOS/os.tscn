@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://doslvomyvwcet" path="res://kebebeOS/Folder Closed.png" id="2_6mifb"]
 [ext_resource type="Texture2D" uid="uid://ddh1uqkfh4u46" path="res://kebebeOS/Internet Shortcut.png" id="3_3nfli"]
 [ext_resource type="Script" uid="uid://sjg40fas7pym" path="res://kebebeOS/shortcut_redmi.gd" id="4_1rwfv"]
-[ext_resource type="Texture2D" uid="uid://cbrxe60cyw3ap" path="res://kebebeOS/Generic Text Document.png" id="4_2k28m"]
+[ext_resource type="Texture2D" uid="uid://bfos7jat3o53m" path="res://kebebeOS/Windows Picture and Fax Viewer.png" id="5_1nine"]
 [ext_resource type="Texture2D" uid="uid://c56cuvl562hf" path="res://kebebeOS/Default.png" id="5_jcc5o"]
 [ext_resource type="Script" uid="uid://cwl4lggxobpna" path="res://kebebeOS/start_button.gd" id="5_lgu7x"]
 [ext_resource type="Script" uid="uid://4bkbqfqolxbr" path="res://UI/kekebeExecutable.gd" id="6_hods8"]
@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://innjxd5o3c1e" path="res://UI/fitgirl_install.gd" id="11_afqs3"]
 [ext_resource type="Texture2D" uid="uid://bv73mvbm1y32v" path="res://kebebeOS/fitgirl.jpg" id="12_1nine"]
 [ext_resource type="Script" uid="uid://dyq2hvcmoe1w0" path="res://UI/fitgirl_progress.gd" id="13_yrc0x"]
-[ext_resource type="Texture2D" uid="uid://bvybe64cjb0sa" path="res://kebebeOS/Change Connection Settings.png" id="14_2k28m"]
 [ext_resource type="Texture2D" uid="uid://cdp75588k5y6e" path="res://kebebeOS/Whistler - Switch User.png" id="14_6mifb"]
 [ext_resource type="Script" uid="uid://ct88fbuwpy5ji" path="res://kebebeOS/draggable.gd" id="14_jcc5o"]
 [ext_resource type="Shader" uid="uid://dnj04efmt5ouu" path="res://UI/CRTandFisheye.gdshader" id="14_vq2s5"]
@@ -25,6 +24,20 @@
 [ext_resource type="Script" uid="uid://fqyt41odts00" path="res://kebebeOS/welcome_message.gd" id="17_afqs3"]
 [ext_resource type="Texture2D" uid="uid://bpdg1eoqysfxh" path="res://kebebeOS/Windows Update.png" id="17_rb7u5"]
 [ext_resource type="Texture2D" uid="uid://o5n4rcwc66d6" path="res://kebebeOS/Alert.png" id="18_afqs3"]
+[ext_resource type="Script" uid="uid://cbtrn5u8xf2su" path="res://kebebeOS/notification.gd" id="18_g3plj"]
+[ext_resource type="AudioStream" uid="uid://72mdlop7d60k" path="res://kebebeOS/sound/windows-xp-print-complete.wav" id="19_mem1y"]
+[ext_resource type="Texture2D" uid="uid://d1u37eppf0p74" path="res://kebebeOS/Logout.png" id="24_vhxy8"]
+[ext_resource type="Texture2D" uid="uid://dla17oymiyydr" path="res://kebebeOS/Recent Documents.png" id="25_js0eq"]
+[ext_resource type="Texture2D" uid="uid://cnf8wcrvxkq7n" path="res://kebebeOS/My Pictures.png" id="26_vhxy8"]
+[ext_resource type="Texture2D" uid="uid://b6m0yc7e5xaop" path="res://kebebeOS/My Music.png" id="27_ej8ma"]
+[ext_resource type="Texture2D" uid="uid://cg2x36qflhcg4" path="res://kebebeOS/My Computer.png" id="28_e3nkc"]
+[ext_resource type="FontFile" uid="uid://dpjthwy70s54p" path="res://fonts/Haltto-Bold.otf" id="29_vhxy8"]
+[ext_resource type="Texture2D" uid="uid://duy0xof47j1wj" path="res://kebebeOS/Internet Explorer 6.png" id="30_ej8ma"]
+[ext_resource type="Texture2D" uid="uid://rduenu14f6es" path="res://kebebeOS/Control Panel.png" id="30_xs71q"]
+[ext_resource type="Texture2D" uid="uid://d3nmn32uqckhi" path="res://kebebeOS/Search.png" id="31_24iwv"]
+[ext_resource type="Texture2D" uid="uid://bph0827lwqj1" path="res://kebebeOS/Email.png" id="31_kxqhs"]
+[ext_resource type="Texture2D" uid="uid://dtyi3xcsmqv78" path="res://kebebeOS/Windows Media Player 10.png" id="32_dp03v"]
+[ext_resource type="AudioStream" uid="uid://ng4arej2opol" path="res://kebebeOS/sound/startup.wav" id="38_mem1y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvnqm"]
 bg_color = Color(0.12156863, 0.8784314, 0, 1)
@@ -71,8 +84,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 18.000002
+offset_top = 21.999998
+offset_right = 18.0
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.807, 0.807)
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
@@ -125,12 +143,11 @@ redme_window = NodePath("../../../../Redme")
 custom_minimum_size = Vector2(64, 64)
 custom_maximum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("4_2k28m")
+texture = ExtResource("5_1nine")
 
 [node name="Label" type="Label" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutRedmi" unique_id=636348997]
 layout_mode = 2
-text = "Redme"
-horizontal_alignment = 1
+text = "IMG_0906"
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=351377254]
 custom_minimum_size = Vector2(0, 40)
@@ -139,6 +156,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.6627451, 0.6627451, 0.6627451, 1)
@@ -147,14 +165,14 @@ color = Color(0.6627451, 0.6627451, 0.6627451, 1)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme_override_constants/margin_left = 5
+theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="TaskbarElements" type="HBoxContainer" parent="ColorRect2/TaskbarPadding" unique_id=51706873]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = -4
 
 [node name="StartButton" type="Button" parent="ColorRect2/TaskbarPadding/TaskbarElements" unique_id=1249300261 node_paths=PackedStringArray("start_menu")]
 custom_minimum_size = Vector2(80, 0)
@@ -164,7 +182,7 @@ script = ExtResource("5_lgu7x")
 start_menu = NodePath("../../../../StartMenu")
 
 [node name="Spacer" type="Control" parent="ColorRect2/TaskbarPadding/TaskbarElements" unique_id=263409000]
-custom_minimum_size = Vector2(982.42, 0)
+custom_minimum_size = Vector2(961.515, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 13.93
@@ -851,6 +869,72 @@ text = "Open"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Notification" type="Panel" parent="." unique_id=1376825888 node_paths=PackedStringArray("message_label")]
+visible = false
+layout_mode = 0
+offset_left = 856.00006
+offset_top = 433.99997
+offset_right = 1203.7706
+offset_bottom = 627.6305
+scale = Vector2(0.785, 0.785)
+mouse_filter = 2
+script = ExtResource("18_g3plj")
+message_label = NodePath("TitleBar/message")
+
+[node name="TitleBar" type="ColorRect" parent="Notification" unique_id=978533540]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1.2739258
+offset_bottom = 194.90443
+grow_horizontal = 2
+color = Color(0.7254902, 0.6901961, 0.7137255, 1)
+
+[node name="top" type="ColorRect" parent="Notification/TitleBar" unique_id=1765841237 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 349.04456
+offset_bottom = 31.847137
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="Notification/TitleBar" unique_id=1129003072 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_left = 5.0955486
+offset_top = 3.8216558
+offset_right = 100.89172
+offset_bottom = 26.821655
+text = "You have a new message"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Button" type="Button" parent="Notification/TitleBar" unique_id=776934932]
+layout_mode = 0
+offset_left = 329.93634
+offset_right = 347.93634
+offset_bottom = 31.0
+text = "X"
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="message" type="Label" parent="Notification/TitleBar" unique_id=2052091966]
+layout_mode = 0
+offset_left = 30.573257
+offset_top = 42.03822
+offset_right = 118.47139
+offset_bottom = 66.038216
+theme_override_colors/font_color = Color(0.47058824, 0.43137255, 0.45882353, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 15
+text = "Lorem ipsu..............."
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Notification" unique_id=1182018795]
+stream = ExtResource("19_mem1y")
+
 [node name="Redme" type="Panel" parent="." unique_id=949252388]
 visible = false
 layout_mode = 0
@@ -927,64 +1011,6 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_constants/paragraph_spacing = -7
 theme_override_font_sizes/font_size = 15
 text = "Read Only"
-
-[node name="Notification" type="Panel" parent="." unique_id=1376825888]
-visible = false
-layout_mode = 0
-offset_left = 871.99994
-offset_top = 433.99997
-offset_right = 1219.7705
-offset_bottom = 627.6305
-scale = Vector2(0.785, 0.785)
-
-[node name="TitleBar" type="ColorRect" parent="Notification" unique_id=978533540]
-custom_minimum_size = Vector2(0, 25)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_right = 1.2739258
-offset_bottom = 194.90443
-grow_horizontal = 2
-color = Color(0.7254902, 0.6901961, 0.7137255, 1)
-
-[node name="top" type="ColorRect" parent="Notification/TitleBar" unique_id=1765841237 node_paths=PackedStringArray("target_window")]
-layout_mode = 0
-offset_right = 349.04456
-offset_bottom = 31.847137
-color = Color(0.11764706, 0.2784314, 0.6784314, 1)
-script = ExtResource("14_jcc5o")
-target_window = NodePath("../..")
-
-[node name="Label" type="Label" parent="Notification/TitleBar" unique_id=1129003072]
-layout_mode = 0
-offset_left = 5.0955486
-offset_top = 3.8216558
-offset_right = 100.89172
-offset_bottom = 26.821655
-text = "You have a new message"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="Notification/TitleBar" unique_id=776934932]
-layout_mode = 0
-offset_left = 329.93634
-offset_right = 347.93634
-offset_bottom = 31.0
-text = "X"
-flat = true
-script = ExtResource("8_1rwfv")
-
-[node name="Label3" type="Label" parent="Notification/TitleBar" unique_id=2052091966]
-layout_mode = 0
-offset_left = 30.573257
-offset_top = 42.03822
-offset_right = 118.47139
-offset_bottom = 66.038216
-theme_override_colors/font_color = Color(0.47058824, 0.43137255, 0.45882353, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
-theme_override_constants/paragraph_spacing = -7
-theme_override_font_sizes/font_size = 15
-text = "Lorem ipsu..............."
 
 [node name="WelcomeMessage" type="Panel" parent="." unique_id=2081669124 node_paths=PackedStringArray("message_label", "ight_button", "x_button")]
 layout_mode = 0
@@ -1114,9 +1140,10 @@ text = "ight"
 [node name="StartMenu" type="Panel" parent="." unique_id=1357609351]
 visible = false
 layout_mode = 0
-offset_top = 455.00003
-offset_right = 347.77063
-offset_bottom = 648.63055
+offset_left = 10.000006
+offset_top = 445.00003
+offset_right = 357.77063
+offset_bottom = 638.6305
 scale = Vector2(0.785, 0.785)
 
 [node name="TitleBar" type="ColorRect" parent="StartMenu" unique_id=449254817]
@@ -1124,53 +1151,57 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -157.96182
-offset_right = 1.2739258
+offset_left = -12.73886
+offset_top = -248.40762
+offset_right = 42.03827
 offset_bottom = 194.90442
 grow_horizontal = 2
-color = Color(0.7254902, 0.6901961, 0.7137255, 1)
 
 [node name="top4" type="ColorRect" parent="StartMenu/TitleBar" unique_id=832926058]
 layout_mode = 0
-offset_left = 94.26751
-offset_top = 63.694275
-offset_right = 349.04456
-offset_bottom = 322.29297
-color = Color(0.88497686, 0.8678303, 0.87917876, 1)
+offset_left = 216.5605
+offset_top = 68.78975
+offset_right = 401.27386
+offset_bottom = 443.312
+color = Color(0.8, 0.8627451, 0.93333334, 1)
+
+[node name="top5" type="ColorRect" parent="StartMenu/TitleBar" unique_id=903916110]
+layout_mode = 0
+offset_left = 217.8344
+offset_top = 68.78975
+offset_right = 402.5478
+offset_bottom = 442.03815
+color = Color(0.827451, 0.8980392, 0.9843137, 1)
 
 [node name="top" type="ColorRect" parent="StartMenu/TitleBar" unique_id=524027028]
 layout_mode = 0
-offset_top = 2.5477905
-offset_right = 349.04456
-offset_bottom = 78.98093
+offset_left = 5.095547
+offset_top = -6.1035156e-05
+offset_right = 403.82162
+offset_bottom = 78.980896
 color = Color(0.07958228, 0.20790839, 0.52865696, 1)
 
 [node name="top2" type="ColorRect" parent="StartMenu/TitleBar" unique_id=1361817623]
 layout_mode = 0
-offset_right = 349.04456
-offset_bottom = 76.433136
+offset_left = -7.643312
+offset_top = -3.0517578e-05
+offset_right = 403.82162
+offset_bottom = 76.433105
 color = Color(0.11764706, 0.2784314, 0.6784314, 1)
 
 [node name="top3" type="ColorRect" parent="StartMenu/TitleBar" unique_id=870492526]
 layout_mode = 0
-offset_top = 305.73245
-offset_right = 349.04456
-offset_bottom = 352.8662
+offset_top = 396.17828
+offset_right = 402.54773
+offset_bottom = 443.31204
 color = Color(0.11764706, 0.2784314, 0.6784314, 1)
-
-[node name="top5" type="ColorRect" parent="StartMenu/TitleBar" unique_id=227487285]
-layout_mode = 0
-offset_top = 305.73245
-offset_right = 94.26751
-offset_bottom = 352.8662
-color = Color(0.028011724, 0.105447195, 0.30200073, 1)
 
 [node name="adminstraor" type="Label" parent="StartMenu/TitleBar" unique_id=281533115]
 layout_mode = 0
-offset_left = 78.98089
-offset_top = 28.025475
-offset_right = 243.3121
-offset_bottom = 51.025475
+offset_left = 100.63694
+offset_top = 28.025444
+offset_right = 264.96814
+offset_bottom = 51.025444
 text = "USERNAME"
 vertical_alignment = 1
 
@@ -1185,10 +1216,10 @@ texture = ExtResource("14_6mifb")
 
 [node name="PowerOff" type="Label" parent="StartMenu/TitleBar" unique_id=652309121]
 layout_mode = 0
-offset_left = 203.82166
-offset_top = 319.7452
-offset_right = 341.82166
-offset_bottom = 343.7452
+offset_left = 254.7771
+offset_top = 410.19107
+offset_right = 392.7771
+offset_bottom = 434.19107
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_constants/paragraph_spacing = -7
@@ -1207,46 +1238,265 @@ icon = ExtResource("15_3nfli")
 script = ExtResource("16_hods8")
 black_screen = NodePath("../../../../BlackScreen")
 
-[node name="PowerOff2" type="Label" parent="StartMenu/TitleBar" unique_id=26884094]
+[node name="logOut" type="Label" parent="StartMenu/TitleBar" unique_id=217307040]
 layout_mode = 0
-offset_left = 8.917196
-offset_top = 319.7452
-offset_right = 146.91719
-offset_bottom = 343.7452
+offset_left = 165.60509
+offset_top = 410.19107
+offset_right = 303.6051
+offset_bottom = 434.19107
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_constants/paragraph_spacing = -7
 theme_override_font_sizes/font_size = 15
-text = "Meskot XP"
+text = "Log Off"
 
-[node name="Label4" type="Label" parent="StartMenu/TitleBar" unique_id=1324111330]
+[node name="Button" type="Button" parent="StartMenu/TitleBar/logOut" unique_id=472268620 node_paths=PackedStringArray("black_screen")]
 layout_mode = 0
-offset_left = 25.477722
-offset_top = 245.85986
-offset_right = 209.47772
-offset_bottom = 268.85986
-rotation = -0.5234649
-scale = Vector2(1.806, 1.806)
-theme_override_colors/font_color = Color(0.851769, 0.8517689, 0.85176885, 1)
-text = "UNDER CONSTRUCTION"
+offset_left = -28.025475
+offset_top = -1.2739067
+offset_right = 1003.97455
+offset_bottom = 1030.7261
+scale = Vector2(0.025, 0.025)
+theme_override_styles/hover = SubResource("StyleBoxFlat_lgu7x")
+icon = ExtResource("24_vhxy8")
+script = ExtResource("16_hods8")
+black_screen = NodePath("../../../../BlackScreen")
 
-[node name="Label2" type="Label" parent="StartMenu/TitleBar" unique_id=1951637599]
+[node name="myDocs" type="TextureRect" parent="StartMenu" unique_id=103223428]
 layout_mode = 0
-offset_left = 26.75161
-offset_top = 247.13373
-offset_right = 210.75162
-offset_bottom = 270.13373
-rotation = -0.5234649
-scale = Vector2(1.806, 1.806)
-text = "UNDER CONSTRUCTION"
+offset_left = 221.656
+offset_top = -163.05664
+offset_right = 1245.656
+offset_bottom = 860.94336
+scale = Vector2(0.029, 0.029)
+texture = ExtResource("2_6mifb")
 
-[node name="TextureRect" type="TextureRect" parent="StartMenu/TitleBar/Label2" unique_id=687656104]
+[node name="Label" type="Label" parent="StartMenu/myDocs" unique_id=957898679]
 layout_mode = 0
-offset_left = -19.10828
-offset_right = 1004.8917
-offset_bottom = 1024.0
-scale = Vector2(0.02, 0.02)
-texture = ExtResource("14_2k28m")
+offset_left = 926.46204
+offset_top = 154.41034
+offset_right = 3981.462
+offset_bottom = 965.06464
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "My Documents"
+
+[node name="recent" type="TextureRect" parent="StartMenu" unique_id=696764963]
+layout_mode = 0
+offset_left = 221.656
+offset_top = -129.93555
+offset_right = 1245.656
+offset_bottom = 894.06445
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("25_js0eq")
+
+[node name="Label" type="Label" parent="StartMenu/recent" unique_id=801259189]
+layout_mode = 0
+offset_left = 1085.1614
+offset_top = 154.41034
+offset_right = 4659.161
+offset_bottom = 965.06464
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "My Recent Docs"
+
+[node name="pic" type="TextureRect" parent="StartMenu" unique_id=864194609]
+layout_mode = 0
+offset_left = 221.656
+offset_top = -94.265625
+offset_right = 1245.656
+offset_bottom = 929.7344
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("26_vhxy8")
+
+[node name="Label" type="Label" parent="StartMenu/pic" unique_id=1003476583]
+layout_mode = 0
+offset_left = 1085.1614
+offset_top = 154.41034
+offset_right = 4659.161
+offset_bottom = 965.06464
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "My Pictures"
+
+[node name="music" type="TextureRect" parent="StartMenu" unique_id=1914430860]
+layout_mode = 0
+offset_left = 221.656
+offset_top = -58.59375
+offset_right = 1245.656
+offset_bottom = 965.40625
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("27_ej8ma")
+
+[node name="Label" type="Label" parent="StartMenu/music" unique_id=1590293185]
+layout_mode = 0
+offset_left = 1085.1614
+offset_top = 154.41034
+offset_right = 4659.161
+offset_bottom = 965.06464
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "My Music"
+
+[node name="computer" type="TextureRect" parent="StartMenu" unique_id=1881146059]
+layout_mode = 0
+offset_left = 221.656
+offset_top = -19.103516
+offset_right = 1245.656
+offset_bottom = 1004.8965
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("28_e3nkc")
+
+[node name="Label" type="Label" parent="StartMenu/computer" unique_id=806788036]
+layout_mode = 0
+offset_left = 1085.1614
+offset_top = 154.41034
+offset_right = 4659.161
+offset_bottom = 965.06464
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "My Computer"
+
+[node name="controlPanel" type="TextureRect" parent="StartMenu" unique_id=1595370411]
+layout_mode = 0
+offset_left = 221.656
+offset_top = 31.847656
+offset_right = 1245.656
+offset_bottom = 1055.8477
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("30_xs71q")
+
+[node name="Label" type="Label" parent="StartMenu/controlPanel" unique_id=415339192]
+layout_mode = 0
+offset_left = 1085.1614
+offset_top = 154.41034
+offset_right = 4659.161
+offset_bottom = 965.06464
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "Control Panel"
+
+[node name="search" type="TextureRect" parent="StartMenu" unique_id=1129704258]
+layout_mode = 0
+offset_left = 221.656
+offset_top = 63.69336
+offset_right = 1245.656
+offset_bottom = 1087.6934
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("31_24iwv")
+
+[node name="Label" type="Label" parent="StartMenu/search" unique_id=750099838]
+layout_mode = 0
+offset_left = 1085.1614
+offset_top = 154.41034
+offset_right = 4659.161
+offset_bottom = 965.06464
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "Search"
+
+[node name="internet" type="TextureRect" parent="StartMenu" unique_id=1034878023]
+layout_mode = 0
+offset_left = 19.108276
+offset_top = -152.86523
+offset_right = 1481.7173
+offset_bottom = 1309.7438
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("30_ej8ma")
+
+[node name="Label" type="Label" parent="StartMenu/internet" unique_id=729801753]
+layout_mode = 0
+offset_left = 1462.6089
+offset_top = 94.36005
+offset_right = 5036.6084
+offset_bottom = 905.01434
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "Internet"
+
+[node name="Label2" type="Label" parent="StartMenu/internet" unique_id=588808042]
+layout_mode = 0
+offset_left = 1462.6089
+offset_top = 566.16943
+offset_right = 5341.609
+offset_bottom = 1226.7026
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_font_sizes/font_size = 351
+text = "Internet Explorer"
+
+[node name="email" type="TextureRect" parent="StartMenu" unique_id=549970642]
+layout_mode = 0
+offset_left = 19.108276
+offset_top = -109.55469
+offset_right = 1481.7173
+offset_bottom = 1353.0543
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("31_kxqhs")
+
+[node name="Label" type="Label" parent="StartMenu/email" unique_id=1234082240]
+layout_mode = 0
+offset_left = 1462.6089
+offset_top = 94.36005
+offset_right = 5036.6084
+offset_bottom = 905.01434
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "E-mail"
+
+[node name="Label2" type="Label" parent="StartMenu/email" unique_id=1695052964]
+layout_mode = 0
+offset_left = 1462.6089
+offset_top = 566.16943
+offset_right = 5341.609
+offset_bottom = 1226.7026
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_font_sizes/font_size = 351
+text = "Outlook, Express"
+
+[node name="media" type="TextureRect" parent="StartMenu" unique_id=1534279938]
+layout_mode = 0
+offset_left = 19.108276
+offset_top = -47.132813
+offset_right = 1481.7173
+offset_bottom = 1415.4762
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("32_dp03v")
+
+[node name="Label" type="Label" parent="StartMenu/media" unique_id=1074645872]
+layout_mode = 0
+offset_left = 1462.6089
+offset_top = 424.62802
+offset_right = 6758.609
+offset_bottom = 1235.2823
+theme_override_colors/font_color = Color(0.2, 0.27450982, 0.42352942, 1)
+theme_override_fonts/font = ExtResource("29_vhxy8")
+theme_override_font_sizes/font_size = 469
+text = "Windows Media Player"
+
+[node name="ColorRect" type="ColorRect" parent="StartMenu" unique_id=1567239881]
+layout_mode = 0
+offset_left = 38.216602
+offset_top = -59.87265
+offset_right = 178.34392
+offset_bottom = -59.108246
+color = Color(0.23921569, 0.23921569, 0.23921569, 0.5176471)
+
+[node name="ColorRect2" type="ColorRect" parent="StartMenu" unique_id=1284176775]
+layout_mode = 0
+offset_left = 226.75156
+offset_top = 16.56047
+offset_right = 366.87885
+offset_bottom = 17.324875
+color = Color(0.23921569, 0.23921569, 0.23921569, 0.5176471)
 
 [node name="BlackScreen" type="ColorRect" parent="." unique_id=594742555]
 visible = false
@@ -1271,3 +1521,6 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0.18431373)
 metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1007008375]
+stream = ExtResource("38_mem1y")

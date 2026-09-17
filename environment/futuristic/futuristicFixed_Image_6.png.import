@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://c2koqx0grml4t"
+path.s3tc="res://.godot/imported/futuristicFixed_Image_6.png-fe541ab93f7841d63ebc4fdfbb1eb7a4.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "cd3b0493b0b8db26a237dbf5ca2f3a84"
+}
+
+[deps]
+
+source_file="res://environment/futuristic/futuristicFixed_Image_6.png"
+dest_files=["res://.godot/imported/futuristicFixed_Image_6.png-fe541ab93f7841d63ebc4fdfbb1eb7a4.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

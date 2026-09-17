@@ -8,13 +8,13 @@ extends Control
 
 func _ready() -> void:
 	if next_button:
-		next_button.disabled = true
+		next_button.disabled = false
 		next_button.pressed.connect(_on_next_pressed)
-	
-	if check_box_1:
-		check_box_1.toggled.connect(_on_checkbox_toggled)
-	if check_box_2:
-		check_box_2.toggled.connect(_on_checkbox_toggled)
+	#
+	#if check_box_1:
+		#check_box_1.toggled.connect(_on_checkbox_toggled)
+	#if check_box_2:
+		#check_box_2.toggled.connect(_on_checkbox_toggled)
 
 func _on_checkbox_toggled(_is_checked: bool) -> void:
 	if next_button:

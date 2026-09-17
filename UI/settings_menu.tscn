@@ -62,10 +62,6 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Enable V-Sync"
 
-[node name="AutoDetectButton" type="Button" parent="Background/VBoxContainer" unique_id=86604926]
-layout_mode = 2
-text = "Auto Detect"
-
 [node name="CloseButton" type="Button" parent="Background/VBoxContainer" unique_id=1235233338]
 layout_mode = 2
 text = "Close"

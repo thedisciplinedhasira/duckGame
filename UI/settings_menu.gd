@@ -5,7 +5,7 @@ extends Control
 @onready var mode_option: OptionButton = $Background/VBoxContainer/ModeRow/WindowModeOption
 @onready var vsync_check: CheckBox = $Background/VBoxContainer/VSyncCheck
 @onready var close_btn: Button = $Background/VBoxContainer/CloseButton
-@onready var auto_detect_btn: Button = $Background/VBoxContainer/AutoDetectButton
+#@onready var auto_detect_btn: Button = $Background/VBoxContainer/AutoDetectButton
 
 const RESOLUTIONS := [
 	Vector2i(1280, 720),
@@ -39,8 +39,8 @@ func _ready() -> void:
 	vsync_check.toggled.connect(_on_vsync_toggled)
 	close_btn.pressed.connect(hide)
 
-	if auto_detect_btn:
-		auto_detect_btn.pressed.connect(_on_auto_detect_pressed)
+	#if auto_detect_btn:
+		#auto_detect_btn.pressed.connect(_on_auto_detect_pressed)
 
 
 func _setup_ui_options() -> void:
