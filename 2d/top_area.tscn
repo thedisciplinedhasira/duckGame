@@ -478,9 +478,10 @@ position = Vector2(98, -182)
 scale = Vector2(0.08045977, 0.08045978)
 sprite_frames = SubResource("SpriteFrames_0wk7y")
 animation = &"walking"
-frame_progress = 0.7297345
+frame_progress = 0.7672661
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1139619912]
+visible = false
 position = Vector2(99.03949, -177.07892)
 shape = SubResource("CapsuleShape2D_eslp5")
 
@@ -591,6 +592,7 @@ scale = Vector2(0.18817203, 0.18817203)
 texture = ExtResource("6_oej3e")
 
 [node name="grass23" type="Sprite2D" parent="grassTop" unique_id=1446981292]
+visible = false
 material = SubResource("ShaderMaterial_4mbg6")
 position = Vector2(651, 510)
 scale = Vector2(0.18817203, 0.18817203)

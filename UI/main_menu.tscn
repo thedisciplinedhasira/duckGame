@@ -7,9 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://osucmihb1rcs" path="res://UI/UIElements/mainMenuButtons/playClick.png" id="4_t2nhh"]
 [ext_resource type="Texture2D" uid="uid://b0q2hoqjsm76r" path="res://UI/UIElements/mainMenuButtons/playHover.png" id="5_saki1"]
 [ext_resource type="AudioStream" uid="uid://dlxd1o6liende" path="res://sounds/ambient.mp3" id="6_8ctay"]
-[ext_resource type="Texture2D" uid="uid://d0ftidf7lf0ox" path="res://UI/UIElements/mainMenuButtons/comicNormal.png" id="6_cwv5u"]
-[ext_resource type="Texture2D" uid="uid://cln275ybmiok4" path="res://UI/UIElements/mainMenuButtons/comicClick.png" id="7_c2iqt"]
-[ext_resource type="Texture2D" uid="uid://030dfuyatjjb" path="res://UI/UIElements/mainMenuButtons/comicHover.png" id="8_27vi8"]
+[ext_resource type="Texture2D" uid="uid://dyse18emovavq" path="res://UI/UIElements/newButtons/fg.png" id="6_27vi8"]
+[ext_resource type="Texture2D" uid="uid://carf2us1sdihv" path="res://UI/UIElements/newButtons/rbrclic.png" id="7_xmcc3"]
+[ext_resource type="Texture2D" uid="uid://cgvdel81gi8xr" path="res://UI/UIElements/newButtons/rbr hover.png" id="8_dtq41"]
 [ext_resource type="Texture2D" uid="uid://dsb4q4v4e1wx3" path="res://UI/UIElements/mainMenuButtons/settingNormal.png" id="9_xmcc3"]
 [ext_resource type="Texture2D" uid="uid://b4y1g3trjsrgx" path="res://UI/UIElements/mainMenuButtons/settingsClick.png" id="10_dtq41"]
 [ext_resource type="Texture2D" uid="uid://q8p6lm6uagn4" path="res://UI/UIElements/mainMenuButtons/settingsHover.png" id="11_b61ai"]
@@ -92,11 +92,11 @@ texture_hover = ExtResource("5_saki1")
 stretch_mode = 5
 
 [node name="ComicButton" type="TextureButton" parent="MenuContainer" unique_id=1055904121]
-custom_maximum_size = Vector2(300, 50)
+custom_maximum_size = Vector2(300, 47.85)
 layout_mode = 2
-texture_normal = ExtResource("6_cwv5u")
-texture_pressed = ExtResource("7_c2iqt")
-texture_hover = ExtResource("8_27vi8")
+texture_normal = ExtResource("6_27vi8")
+texture_pressed = ExtResource("7_xmcc3")
+texture_hover = ExtResource("8_dtq41")
 stretch_mode = 5
 
 [node name="SettingsButton" type="TextureButton" parent="MenuContainer" unique_id=1565724304]

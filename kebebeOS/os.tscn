@@ -4,12 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://doslvomyvwcet" path="res://kebebeOS/Folder Closed.png" id="2_6mifb"]
 [ext_resource type="Texture2D" uid="uid://ddh1uqkfh4u46" path="res://kebebeOS/Internet Shortcut.png" id="3_3nfli"]
 [ext_resource type="Script" uid="uid://sjg40fas7pym" path="res://kebebeOS/shortcut_redmi.gd" id="4_1rwfv"]
-[ext_resource type="Texture2D" uid="uid://bfos7jat3o53m" path="res://kebebeOS/Windows Picture and Fax Viewer.png" id="5_1nine"]
+[ext_resource type="Script" uid="uid://cjfhkpv8xj0hi" path="res://kebebeOS/disabled.gd" id="4_fompo"]
+[ext_resource type="Texture2D" uid="uid://cbrxe60cyw3ap" path="res://kebebeOS/Generic Text Document.png" id="5_1k8pf"]
 [ext_resource type="Texture2D" uid="uid://c56cuvl562hf" path="res://kebebeOS/Default.png" id="5_jcc5o"]
 [ext_resource type="Script" uid="uid://cwl4lggxobpna" path="res://kebebeOS/start_button.gd" id="5_lgu7x"]
 [ext_resource type="Script" uid="uid://4bkbqfqolxbr" path="res://UI/kekebeExecutable.gd" id="6_hods8"]
 [ext_resource type="Texture2D" uid="uid://16o612p6fox4" path="res://kebebeOS/Programs.png" id="7_lgu7x"]
 [ext_resource type="Script" uid="uid://dp8304ao7x4pl" path="res://UI/osButton.gd" id="8_1rwfv"]
+[ext_resource type="Script" uid="uid://dnroxyqpkw02k" path="res://kebebeOS/unsupported.gd" id="9_kpf42"]
 [ext_resource type="Script" uid="uid://b5w7hgfvpsc1a" path="res://UI/fitgirl_first.gd" id="9_nvlid"]
 [ext_resource type="Texture2D" uid="uid://da46nnwgwu48t" path="res://kebebeOS/menuImage (Large).png" id="10_rb7u5"]
 [ext_resource type="Script" uid="uid://innjxd5o3c1e" path="res://UI/fitgirl_install.gd" id="11_afqs3"]
@@ -26,7 +28,9 @@
 [ext_resource type="Texture2D" uid="uid://o5n4rcwc66d6" path="res://kebebeOS/Alert.png" id="18_afqs3"]
 [ext_resource type="Script" uid="uid://cbtrn5u8xf2su" path="res://kebebeOS/notification.gd" id="18_g3plj"]
 [ext_resource type="AudioStream" uid="uid://72mdlop7d60k" path="res://kebebeOS/sound/windows-xp-print-complete.wav" id="19_mem1y"]
+[ext_resource type="Texture2D" uid="uid://4uwef1nix0sd" path="res://kebebeOS/Exit.png" id="23_fompo"]
 [ext_resource type="Texture2D" uid="uid://d1u37eppf0p74" path="res://kebebeOS/Logout.png" id="24_vhxy8"]
+[ext_resource type="Texture2D" uid="uid://b2qd2eg0tvivu" path="res://kebebeOS/Critical.png" id="25_ikwcr"]
 [ext_resource type="Texture2D" uid="uid://dla17oymiyydr" path="res://kebebeOS/Recent Documents.png" id="25_js0eq"]
 [ext_resource type="Texture2D" uid="uid://cnf8wcrvxkq7n" path="res://kebebeOS/My Pictures.png" id="26_vhxy8"]
 [ext_resource type="Texture2D" uid="uid://b6m0yc7e5xaop" path="res://kebebeOS/My Music.png" id="27_ej8ma"]
@@ -38,6 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://bph0827lwqj1" path="res://kebebeOS/Email.png" id="31_kxqhs"]
 [ext_resource type="Texture2D" uid="uid://dtyi3xcsmqv78" path="res://kebebeOS/Windows Media Player 10.png" id="32_dp03v"]
 [ext_resource type="AudioStream" uid="uid://ng4arej2opol" path="res://kebebeOS/sound/startup.wav" id="38_mem1y"]
+[ext_resource type="AudioStream" uid="uid://b4feda7d7f5it" path="res://kebebeOS/sound/windows-xp-error.wav" id="41_whqih"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvnqm"]
 bg_color = Color(0.12156863, 0.8784314, 0, 1)
@@ -120,8 +125,11 @@ layout_mode = 2
 text = "Kekebe"
 horizontal_alignment = 1
 
-[node name="ShortcutInternet" type="VBoxContainer" parent="DesktopPadding/IconsColumn/ColumnLeft" unique_id=275495137]
+[node name="ShortcutInternet" type="VBoxContainer" parent="DesktopPadding/IconsColumn/ColumnLeft" unique_id=275495137 node_paths=PackedStringArray("warning_window", "error_sound")]
 layout_mode = 2
+script = ExtResource("4_fompo")
+warning_window = NodePath("../../../../warning")
+error_sound = NodePath("../../../../errorSound")
 
 [node name="Icon" type="TextureRect" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutInternet" unique_id=1113763966]
 custom_minimum_size = Vector2(64, 64)
@@ -143,11 +151,11 @@ redme_window = NodePath("../../../../Redme")
 custom_minimum_size = Vector2(64, 64)
 custom_maximum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("5_1nine")
+texture = ExtResource("5_1k8pf")
 
 [node name="Label" type="Label" parent="DesktopPadding/IconsColumn/ColumnLeft/ShortcutRedmi" unique_id=636348997]
 layout_mode = 2
-text = "IMG_0906"
+text = "   Todo"
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=351377254]
 custom_minimum_size = Vector2(0, 40)
@@ -220,11 +228,14 @@ columns = 4
 [node name="MD5" type="VBoxContainer" parent="FolderWindow/FileArea/FileGrid" unique_id=1511185745]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/MD5" unique_id=629156313]
+[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/MD5" unique_id=629156313 node_paths=PackedStringArray("unsupported_window", "error_sound")]
 custom_minimum_size = Vector2(20, 20)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("2_6mifb")
+script = ExtResource("9_kpf42")
+unsupported_window = NodePath("../../../../../unsupported")
+error_sound = NodePath("../../../../../errorSound")
 
 [node name="Label" type="Label" parent="FolderWindow/FileArea/FileGrid/MD5" unique_id=1657238794]
 layout_mode = 2
@@ -233,11 +244,14 @@ text = "MD5"
 [node name="File1" type="VBoxContainer" parent="FolderWindow/FileArea/FileGrid" unique_id=1060445176]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/File1" unique_id=1416655699]
+[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/File1" unique_id=1416655699 node_paths=PackedStringArray("unsupported_window", "error_sound")]
 custom_minimum_size = Vector2(20, 20)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("5_jcc5o")
+script = ExtResource("9_kpf42")
+unsupported_window = NodePath("../../../../../unsupported")
+error_sound = NodePath("../../../../../errorSound")
 
 [node name="Label" type="Label" parent="FolderWindow/FileArea/FileGrid/File1" unique_id=973003174]
 layout_mode = 2
@@ -246,11 +260,14 @@ text = "fg-01.bin"
 [node name="File2" type="VBoxContainer" parent="FolderWindow/FileArea/FileGrid" unique_id=1796974540]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/File2" unique_id=1256075536]
+[node name="TextureRect" type="TextureRect" parent="FolderWindow/FileArea/FileGrid/File2" unique_id=1256075536 node_paths=PackedStringArray("unsupported_window", "error_sound")]
 custom_minimum_size = Vector2(20, 20)
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("5_jcc5o")
+script = ExtResource("9_kpf42")
+unsupported_window = NodePath("../../../../../unsupported")
+error_sound = NodePath("../../../../../errorSound")
 
 [node name="Label" type="Label" parent="FolderWindow/FileArea/FileGrid/File2" unique_id=770196680]
 layout_mode = 2
@@ -292,10 +309,13 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="FolderWindow/TitleBar" unique_id=1619172459]
 layout_mode = 0
-offset_left = 510.0
-offset_right = 528.0
-offset_bottom = 31.0
+offset_left = 495.0
+offset_top = 2.0
+offset_right = 1541.0
+offset_bottom = 1034.0
+scale = Vector2(0.027, 0.027)
 text = "X"
+icon = ExtResource("23_fompo")
 flat = true
 script = ExtResource("8_1rwfv")
 
@@ -316,8 +336,9 @@ color = Color(0.3228544, 0.31012025, 0.31967682, 1)
 
 [node name="documentPath" type="Label" parent="FolderWindow/AddressBar/ColorRect" unique_id=1763947775]
 layout_mode = 0
+offset_left = 13.0
 offset_top = 4.0
-offset_right = 209.0
+offset_right = 233.0
 offset_bottom = 27.0
 text = "  HOME/USERNAME/KEKEBE/"
 
@@ -439,10 +460,13 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="FitgirlFirst/TitleBar" unique_id=1822804254]
 layout_mode = 0
-offset_left = 644.586
-offset_right = 662.586
-offset_bottom = 31.0
+offset_left = 628.0255
+offset_top = 1.2738853
+offset_right = 1674.0255
+offset_bottom = 1033.2739
+scale = Vector2(0.027, 0.027)
 text = "X"
+icon = ExtResource("23_fompo")
 flat = true
 script = ExtResource("8_1rwfv")
 
@@ -614,10 +638,13 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="FitgirlInstall/TitleBar" unique_id=1159497206]
 layout_mode = 0
-offset_left = 644.586
-offset_right = 662.586
-offset_bottom = 31.0
+offset_left = 630.5733
+offset_top = 1.2738853
+offset_right = 1676.5732
+offset_bottom = 1033.2739
+scale = Vector2(0.027, 0.027)
 text = "X"
+icon = ExtResource("23_fompo")
 script = ExtResource("8_1rwfv")
 
 [node name="TextureRect" type="TextureRect" parent="FitgirlInstall/TitleBar" unique_id=1795855557]
@@ -795,10 +822,13 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="FitgirlProgress/TitleBar" unique_id=379414935]
 layout_mode = 0
-offset_left = 644.586
-offset_right = 662.586
-offset_bottom = 31.0
+offset_left = 628.0255
+offset_top = 1.2738853
+offset_right = 1674.0255
+offset_bottom = 1033.2739
+scale = Vector2(0.027, 0.027)
 text = "X"
+icon = ExtResource("23_fompo")
 script = ExtResource("8_1rwfv")
 
 [node name="TextureRect" type="TextureRect" parent="FitgirlProgress/TitleBar" unique_id=1654421569]
@@ -875,7 +905,7 @@ layout_mode = 0
 offset_left = 856.00006
 offset_top = 433.99997
 offset_right = 1203.7706
-offset_bottom = 627.6305
+offset_bottom = 591.9618
 scale = Vector2(0.785, 0.785)
 mouse_filter = 2
 script = ExtResource("18_g3plj")
@@ -887,7 +917,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_right = 1.2739258
-offset_bottom = 194.90443
+offset_bottom = 157.96179
 grow_horizontal = 2
 color = Color(0.7254902, 0.6901961, 0.7137255, 1)
 
@@ -910,15 +940,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("14_jcc5o")
 target_window = NodePath("../..")
-
-[node name="Button" type="Button" parent="Notification/TitleBar" unique_id=776934932]
-layout_mode = 0
-offset_left = 329.93634
-offset_right = 347.93634
-offset_bottom = 31.0
-text = "X"
-flat = true
-script = ExtResource("8_1rwfv")
 
 [node name="message" type="Label" parent="Notification/TitleBar" unique_id=2052091966]
 layout_mode = 0
@@ -993,10 +1014,13 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Redme/TitleBar" unique_id=406477226]
 layout_mode = 0
-offset_left = 329.93634
-offset_right = 347.93634
-offset_bottom = 31.0
+offset_left = 315.9236
+offset_top = 1.2738755
+offset_right = 1361.9236
+offset_bottom = 1033.2739
+scale = Vector2(0.027, 0.027)
 text = "X"
+icon = ExtResource("23_fompo")
 flat = true
 script = ExtResource("8_1rwfv")
 
@@ -1101,10 +1125,13 @@ texture = ExtResource("17_rb7u5")
 
 [node name="Button" type="Button" parent="WelcomeMessage/TitleBar" unique_id=1869983524]
 layout_mode = 0
-offset_left = 681.5285
-offset_right = 699.5285
-offset_bottom = 31.0
+offset_left = 668.7896
+offset_top = 2.547751
+offset_right = 1714.7896
+offset_bottom = 1034.5477
+scale = Vector2(0.027, 0.027)
 text = "X"
+icon = ExtResource("23_fompo")
 flat = true
 script = ExtResource("8_1rwfv")
 
@@ -1136,6 +1163,203 @@ offset_top = 231.84712
 offset_right = 401.27383
 offset_bottom = 262.8471
 text = "ight"
+
+[node name="warning" type="Panel" parent="." unique_id=1443215147]
+visible = false
+layout_mode = 0
+offset_left = 354.00012
+offset_top = 184.00002
+offset_right = 951.45215
+offset_bottom = 336.8662
+scale = Vector2(0.785, 0.785)
+
+[node name="TitleBar" type="ColorRect" parent="warning" unique_id=1409898675]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 101.91077
+offset_bottom = 155.41399
+grow_horizontal = 2
+color = Color(0.7254902, 0.6901961, 0.7137255, 1)
+
+[node name="top3" type="ColorRect" parent="warning/TitleBar" unique_id=1697245871 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_left = -0.00015640259
+offset_top = 35.668766
+offset_right = 699.3628
+offset_bottom = 152.86621
+color = Color(0.7581918, 0.7581918, 0.7581917, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="top" type="ColorRect" parent="warning/TitleBar" unique_id=568255920 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_top = 3.82164
+offset_right = 699.3628
+offset_bottom = 35.668777
+color = Color(0.036794502, 0.12474897, 0.3449358, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="top2" type="ColorRect" parent="warning/TitleBar" unique_id=702907038 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 699.3628
+offset_bottom = 31.847137
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="warning/TitleBar" unique_id=457746908]
+layout_mode = 0
+offset_left = 28.025328
+offset_top = 3.8216558
+offset_right = 123.8215
+offset_bottom = 26.821655
+text = "Meskot XP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="warning/TitleBar/Label" unique_id=1973041512]
+layout_mode = 0
+offset_left = -16.560509
+offset_top = -1.2739048
+offset_right = 1007.4395
+offset_bottom = 1022.7261
+scale = Vector2(0.024, 0.024)
+texture = ExtResource("17_rb7u5")
+
+[node name="Button" type="Button" parent="warning/TitleBar" unique_id=1758574040]
+layout_mode = 0
+offset_left = 666.2419
+offset_top = 2.547751
+offset_right = 1712.242
+offset_bottom = 1034.5477
+scale = Vector2(0.027, 0.027)
+text = "X"
+icon = ExtResource("23_fompo")
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="Label3" type="Label" parent="warning/TitleBar" unique_id=993022377]
+layout_mode = 0
+offset_left = 87.897934
+offset_top = 63.694252
+offset_right = 625.89795
+offset_bottom = 119.69425
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 21
+text = "We're Under Construction. You can only interact with
+\"Kekebe\" Folder"
+
+[node name="TextureRect" type="TextureRect" parent="warning/TitleBar/Label3" unique_id=864900764]
+layout_mode = 0
+offset_left = -75.15923
+offset_top = -5.095549
+offset_right = 4086.1982
+offset_bottom = 4156.2617
+scale = Vector2(0.015, 0.015)
+texture = ExtResource("25_ikwcr")
+
+[node name="unsupported" type="Panel" parent="." unique_id=859517246]
+visible = false
+layout_mode = 0
+offset_left = 354.00012
+offset_top = 184.00002
+offset_right = 760.3694
+offset_bottom = 336.8662
+scale = Vector2(0.785, 0.785)
+
+[node name="TitleBar" type="ColorRect" parent="unsupported" unique_id=1345308423]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -3.0517578e-05
+offset_bottom = 155.41399
+grow_horizontal = 2
+color = Color(0.7254902, 0.6901961, 0.7137255, 1)
+
+[node name="top3" type="ColorRect" parent="unsupported/TitleBar" unique_id=948444609 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_left = -0.00015640259
+offset_top = 35.668766
+offset_right = 406.36923
+offset_bottom = 152.86621
+color = Color(0.7581918, 0.7581918, 0.7581917, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="top" type="ColorRect" parent="unsupported/TitleBar" unique_id=603904076 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_top = 3.82164
+offset_right = 406.36923
+offset_bottom = 35.668777
+color = Color(0.036794502, 0.12474897, 0.3449358, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="top2" type="ColorRect" parent="unsupported/TitleBar" unique_id=819751656 node_paths=PackedStringArray("target_window")]
+layout_mode = 0
+offset_right = 406.36923
+offset_bottom = 31.847137
+color = Color(0.11764706, 0.2784314, 0.6784314, 1)
+script = ExtResource("14_jcc5o")
+target_window = NodePath("../..")
+
+[node name="Label" type="Label" parent="unsupported/TitleBar" unique_id=1769152393]
+layout_mode = 0
+offset_left = 28.025328
+offset_top = 3.8216558
+offset_right = 123.8215
+offset_bottom = 26.821655
+text = "Meskot XP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="unsupported/TitleBar/Label" unique_id=187961119]
+layout_mode = 0
+offset_left = -16.560509
+offset_top = -1.2739048
+offset_right = 1007.4395
+offset_bottom = 1022.7261
+scale = Vector2(0.024, 0.024)
+texture = ExtResource("17_rb7u5")
+
+[node name="Button" type="Button" parent="unsupported/TitleBar" unique_id=1555399973]
+layout_mode = 0
+offset_left = 374.52216
+offset_top = 2.547751
+offset_right = 1420.5222
+offset_bottom = 1034.5477
+scale = Vector2(0.027, 0.027)
+text = "X"
+icon = ExtResource("23_fompo")
+flat = true
+script = ExtResource("8_1rwfv")
+
+[node name="Label3" type="Label" parent="unsupported/TitleBar" unique_id=487815180]
+layout_mode = 0
+offset_left = 87.897934
+offset_top = 71.33756
+offset_right = 359.23553
+offset_bottom = 127.33756
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/paragraph_spacing = -7
+theme_override_font_sizes/font_size = 21
+text = "Unsupported File System"
+
+[node name="TextureRect" type="TextureRect" parent="unsupported/TitleBar/Label3" unique_id=290407671]
+layout_mode = 0
+offset_left = -75.15923
+offset_top = -12.738861
+offset_right = 4086.1982
+offset_bottom = 4148.6187
+scale = Vector2(0.015, 0.015)
+texture = ExtResource("25_ikwcr")
 
 [node name="StartMenu" type="Panel" parent="." unique_id=1357609351]
 visible = false
@@ -1524,3 +1748,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1007008375]
 stream = ExtResource("38_mem1y")
+
+[node name="errorSound" type="AudioStreamPlayer" parent="." unique_id=1262726717]
+stream = ExtResource("41_whqih")

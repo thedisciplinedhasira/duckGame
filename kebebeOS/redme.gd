@@ -16,7 +16,7 @@ func _ready() -> void:
 	player_name = player_name.capitalize()
 	
 	if readme_label:
-		readme_label.text = "Hey " + player_name + ",\n\nTo get started, open the File Explorer and go to the KEKEBE folder.\n\nRun the installer, wait for it to finish, and enjoy the game!"
+		readme_label.text = "Hey " + player_name + ",\n\nOpen the KEKEBE folder.\n\nRun the installer, wait for it to finish, and enjoy the game"
 		
 	visibility_changed.connect(_on_visibility_changed)
 

@@ -7,7 +7,7 @@ animation = &"telekinesisHolding"
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_qhqgy"]
 filter_enabled = true
-filters = ["Armature/Skeleton3D:mixamorig_Head", "Armature/Skeleton3D:mixamorig_LeftArm", "Armature/Skeleton3D:mixamorig_LeftForeArm", "Armature/Skeleton3D:mixamorig_LeftHand", "Armature/Skeleton3D:mixamorig_LeftHandIndex1", "Armature/Skeleton3D:mixamorig_LeftHandIndex2", "Armature/Skeleton3D:mixamorig_LeftHandIndex3", "Armature/Skeleton3D:mixamorig_LeftShoulder", "Armature/Skeleton3D:mixamorig_Neck", "Armature/Skeleton3D:mixamorig_RightArm", "Armature/Skeleton3D:mixamorig_RightForeArm", "Armature/Skeleton3D:mixamorig_RightHand", "Armature/Skeleton3D:mixamorig_RightHandIndex1", "Armature/Skeleton3D:mixamorig_RightHandIndex2", "Armature/Skeleton3D:mixamorig_RightHandIndex3", "Armature/Skeleton3D:mixamorig_RightShoulder", "Armature/Skeleton3D:mixamorig_Spine", "Armature/Skeleton3D:mixamorig_Spine1", "Armature/Skeleton3D:mixamorig_Spine2"]
+filters = ["Armature/Skeleton3D:mixamorig_RightArm", "Armature/Skeleton3D:mixamorig_RightForeArm", "Armature/Skeleton3D:mixamorig_RightHand", "Armature/Skeleton3D:mixamorig_RightHandIndex1", "Armature/Skeleton3D:mixamorig_RightHandIndex2", "Armature/Skeleton3D:mixamorig_RightHandIndex3", "Armature/Skeleton3D:mixamorig_RightShoulder"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ksgpb"]
 animation = &"hovering"
@@ -60,5 +60,5 @@ nodes/StateMachine/position = Vector2(60, 540)
 nodes/HoldBlend/node = SubResource("AnimationNodeBlend2_qhqgy")
 nodes/HoldBlend/position = Vector2(360, 220)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_g2els")
-nodes/Animation/position = Vector2(60, 280)
+nodes/Animation/position = Vector2(-20, 300)
 node_connections = [&"output", 0, &"HoldBlend", &"HoldBlend", 0, &"StateMachine", &"HoldBlend", 1, &"Animation"]

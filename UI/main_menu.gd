@@ -8,11 +8,11 @@ extends Control
 @onready var dust_particles: GPUParticles2D = $DustParticles
 @onready var selector: TextureRect = $Selector 
 
-# Reference to the SettingsMenu node inside your MainMenu scene
 @onready var settings_menu: Control = $SettingsMenu
 
-
 var hover_sound = preload("res://sounds/menuHover.wav")
+# Update this path to where your ComicViewer scene is saved
+const COMIC_VIEWER = preload("res://UI/comicviewer.scn") 
 
 func _ready() -> void:
 	selector.hide()
@@ -29,6 +29,8 @@ func _ready() -> void:
 			
 			if button.name == "PlayButton":
 				button.pressed.connect(_on_play_pressed)
+			elif button.name == "ComicButton":
+				button.pressed.connect(_on_comic_pressed)
 			elif button.name == "SettingsButton":
 				button.pressed.connect(_on_settings_pressed)
 			elif button.name == "QuitButton":
@@ -54,6 +56,10 @@ func _on_button_focused(btn: TextureButton) -> void:
 
 func _on_play_pressed() -> void:
 	get_tree().change_scene_to_file("res://kebebeOS/os.tscn")
+	
+func _on_comic_pressed() -> void:
+	var viewer = COMIC_VIEWER.instantiate()
+	add_child(viewer)
 	
 func _on_settings_pressed() -> void:
 	if settings_menu:
