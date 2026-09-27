@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cw1hfmlo6it2n"
+path="res://.godot/imported/Download 'Happy Magic ' Royalty-Free Music.mp3-8fe1bda6cb4a3c56660fb9f4356fabe5.mp3str"
+
+[deps]
+
+source_file="res://sounds/Download 'Happy Magic ' Royalty-Free Music.mp3"
+dest_files=["res://.godot/imported/Download 'Happy Magic ' Royalty-Free Music.mp3-8fe1bda6cb4a3c56660fb9f4356fabe5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

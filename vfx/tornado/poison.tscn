@@ -128,7 +128,7 @@ input_name = "uv"
 default_input_values = [0, 1.0, 1, 5.0]
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_d53td"]
-size = Vector2(824.0001, 264)
+size = Vector2(824, 442)
 title = "Wobble"
 attached_nodes = PackedInt32Array(17, 16, 13, 14, 26, 30, 36)
 
@@ -307,8 +307,8 @@ color_ramp = SubResource("Gradient_gohc1")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vcg2a"]
 render_priority = 0
 shader = SubResource("VisualShader_bm4o5")
-shader_parameter/speedWobble = 0.5
-shader_parameter/wobble = 0.25
+shader_parameter/speedWobble = 0.0
+shader_parameter/wobble = 0.0
 shader_parameter/intesityColor = 10.0
 shader_parameter/ColorParameter = Color(0.472829, 0.464931, 0.0484824, 1)
 shader_parameter/polarcoord = Vector2(0, 0)
@@ -319,43 +319,6 @@ shader_parameter/gradient = SubResource("GradientTexture2D_ys2ah")
 
 [sub_resource type="SphereMesh" id="SphereMesh_fftvr"]
 radius = 2.8
-
-[sub_resource type="Gradient" id="Gradient_8fm1t"]
-offsets = PackedFloat32Array(0, 0.532995, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ihqv"]
-gradient = SubResource("Gradient_8fm1t")
-fill_from = Vector2(1, 0)
-fill_to = Vector2(1, 1)
-repeat = 1
-
-[sub_resource type="Gradient" id="Gradient_havti"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.817259, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_1b8j8"]
-noise_type = 3
-frequency = 0.005
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qvuio"]
-noise = SubResource("FastNoiseLite_1b8j8")
-color_ramp = SubResource("Gradient_havti")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yap6x"]
-resource_local_to_scene = true
-render_priority = 0
-shader = SubResource("VisualShader_bm4o5")
-shader_parameter/speedWobble = 1.0
-shader_parameter/wobble = 0.5
-shader_parameter/intesityColor = 5.0
-shader_parameter/ColorParameter = Color(0.929715, 0.929715, 0.929715, 1)
-shader_parameter/polarcoord = Vector2(0.5, 5)
-shader_parameter/scale = Vector2(2, 2)
-shader_parameter/speed = -0.5
-shader_parameter/textureObj = SubResource("NoiseTexture2D_qvuio")
-shader_parameter/gradient = SubResource("GradientTexture2D_0ihqv")
 
 [sub_resource type="Gradient" id="Gradient_1ih5f"]
 
@@ -368,14 +331,18 @@ repeat = 1
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m8lnu"]
 render_priority = 0
 shader = SubResource("VisualShader_bm4o5")
-shader_parameter/speedWobble = 0.5
-shader_parameter/wobble = 0.25
-shader_parameter/intesityColor = 15.0
+shader_parameter/speedWobble = 0.0
+shader_parameter/wobble = 0.0
+shader_parameter/intesityColor = 0.0
 shader_parameter/ColorParameter = Color(0.223667, 0.399877, 1.92523e-07, 1)
 shader_parameter/polarcoord = Vector2(0.5, 0.5)
 shader_parameter/scale = Vector2(1, 1)
 shader_parameter/speed = -0.2
 shader_parameter/gradient = SubResource("GradientTexture2D_irk88")
+
+[sub_resource type="SphereMesh" id="SphereMesh_cqsu7"]
+radius = 2.265
+height = 0.001
 
 [sub_resource type="Gradient" id="Gradient_l11oh"]
 
@@ -447,14 +414,10 @@ material_override = SubResource("ShaderMaterial_vcg2a")
 mesh = SubResource("SphereMesh_fftvr")
 skeleton = NodePath("../..")
 
-[node name="twhite2" type="MeshInstance3D" parent="." unique_id=209036806]
-transform = Transform3D(0.779428, 0, -2.18536, 0, 1.5, 0, 2.37539, 0, 0.717074, 5.58733, -0.819112, -3.91603)
-material_override = SubResource("ShaderMaterial_yap6x")
-skeleton = NodePath("../..")
-
 [node name="twhite3" type="MeshInstance3D" parent="." unique_id=1399025612]
-transform = Transform3D(0.623542, 0, -1.90031, 0, 1.25, 0, 1.90031, 0, 0.623542, 5.58733, -0.819112, -3.91603)
+transform = Transform3D(0.623542, 0, -1.90031, 0, 1.25, 0, 1.90031, 0, 0.623542, 5.9157257, -5.983367, -4.3478985)
 material_override = SubResource("ShaderMaterial_m8lnu")
+mesh = SubResource("SphereMesh_cqsu7")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=460868764]

@@ -19,9 +19,12 @@ shader_parameter/thickness = 0.23400000948506
 shader_parameter/gap_width = 0.008
 shader_parameter/segment_colors = PackedVector4Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 shader_parameter/selected_border_color = Color(0.99999994, 0.9172606, 0.60530186, 1)
-shader_parameter/unselected_alpha = 0.15600000741
-shader_parameter/selected_alpha = 0.818000038855
+shader_parameter/unselected_alpha = 0.2190000104025
+shader_parameter/selected_alpha = 0.95
 shader_parameter/aspect_ratio = 1.0
+shader_parameter/outline_dark_color = Color(0, 0, 0, 0)
+shader_parameter/outline_light_color = Color(1, 1, 1, 0)
+shader_parameter/outline_width = 0.006
 
 [node name="WeaponWheel" type="CanvasLayer" unique_id=249968041]
 scale = Vector2(1.04, 1.04)
@@ -68,18 +71,18 @@ metadata/_edit_use_anchors_ = true
 
 [node name="PopupSound" type="AudioStreamPlayer" parent="." unique_id=693887593]
 stream = ExtResource("6_470tc")
-volume_db = -24.572
+volume_db = -11.346
 
 [node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=657413284]
 stream = ExtResource("7_m7dcl")
-volume_db = -14.856
+volume_db = -3.152
 
 [node name="AbilityMeter" parent="." unique_id=1069792125 instance=ExtResource("11_i582j")]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 26.923079
-offset_top = -174.92307
-offset_right = 154.92308
-offset_bottom = -46.923096
+offset_left = 50.96154
+offset_top = -185.5
+offset_right = 178.96155
+offset_bottom = -57.5
 grow_vertical = 0
