@@ -1,91 +1,108 @@
 shader_type canvas_item;
 
-uniform int segment_count = 1;
-uniform int selected_index = -1;
+uniform int segment_count = 3;
+uniform int selected_index = 0;
 
-uniform float outer_radius : hint_range(0.1, 0.5) = 0.45;
-uniform float thickness : hint_range(0.05, 0.5) = 0.18;
-uniform float gap_width : hint_range(0.0, 0.05) = 0.008;
+// Dimensions
+uniform float outer_radius : hint_range(0.1, 0.5) = 0.38;
+uniform float thickness : hint_range(0.05, 0.5) = 0.16;
+uniform float gap_width : hint_range(0.0, 0.08) = 0.015;
 
-// Up to 12 ability colors!
+// Colors & Styling
 uniform vec4 segment_colors[12];
-uniform vec4 selected_border_color : source_color = vec4(1.0, 0.85, 0.2, 1.0);
+uniform vec4 ink_outline_color : source_color = vec4(0.1, 0.12, 0.15, 1.0); // Thick comic border
+uniform vec4 active_yellow_stroke : source_color = vec4(1.0, 0.9, 0.25, 1.0); // Selected inner border
+uniform vec4 popup_line_color : source_color = vec4(0.95, 0.2, 0.2, 1.0); // 3 Red comic lines
 
-// bumped from 0.4 -> 0.65, the old value was nearly invisible against
-// anything but a plain bright background
-uniform float unselected_alpha : hint_range(0.0, 1.0) = 0.65;
-uniform float selected_alpha : hint_range(0.0, 1.0) = 0.95;
-
-uniform float aspect_ratio = 1.0;
-
-// --- NEW: contrast outline -------------------------------------------------
-// A dark core stroke plus a thin light hairline, traced along every exposed
-// edge (outer rim, inner rim, wedge gaps). One of the two always reads
-// against whatever is behind the wheel, dark cave or bright sky alike.
-uniform vec4 outline_dark_color : source_color = vec4(0.0, 0.0, 0.0, 0.85);
-uniform vec4 outline_light_color : source_color = vec4(1.0, 1.0, 1.0, 0.5);
-uniform float outline_width : hint_range(0.0, 0.02) = 0.006;
-// -----------------------------------------------------------------------
+// Selection & Opacity
+uniform float unselected_brightness : hint_range(0.1, 1.0) = 0.55;
+uniform float ink_border_width : hint_range(0.005, 0.05) = 0.022;
+uniform float active_stroke_width : hint_range(0.002, 0.03) = 0.012;
 
 void fragment() {
     vec2 uv = UV - vec2(0.5);
+    float aspect_ratio = SCREEN_PIXEL_SIZE.x > 0.0 ? (1.0 / SCREEN_PIXEL_SIZE.x) / (1.0 / SCREEN_PIXEL_SIZE.y) : 1.0;
+    
+    // Normalize aspect ratio
     uv.x *= aspect_ratio;
 
     float dist = length(uv);
-    float segment_arc = TAU / float(segment_count);
+    float segment_arc = TAU / float(max(segment_count, 1));
 
-    // MATHEMATICAL FIX: Shift the angle so the exact center of segment 0 is perfectly at the top
+    // Shift angle so segment 0 centers at the top
     float base_angle = atan(uv.y, uv.x);
-    float shifted_angle = base_angle + (PI / 2.0) + (segment_arc / 2.0);
-
-    // Normalize angle to keep it safely within 0 to TAU
-    shifted_angle = mod(shifted_angle, TAU);
+    float shifted_angle = mod(base_angle + (PI / 2.0) + (segment_arc / 2.0), TAU);
     if (shifted_angle < 0.0) shifted_angle += TAU;
 
     int current_segment = int(floor(shifted_angle / segment_arc));
     float local_angle = mod(shifted_angle, segment_arc);
 
     float inner_radius = outer_radius - thickness;
+
+    // Distances to wedge boundaries
     float dist_to_inner = dist - inner_radius;
     float dist_to_outer = outer_radius - dist;
     float dist_to_start = local_angle * dist;
     float dist_to_end = (segment_arc - local_angle) * dist;
 
     float edge_dist = min(min(dist_to_inner, dist_to_outer), min(dist_to_start, dist_to_end));
-    // slightly wider AA band than before (0.003 -> 0.005) so the ring edge
-    // itself doesn't look jagged once the outline sits right on top of it
-    float mask = smoothstep(0.0, 0.005, edge_dist - gap_width);
 
-    if (mask <= 0.0) {
-        COLOR = vec4(0.0); // Clean cutouts between segments
-    } else {
-        vec4 base_color = segment_colors[current_segment];
-        vec3 final_rgb;
-        float final_alpha;
+    bool drawn_popup = false;
 
-        if (current_segment == selected_index) {
-            float border_mask = smoothstep(0.004, 0.012, edge_dist - gap_width);
-            final_rgb = mix(selected_border_color.rgb, base_color.rgb, border_mask);
+    // -------------------------------------------------------------------
+    // 1. COMIC ACCENT POPUP LINES (Rendered outside the outer ring)
+    // -------------------------------------------------------------------
+    if (dist > outer_radius + 0.005 && dist < outer_radius + 0.09) {
+        if (current_segment == selected_index && selected_index != -1) {
+            float line_dist_from_ring = dist - (outer_radius + 0.02);
+            float norm_angle = (local_angle / segment_arc) - 0.5; // -0.5 to 0.5 across wedge
+            
+            // 3 line radial positions (-0.28, 0.0, 0.28)
+            float l1 = abs(norm_angle - (-0.28));
+            float l2 = abs(norm_angle - 0.0);
+            float l3 = abs(norm_angle - 0.28);
+            float min_line_angle = min(min(l1, l2), l3);
 
-            float glow = 1.0 - ((dist - inner_radius) / thickness);
-            final_rgb += vec3(0.2) * glow;
-
-            final_alpha = selected_alpha * mask;
-        } else {
-            final_rgb = base_color.rgb;
-            final_alpha = unselected_alpha * mask;
+            // Shape line dashes
+            float line_thick = smoothstep(0.04, 0.0, min_line_angle);
+            float line_length = smoothstep(0.0, 0.008, line_dist_from_ring) * smoothstep(0.05, 0.035, line_dist_from_ring);
+            
+            float popup_alpha = line_thick * line_length;
+            if (popup_alpha > 0.1) {
+                COLOR = vec4(popup_line_color.rgb, popup_line_color.a * popup_alpha);
+                drawn_popup = true;
+            }
         }
+    }
 
-        // Lay the two-tone stroke over the top: dark band right at the edge,
-        // a lighter hairline just inside it.
-        float dark_band = 1.0 - smoothstep(0.0, outline_width, edge_dist - gap_width);
-        float light_band = 1.0 - smoothstep(outline_width * 0.4, outline_width, edge_dist - gap_width);
-        light_band *= (1.0 - dark_band);
+    // -------------------------------------------------------------------
+    // 2. MAIN WEDGE MASK & BORDERS
+    // -------------------------------------------------------------------
+    if (!drawn_popup) {
+        float main_mask = smoothstep(0.0, 0.004, edge_dist - gap_width);
 
-        final_rgb = mix(final_rgb, outline_dark_color.rgb, dark_band * outline_dark_color.a);
-        final_rgb = mix(final_rgb, outline_light_color.rgb, light_band * outline_light_color.a);
-        final_alpha = max(final_alpha, dark_band * mask);
+        if (main_mask <= 0.0) {
+            COLOR = vec4(0.0);
+        } else {
+            vec4 base_color = segment_colors[current_segment];
+            bool is_selected = (current_segment == selected_index);
 
-        COLOR = vec4(final_rgb, final_alpha);
+            // Apply dark comic ink outline around wedge edge
+            float ink_mask = smoothstep(ink_border_width, 0.0, edge_dist - gap_width);
+
+            // Calculate wedge RGB base
+            vec3 col = is_selected ? base_color.rgb : base_color.rgb * unselected_brightness;
+
+            // Apply active inner yellow highlight border if selected
+            if (is_selected) {
+                float active_stroke_mask = smoothstep(ink_border_width + active_stroke_width, ink_border_width, edge_dist - gap_width);
+                col = mix(col, active_yellow_stroke.rgb, active_stroke_mask);
+            }
+
+            // Overlay main outer dark ink outline
+            col = mix(col, ink_outline_color.rgb, ink_mask);
+
+            COLOR = vec4(col, base_color.a * main_mask);
+        }
     }
 }

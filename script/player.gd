@@ -230,7 +230,6 @@ var is_dead := false
 var current_respawn_pos: Vector3 = Vector3.ZERO
 var death_tween: Tween
 
-
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	target_yaw = rotation.y
@@ -580,7 +579,15 @@ func _apply_horizontal_velocity(direction: Vector3, sprinting: bool, delta: floa
 		var speed := _get_move_speed(sprinting)
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
-		target_blend = Vector2(0.0, speed)
+		
+		# Decouple the animation state from the physical speed
+		var anim_speed := speed
+		if is_micro:
+			# Force the blend space to use the run animation 
+			# so feet move fast enough to match the ground covered
+			anim_speed = RUN_SPEED
+
+		target_blend = Vector2(0.0, anim_speed)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, STOP_DECEL * delta)
 		velocity.z = move_toward(velocity.z, 0.0, STOP_DECEL * delta)
@@ -605,7 +612,7 @@ func _update_footsteps(delta: float, is_moving: bool) -> void:
 			footstep_audio.play()
 			if is_super_sprinting:
 				footstep_timer = SUPER_RUN_STEP_TIME
-			elif is_running:
+			elif is_running or is_micro: # Match footstep audio cadence to the running animation
 				footstep_timer = RUN_STEP_TIME
 			else:
 				footstep_timer = WALK_STEP_TIME
