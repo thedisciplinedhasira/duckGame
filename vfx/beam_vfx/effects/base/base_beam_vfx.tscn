@@ -10,8 +10,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2lygp"]
 render_priority = 0
 shader = ExtResource("2_v1dkf")
-shader_parameter/primary_color = Color(1, 1, 1, 1)
-shader_parameter/tertiary_color = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/primary_color = Color(1, 1, 0.8980392, 1)
+shader_parameter/tertiary_color = Color(1, 1, 0.8980392, 1)
 shader_parameter/emission = 3.0
 shader_parameter/flash_amount = 0.0
 shader_parameter/flash_emission = 5.999999865888
@@ -23,7 +23,7 @@ height = 0.6
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a55gb"]
 render_priority = 0
 shader = ExtResource("3_5cohp")
-shader_parameter/primary_color = Color(1, 1, 1, 1)
+shader_parameter/primary_color = Color(1, 1, 0.8980392, 1)
 shader_parameter/secondary_color = Color(0.45, 0.45, 0.45, 1)
 shader_parameter/emission = 3.0
 shader_parameter/pulse_speed = 30.0
@@ -46,8 +46,8 @@ cap_bottom = false
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anw6r"]
 render_priority = 0
 shader = ExtResource("4_fhrsq")
-shader_parameter/primary_color = Color(1, 1, 1, 1)
-shader_parameter/secondary_color = Color(0.45, 0.45, 0.45, 1)
+shader_parameter/primary_color = Color(1, 1, 0.8980392, 1)
+shader_parameter/secondary_color = Color(1, 1, 0.8980392, 1)
 shader_parameter/tertiary_color = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/emission = 3.0
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_q6okr")
@@ -77,7 +77,7 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_q6okr")
 shader_parameter/noise_twist = 0.0
 shader_parameter/scroll_speed = Vector2(0, 2)
 shader_parameter/beam_length = 4.0
-shader_parameter/secondary_color = Color(0.45, 0.45, 0.45, 1)
+shader_parameter/secondary_color = Color(1, 1, 0.8980392, 1)
 shader_parameter/tertiary_color = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/emission = 3.0
 shader_parameter/is_tertiary = true
@@ -98,8 +98,8 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_q6okr")
 shader_parameter/noise_twist = 0.0
 shader_parameter/scroll_speed = Vector2(0, 2)
 shader_parameter/beam_length = 4.0
-shader_parameter/secondary_color = Color(0.45, 0.45, 0.45, 1)
-shader_parameter/tertiary_color = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/secondary_color = Color(1, 1, 0.8980392, 1)
+shader_parameter/tertiary_color = Color(1, 1, 0.8980392, 1)
 shader_parameter/emission = 3.0
 shader_parameter/is_tertiary = false
 shader_parameter/open_amount = 1.0
@@ -171,6 +171,10 @@ shader_parameter/emission = 3.0
 shader_parameter/flash_amount = 0.999999977648
 shader_parameter/flash_emission = 3.999999910592
 
+[sub_resource type="SphereMesh" id="SphereMesh_tds3u"]
+radius = 0.4
+height = 0.8
+
 [sub_resource type="Curve" id="Curve_1o7w0"]
 _data = [Vector2(0, 1), 0.0, -1.0023087, 0, 0, Vector2(1, 0), -1.212547, 0.0, 0, 0]
 point_count = 2
@@ -200,14 +204,11 @@ alpha_curve = SubResource("CurveTexture_2segj")
 [sub_resource type="SphereMesh" id="SphereMesh_vxkl2"]
 radius = 0.1
 
-[sub_resource type="SphereMesh" id="SphereMesh_nrnh6"]
-
 [node name="BaseBeamVFX" type="Node3D" unique_id=335639217]
 script = ExtResource("1_q6okr")
 
 [node name="BeamStart" type="MeshInstance3D" parent="." unique_id=1923619505]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001, -0.006, 0)
-visible = false
 material_override = SubResource("ShaderMaterial_2lygp")
 mesh = SubResource("SphereMesh_8nl8c")
 
@@ -222,37 +223,33 @@ transform = Transform3D(1, 6.938894e-18, 1.8626451e-08, 0, 1, -9.313226e-09, -3.
 
 [node name="BeamCore" type="MeshInstance3D" parent="BeamPivot/BeamScalor" unique_id=129748878]
 transform = Transform3D(1, 0, -1.4901161e-08, 0, -1.1920929e-07, -0.99999994, 0, 1, -4.0978193e-08, 0, 0, -0.5)
-visible = false
 sorting_offset = -0.1
 material_override = SubResource("ShaderMaterial_a55gb")
 mesh = SubResource("CylinderMesh_16tsm")
 
 [node name="BeamOuter" type="MeshInstance3D" parent="BeamPivot/BeamScalor" unique_id=1979448011]
 transform = Transform3D(1, 0, -1.4901161e-08, 0, -1.1920929e-07, -0.99999994, 0, 1, -4.0978193e-08, -1.0231596e-08, -5.9604645e-08, -0.5)
-visible = false
 material_override = SubResource("ShaderMaterial_anw6r")
 mesh = SubResource("CylinderMesh_2virs")
 
 [node name="AudioMid" type="AudioStreamPlayer3D" parent="BeamPivot/BeamScalor" unique_id=209415801]
 transform = Transform3D(1, 0, -3.7252916e-09, 6.938894e-18, 1, 1.8626458e-09, 7.4505807e-10, -3.7252904e-10, 0.20000008, 0, 0, -0.5)
-visible = false
 
 [node name="BeamFlare1" type="MeshInstance3D" parent="BeamPivot" unique_id=72157017]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -1)
-visible = false
 sorting_offset = 1.0
 material_override = SubResource("ShaderMaterial_1ivtj")
 mesh = SubResource("CylinderMesh_vqjau")
 
 [node name="BeamFlare2" type="MeshInstance3D" parent="BeamPivot" unique_id=672264532]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.5)
-visible = false
 sorting_offset = 2.0
 material_override = SubResource("ShaderMaterial_resw7")
 mesh = SubResource("CylinderMesh_svpl7")
 
 [node name="BeamParticles" type="GPUParticles3D" parent="BeamPivot" unique_id=510382670]
-transform = Transform3D(0.99999994, 0, 0, 2.3283064e-10, 0.99999994, 0, 1.8626451e-09, 0, 0.99999994, 0, 0.32374406, 0)
+transform = Transform3D(0.99999994, 0, 0, 2.3283064e-10, 0.99999994, 0, 1.8626451e-09, 0, 0.99999994, 0, 0, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_af72l")
 amount = 64
 lifetime = 0.5
@@ -262,7 +259,13 @@ process_material = SubResource("ParticleProcessMaterial_6hjry")
 draw_pass_1 = SubResource("SphereMesh_fqy8c")
 
 [node name="BeamEndPivot" type="Node3D" parent="." unique_id=1227742675]
-transform = Transform3D(0.9999464, 0, 0, 1.3877788e-17, 0.9999233, 0, 1.110223e-16, 0, 0.9999485, 0, 0, -5.0000005)
+transform = Transform3D(0.99994636, 0, 0, 0, 0.9999232, 0, 0, 0, 0.99994844, 0, 0, -5)
+
+[node name="BeamEnd" type="MeshInstance3D" parent="BeamEndPivot" unique_id=160767194]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+visible = false
+material_override = SubResource("ShaderMaterial_pe1wu")
+mesh = SubResource("SphereMesh_tds3u")
 
 [node name="AudioEnd" type="AudioStreamPlayer3D" parent="BeamEndPivot" unique_id=49957222]
 transform = Transform3D(1.0000536, 0, 0, 0, 1.0000768, 0, 0, 0, 1.0000516, 0, 0, 0)
@@ -277,7 +280,3 @@ local_coords = true
 transform_align = 2
 process_material = SubResource("ParticleProcessMaterial_0sd8b")
 draw_pass_1 = SubResource("SphereMesh_vxkl2")
-
-[node name="BeamEnd" type="MeshInstance3D" parent="BeamEndPivot" unique_id=264278011]
-transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-mesh = SubResource("SphereMesh_nrnh6")

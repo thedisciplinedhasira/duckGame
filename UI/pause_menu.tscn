@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://u7mxidxae82p"]
+
+[ext_resource type="Texture2D" uid="uid://cddt37g42jl11" path="res://UI/pauseMenu/pauseBackground.png" id="1_0b5ob"]
+[ext_resource type="Script" uid="uid://fo6xhcyuhkol" path="res://UI/pause_menu.gd" id="1_nben2"]
+[ext_resource type="Shader" uid="uid://cowxs2bhrffpc" path="res://UI/pause_menu.gdshader" id="2_mxjhc"]
+[ext_resource type="Texture2D" uid="uid://ctylast6g1x7a" path="res://UI/pauseMenu/hoverRiben.png" id="2_nben2"]
+[ext_resource type="Texture2D" uid="uid://dhn3qpy1d0kbv" path="res://UI/pauseMenu/return.png" id="2_pqlge"]
+[ext_resource type="Texture2D" uid="uid://jsa3d00cq38m" path="res://UI/pauseMenu/pause.png" id="2_xv4gp"]
+[ext_resource type="Texture2D" uid="uid://diewstv6hs3lu" path="res://UI/pauseMenu/option.png" id="3_nben2"]
+[ext_resource type="Texture2D" uid="uid://dai6sxd1mke42" path="res://UI/pauseMenu/quit.png" id="4_xv4gp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xv4gp"]
+shader = ExtResource("2_mxjhc")
+shader_parameter/blur_amount = 2.5
+shader_parameter/mix_amount = 0.5
+shader_parameter/color_over = Color(0, 0, 0, 1)
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1213090792]
+process_mode = 3
+layer = 100
+script = ExtResource("1_nben2")
+ribbon_move_duration = 0.1
+ribbon_x_offset = -80.0
+
+[node name="DimOverlay" type="ColorRect" parent="." unique_id=1807497031]
+material = SubResource("ShaderMaterial_xv4gp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.41568628)
+
+[node name="MenuBackground" type="TextureRect" parent="." unique_id=1913202080]
+offset_left = 83.0
+offset_top = 30.0
+offset_right = 607.0
+offset_bottom = 554.0
+texture = ExtResource("1_0b5ob")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="MenuBackground" unique_id=1824276689]
+layout_mode = 0
+offset_left = -17.0
+offset_top = -39.0
+offset_right = 186.0
+offset_bottom = 164.0
+texture = ExtResource("2_xv4gp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HoverRibbon" type="TextureRect" parent="MenuBackground" unique_id=570485894]
+layout_mode = 0
+offset_left = -15.000008
+offset_top = -61.000008
+offset_right = 461.0
+offset_bottom = 415.0
+rotation = -0.024173224
+texture = ExtResource("2_nben2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="Control" parent="MenuBackground" unique_id=266775212]
+anchors_preset = 0
+offset_left = 84.0
+offset_top = 146.0
+offset_right = 493.0
+offset_bottom = 373.0
+rotation = -0.006821148
+scale = Vector2(0.779, 0.779)
+
+[node name="ReturnButton" type="Button" parent="MenuBackground/VBoxContainer" unique_id=435651571]
+layout_mode = 0
+offset_right = 409.0
+offset_bottom = 72.0
+icon = ExtResource("2_pqlge")
+flat = true
+
+[node name="OptionsButton" type="Button" parent="MenuBackground/VBoxContainer" unique_id=1246201249]
+layout_mode = 0
+offset_left = -0.11205664
+offset_top = 92.427574
+offset_right = 408.88794
+offset_bottom = 163.42758
+icon = ExtResource("3_nben2")
+flat = true
+
+[node name="QuitButton" type="Button" parent="MenuBackground/VBoxContainer" unique_id=1973471982]
+layout_mode = 0
+offset_left = -0.090834826
+offset_top = 164.31645
+offset_right = 408.90918
+offset_bottom = 240.31647
+icon = ExtResource("4_xv4gp")
+flat = true
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="." unique_id=932629195]
+volume_db = -9.139

@@ -236,7 +236,8 @@ func _ready() -> void:
 	target_pitch = camera.rotation.x
 	default_fov = camera.fov
 	target_fov = default_fov
-
+	
+	
 	current_ability_charges = max_ability_charges
 	head_look_cos = cos(deg_to_rad(max_head_look_angle))
 
@@ -253,7 +254,7 @@ func _ready() -> void:
 	base_camera_local = camera.position
 	base_camera_near = camera.near
 	camera_mount.top_level = true
-
+	
 	# ray is built here in code so the scene doesnt need a new node
 	# it stays disabled and only fires when we force it while hovering
 	hover_ray = RayCast3D.new()
@@ -276,7 +277,7 @@ func _ready() -> void:
 	active_ability_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	active_ability_icon.custom_minimum_size = Vector2(64, 64)
 	active_ability_icon.size = Vector2(64, 64)
-
+	
 	if not ambient_sound.playing:
 		ambient_sound.play()
 	if not theme_song.playing:
@@ -296,7 +297,6 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if is_input_locked:
 		return
-
 	var motion := event as InputEventMouseMotion
 	if motion:
 		_handle_look_input(motion)
@@ -311,12 +311,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(ACT_GRAB) and current_ability == Ability.MICRO:
 		toggle_micro_size()
 
-
 # gameplay and physics only, this can run several times per frame when fps drops
 func _physics_process(delta: float) -> void:
 	# check for exhaustion before allowing hover
 	is_hovering = current_ability == Ability.HOVER and Input.is_action_pressed(ACT_HOVER) and not is_ability_exhausted
-
 	_update_ability_charges(delta)
 
 	if is_input_locked:
@@ -373,10 +371,10 @@ func _follow_camera() -> void:
 		return
 	last_camera_pos = target
 	camera_mount.global_position = target
+	
 
 
 # ---------- look ----------
-
 func _handle_look_input(event: InputEventMouseMotion) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		return
@@ -392,7 +390,6 @@ func _handle_look_rotation(delta: float) -> void:
 	if target_pitch != applied_pitch:
 		applied_pitch = target_pitch
 		camera.rotation.x = target_pitch
-
 func _update_fov() -> void:
 	if grabbed_object:
 		_set_target_fov(FOV_GRAB, 0.2)
@@ -426,7 +423,7 @@ func _apply_gravity(delta: float) -> void:
 func _apply_hover_spring(delta: float) -> void:
 	# forced cast on a disabled ray gives fresh results without building a dictionary
 	hover_ray.force_raycast_update()
-
+	
 	if not hover_ray.is_colliding():
 		velocity.y = lerpf(velocity.y, HOVER_SINK_SPEED, _smooth(HOVER_SINK_RATE, delta))
 		return
@@ -443,7 +440,8 @@ func _handle_hover_state(delta: float) -> void:
 		tornado_vfx.visible = is_hovering
 		if not is_hovering:
 			hover_audio.stop()
-
+			
+			
 	if is_hovering:
 		hover_audio_timer += delta
 		if not hover_audio.playing or hover_audio_timer >= HOVER_AUDIO_LOOP_TIME:
@@ -485,7 +483,7 @@ func _update_ability_charges(delta: float) -> void:
 # meters are pushed from _process, and only when the bar would visibly change
 func _sync_meters() -> void:
 	if ability_meter == null:
-		return
+		return 
 
 	if _meter_changed(current_stamina, last_stamina_sent, max_stamina):
 		last_stamina_sent = current_stamina
@@ -555,7 +553,7 @@ func _update_sprint_speed(delta: float) -> void:
 	var target := super_run_speed if is_super_sprinting else RUN_SPEED
 	var rate := 10.0 if is_super_sprinting else 15.0
 	current_sprint_speed = move_toward(current_sprint_speed, target, rate * delta)
-	
+
 func _get_move_speed(sprinting: bool) -> float:
 	var speed := WALK_SPEED
 
@@ -605,7 +603,8 @@ func _update_footsteps(delta: float, is_moving: bool) -> void:
 	var want_dust := is_running and grounded
 	if footstep_dust.emitting != want_dust:
 		footstep_dust.emitting = want_dust
-
+		
+		
 	if is_moving and grounded:
 		footstep_timer -= delta
 		if footstep_timer <= 0.0:
@@ -646,7 +645,6 @@ func _validate_grab() -> void:
 	if grabbed_object and not is_instance_valid(grabbed_object):
 		grabbed_object = null
 		_end_grab_visuals()
-		
 
 func try_grab_object() -> void:
 	# cannot grab with no ability energy
