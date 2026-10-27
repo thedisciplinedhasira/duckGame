@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://daw5ronv7juna"]
+
+[ext_resource type="Script" uid="uid://caiedud0ushuv" path="res://look_trigger.gd" id="1_kjdts"]
+
+[node name="LookTrigger" type="Node3D" unique_id=318740725]
+script = ExtResource("1_kjdts")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=322977876]

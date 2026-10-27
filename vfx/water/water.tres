@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dawy8k3uej2ev"]
+
+[ext_resource type="Shader" uid="uid://c6l6hmff0sdv3" path="res://vfx/water/shader/water.tres" id="1_ycxlu"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ycxlu")
+shader_parameter/ShallowColor = Color(2e-06, 0.752171, 0.756353, 1)
+shader_parameter/DeepColor = Color(0.001514, 0.302474, 0.570934, 1)
+shader_parameter/ParallaxSpeed = Vector2(0.1, 0.1)
+shader_parameter/Depth = -3.0
+shader_parameter/ParallaxTiling = Vector2(0.025, 0.025)
+shader_parameter/FoamColor = Color(0.669587, 1, 0.998542, 1)
+shader_parameter/FoamSpeed = Vector2(0.1, 0.1)
+shader_parameter/FoamTiling = Vector2(0.02, 0.02)

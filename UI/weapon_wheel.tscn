@@ -12,19 +12,20 @@
 [ext_resource type="Texture2D" uid="uid://2rkic35jhme6" path="res://UI/weaponWheel/shinkurt.png" id="8_b71bg"]
 [ext_resource type="Texture2D" uid="uid://1m16uvp3y7ic" path="res://UI/weaponWheel/Dots.png" id="8_i582j"]
 [ext_resource type="Texture2D" uid="uid://073v0t57pia6" path="res://UI/weaponWheel/cini.png" id="9_s22nq"]
+[ext_resource type="Texture2D" uid="uid://bcyjmakkvu60d" path="res://UI/UIElements/abilityMeter/wwar.png" id="11_b71bg"]
 [ext_resource type="PackedScene" uid="uid://f2nypdc7ksxt" path="res://UI/AbilityMeter.tscn" id="11_i582j"]
 
-[node name="WeaponWheel" type="CanvasLayer" unique_id=249968041 node_paths=PackedStringArray("icon_nodes", "highlight_nodes")]
+[node name="WeaponWheel" type="CanvasLayer" unique_id=249968041 node_paths=PackedStringArray("icon_nodes", "highlight_nodes", "not_available_rect")]
 scale = Vector2(1.04, 1.04)
 transform = Transform2D(1.04, 0, 0, 1.04, 0, 0)
 script = ExtResource("2_xqp5f")
 icon_nodes = [NodePath("CenterControl/IconCoffee"), NodePath("CenterControl/IconGarlic"), NodePath("CenterControl/IconBuna")]
 highlight_nodes = [NodePath("CenterControl/HighlightTop"), NodePath("CenterControl/HighlightRight"), NodePath("CenterControl/HighlightLeft")]
+not_available_rect = NodePath("CenterControl/NotAvailable")
+unlocked_abilities = Array[bool]([true, true, true])
 dot_fade_in_duration = 1.0
-ability_names = Array[String](["Buna", "Nech Shinkurt", "Buna be Nech Shinkurt"])
 custom_font = ExtResource("6_inh8t")
 font_color = Color(0.92535293, 0.9253528, 0.9253529, 1)
-outline_size = 2
 
 [node name="CenterControl" type="Control" parent="." unique_id=1573097207]
 layout_mode = 3
@@ -152,6 +153,16 @@ offset_right = 221.88464
 offset_bottom = 521.9616
 rotation = 4.1887903
 texture = ExtResource("8_i582j")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NotAvailable" type="TextureRect" parent="CenterControl" unique_id=349715963]
+layout_mode = 0
+offset_left = -58.884583
+offset_top = -220.34616
+offset_right = 68.03851
+offset_bottom = -116.5
+texture = ExtResource("11_b71bg")
 expand_mode = 1
 stretch_mode = 5
 

@@ -18,10 +18,10 @@ const STATE_MOVEMENT := &"Movement"
 const STATE_HOVERING := &"hovering"
 
 # movement
-const WALK_SPEED := 4.0
-const RUN_SPEED := 9.0
-const CARRY_SPEED := 4.0
-const ACCEL := 15.0
+const WALK_SPEED := 10
+const RUN_SPEED := 15
+const CARRY_SPEED := 10#4.0
+const ACCEL := 50#15.0
 const STOP_DECEL := 240.0
 const ROTATION_SMOOTHING := 23.0
 
@@ -38,9 +38,8 @@ const HOVER_AUDIO_START := 5.0
 const HOVER_AUDIO_LOOP_TIME := 25.0
 
 # camera
-const MAX_PITCH := deg_to_rad(89.0)
-const FOV_HOVER := 85.0
-const FOV_GRAB := 65.0
+const FOV_HOVER := 100 #85.0
+const FOV_GRAB := 60#65.0
 # skip camera rotation updates smaller than this (radians, about 0.006 degrees)
 const ANGLE_EPSILON := 0.0001
 
@@ -75,8 +74,16 @@ const DEATH_FADE_OUT := 0.5
 @export var pull_damping := 8.0
 @export var throw_strength: float = 20.0
 
+@export_category("Camera Settings")
+# degrees the player can look up and down
+@export_range(10.0, 89.0) var max_look_up_deg := 45.0
+@export_range(10.0, 89.0) var max_look_down_deg := 80.0
+# camera distance multiplier at the extremes, 1.0 is your normal distance at level
+@export_range(0.1, 1.0, 0.05) var look_up_distance_mult := 0.45
+@export_range(1.0, 3.0, 0.05) var look_down_distance_mult := 1.5
+
 @export_category("Sprint Settings")
-@export var super_run_speed := 9.0
+@export var super_run_speed := 19 #15
 @export var super_sprint_delay := 0.5
 @export var super_sprint_fov := 90.0
 
@@ -129,6 +136,74 @@ const DEATH_FADE_OUT := 0.5
 @export var quit_button: Button
 @export var death_sound: AudioStreamPlayer
 
+
+# ---------- ability unlocks ----------
+# this array is the one real source of truth, the weapon wheel just mirrors it
+@export_category("Ability Unlocks")
+## 0: Hover, 1: Telekinesis, 2: Micro-Duck (True = Unlocked, False = Locked)
+@export var unlocked_abilities: Array[bool] = [true, false, false] 
+## shown for a moment when the player picks a locked ability in the wheel
+@export var locked_warning_texture: TextureRect
+
+var locked_tween: Tween
+
+func unlock_all_abilities() -> void:
+	for i in unlocked_abilities.size():
+		set_ability_unlocked(i, true)
+
+func disable_all_abilities() -> void:
+	for i in unlocked_abilities.size():
+		set_ability_unlocked(i, false)
+
+# the one door every zone / pickup goes through
+func set_ability_unlocked(index: int, unlocked: bool) -> void:
+	if index < 0 or index >= unlocked_abilities.size():
+		return
+	unlocked_abilities[index] = unlocked
+	weapon_wheel.set_slot_unlocked(index, unlocked)
+
+	# if the equipped one just got locked, take it away from the player
+	if not unlocked and _ability_to_slot(current_ability) == index:
+		if is_micro:
+			# shrink back first, the ceiling check may refuse
+			toggle_micro_size()
+			if is_micro:
+				return # stuck under a low ceiling, keep it equipped so they can still un-shrink
+		_unequip_ability()
+
+func _ability_to_slot(ability: Ability) -> int:
+	match ability:
+		Ability.HOVER:
+			return 0
+		Ability.TELEKINESIS:
+			return 1
+		Ability.MICRO:
+			return 2
+	return -1
+
+func _unequip_ability() -> void:
+	if grabbed_object:
+		release_object()
+	current_ability = Ability.NONE
+	tele_ray.enabled = false
+	ability_meter.set_ability_icon(null)
+	active_ability_icon.texture = null
+
+func _on_locked_ability_selected(_index: int) -> void:
+	_show_locked_warning()
+
+func _show_locked_warning() -> void:
+	if locked_warning_texture == null:
+		return
+	locked_warning_texture.show()
+	locked_warning_texture.modulate.a = 0.0
+	locked_tween = _fresh_tween(locked_tween)
+	locked_tween.tween_property(locked_warning_texture, "modulate:a", 1.0, 0.15)
+	locked_tween.tween_interval(1.2)
+	locked_tween.tween_property(locked_warning_texture, "modulate:a", 0.0, 0.3)
+	locked_tween.tween_callback(locked_warning_texture.hide)
+
+
 @onready var hover_audio: AudioStreamPlayer3D = $HoverAudio
 @onready var ambient_sound: AudioStreamPlayer = $AmbientSound
 @onready var theme_song: AudioStreamPlayer = $ThemeSong
@@ -143,6 +218,7 @@ const DEATH_FADE_OUT := 0.5
 @onready var telekinesis_vfx: GPUParticles3D = $cameraMount/Camera3D/HoldPosition/TelekinesisVFX
 @onready var head_look: LookAtModifier3D = %LookAtModifier3D
 @onready var active_ability_icon: TextureRect = $HUD/ActiveAbilityIcon
+@onready var weapon_wheel: WeaponWheel = $WeaponWheel
 @onready var ability_meter: AbilityMeter = $WeaponWheel/AbilityMeter
 
 # lives outside the player scene so this one stays optional
@@ -161,6 +237,8 @@ var last_camera_pos := Vector3.INF
 var default_fov := 75.0
 var target_fov := 75.0
 var fov_tween: Tween
+# how far the camera sits from the pivot because of pitch, 1.0 is level
+var pitch_distance_mult := 1.0
 
 # input and unlock flags
 var is_input_locked := false
@@ -214,7 +292,7 @@ var camera_scale := 1.0:
 	set(value):
 		camera_scale = value
 		camera_offset = base_camera_offset * value
-		camera.position = base_camera_local * value
+		_apply_camera_position()
 		camera.near = maxf(base_camera_near * value, minf(base_camera_near, MICRO_NEAR_MIN))
 
 # shader param cache
@@ -233,7 +311,9 @@ var death_tween: Tween
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	target_yaw = rotation.y
-	target_pitch = camera.rotation.x
+	# any tilt the camera had in the scene becomes the starting pitch on the mount
+	target_pitch = camera_mount.rotation.x + camera.rotation.x
+	camera.rotation.x = 0.0
 	default_fov = camera.fov
 	target_fov = default_fov
 	
@@ -254,6 +334,12 @@ func _ready() -> void:
 	base_camera_local = camera.position
 	base_camera_near = camera.near
 	camera_mount.top_level = true
+
+	# pitch lives on the mount now so the camera orbits the pivot
+	camera_mount.rotation.x = target_pitch
+	applied_pitch = target_pitch
+	pitch_distance_mult = _calc_pitch_distance_mult()
+	_apply_camera_position()
 	
 	# ray is built here in code so the scene doesnt need a new node
 	# it stays disabled and only fires when we force it while hovering
@@ -273,6 +359,8 @@ func _ready() -> void:
 
 	# telekinesis ray only casts while that ability is equipped
 	tele_ray.enabled = false
+	# camera swings around the duck now so the ray must never hit the duck itself
+	tele_ray.add_exception(self)
 	# icon setup only needs to happen once,
 	active_ability_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	active_ability_icon.custom_minimum_size = Vector2(64, 64)
@@ -290,6 +378,15 @@ func _ready() -> void:
 		respawn_button.pressed.connect(_on_respawn_pressed)
 	if quit_button:
 		quit_button.pressed.connect(_on_quit_pressed)
+
+	# wheel mirrors whatever the player says is unlocked
+	# children finish _ready before the parent so the wheel is already set up here
+	weapon_wheel.locked_ability_selected.connect(_on_locked_ability_selected)
+	for i in unlocked_abilities.size():
+		weapon_wheel.set_slot_unlocked(i, unlocked_abilities[i])
+	if locked_warning_texture:
+		locked_warning_texture.modulate.a = 0.0
+		locked_warning_texture.hide()
 
 	_follow_camera()
 
@@ -373,13 +470,16 @@ func _follow_camera() -> void:
 	camera_mount.global_position = target
 	
 
-
 # ---------- look ----------
 func _handle_look_input(event: InputEventMouseMotion) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		return
 	target_yaw -= event.relative.x * mouse_sensitivity
-	target_pitch = clampf(target_pitch - event.relative.y * mouse_sensitivity, -MAX_PITCH, MAX_PITCH)
+	target_pitch = clampf(
+		target_pitch - event.relative.y * mouse_sensitivity,
+		-deg_to_rad(max_look_down_deg),
+		deg_to_rad(max_look_up_deg)
+	)
 
 func _handle_look_rotation(delta: float) -> void:
 	var yaw := camera_mount.rotation.y
@@ -387,9 +487,26 @@ func _handle_look_rotation(delta: float) -> void:
 		camera_mount.rotation.y = lerp_angle(yaw, target_yaw, _smooth(ROTATION_SMOOTHING, delta))
 
 	# compare against our own float, reading rotation.x back is never exactly equal
+	# pitch goes on the mount so the camera swings around the pivot instead of tilting in place
 	if target_pitch != applied_pitch:
 		applied_pitch = target_pitch
-		camera.rotation.x = target_pitch
+		camera_mount.rotation.x = target_pitch
+		pitch_distance_mult = _calc_pitch_distance_mult()
+		_apply_camera_position()
+
+# 1.0 at level, shrinks toward the look up mult, grows toward the look down mult
+func _calc_pitch_distance_mult() -> float:
+	if target_pitch >= 0.0:
+		var up_w := smoothstep(0.0, deg_to_rad(max_look_up_deg), target_pitch)
+		return lerpf(1.0, look_up_distance_mult, up_w)
+	else:
+		var down_w := smoothstep(0.0, deg_to_rad(max_look_down_deg), -target_pitch)
+		return lerpf(1.0, look_down_distance_mult, down_w)
+
+# pitch distance and micro scale both end up on the camera's local position
+func _apply_camera_position() -> void:
+	camera.position = base_camera_local * pitch_distance_mult * camera_scale
+
 func _update_fov() -> void:
 	if grabbed_object:
 		_set_target_fov(FOV_GRAB, 0.2)
@@ -408,7 +525,6 @@ func _set_target_fov(fov: float, duration: float) -> void:
 	target_fov = fov
 	fov_tween = _fresh_tween(fov_tween)
 	fov_tween.tween_property(camera, "fov", fov, duration).set_trans(Tween.TRANS_SINE)
-
 
 # ---------- gravity and hover ----------
 
@@ -524,9 +640,9 @@ func _get_move_direction() -> Vector3:
 	# no input means no basis multiply and no normalize
 	if input_dir == Vector2.ZERO:
 		return Vector3.ZERO
-	var direction := camera_mount.global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
-	direction.y = 0.0
-	return direction.normalized()
+	# yaw only, pitch lives on the same node now and would squash forward input
+	var yaw_basis := Basis(Vector3.UP, camera_mount.rotation.y)
+	return (yaw_basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
 
 func _update_stamina(delta: float, sprinting: bool) -> void:
 	if sprinting:
@@ -566,7 +682,7 @@ func _get_move_speed(sprinting: bool) -> float:
 		speed *= MICRO_SPEED_MULT
 
 	return speed
-
+	
 func _apply_horizontal_velocity(direction: Vector3, sprinting: bool, delta: float) -> void:
 	var target_blend := Vector2.ZERO
 
@@ -603,7 +719,6 @@ func _update_footsteps(delta: float, is_moving: bool) -> void:
 	var want_dust := is_running and grounded
 	if footstep_dust.emitting != want_dust:
 		footstep_dust.emitting = want_dust
-		
 		
 	if is_moving and grounded:
 		footstep_timer -= delta
@@ -780,6 +895,12 @@ func _on_weapon_wheel_weapon_selected(ability_index: int) -> void:
 
 
 func equip_ability(ability: Ability, icon: Texture2D, ability_name: String) -> void:
+	# safety gate, a locked ability can never be equipped no matter who calls this
+	var slot := _ability_to_slot(ability)
+	if slot != -1 and not unlocked_abilities[slot]:
+		_show_locked_warning()
+		return
+
 	if ability != Ability.TELEKINESIS and grabbed_object:
 		release_object()
 

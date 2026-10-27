@@ -1,18 +1,31 @@
 extends CanvasLayer
+class_name WeaponWheel
 
 signal weapon_selected(ability_index)
+signal locked_ability_selected(ability_index)
 
 @export_group("Wheel Nodes")
 ## Drag your TextureRect nodes from the Scene tree here in order (0: Top, 1: Bottom-Right, 2: Bottom-Left)
 @export var icon_nodes: Array[TextureRect] = []
 @export var highlight_nodes: Array[TextureRect] = [] 
 @export var dot_nodes: Array[TextureRect] = []
+@export var locked_overlay_nodes: Array[TextureRect] = [] ## Custom TextureRect overlays for locked slots
+## The "Not Available" TextureRect, shown while hovering a locked slot
+@export var not_available_rect: TextureRect
+
+@export_group("Ability Lock Settings")
+## Starting values only, the player overwrites these on _ready and owns the real state
+@export var unlocked_abilities: Array[bool] = [true, false, false]
 
 @export_group("Animation Settings")
 ## Time in seconds for the red comic dots to fade/flash in (increase to slow down)
 @export var dot_fade_in_duration: float = 0.30
 ## Time in seconds for the red comic dots to fade out when switching slots
 @export var dot_fade_out_duration: float = 0.20
+## Time in seconds for the "Not Available" popup to fade in
+@export var not_available_fade_duration: float = 0.12
+## Time in seconds for the "Not Available" popup to scale up
+@export var not_available_pop_duration: float = 0.18
 
 @export_group("Data & Text")
 @export var ability_names: Array[String] = [] 
@@ -33,6 +46,7 @@ var selected_weapon_index: int = -1
 var name_label: Label 
 var equipped_icon_rect: TextureRect 
 var dot_tweens: Array[Tween] = []
+var not_available_tween: Tween
 
 @onready var center_control = $CenterControl
 @onready var ring_background = $CenterControl/RingBackground
@@ -49,6 +63,12 @@ func _ready():
 		if highlight:
 			highlight.modulate = Color(1, 1, 1, 0)
 			
+	# Initialize locked overlay textures based on unlock status
+	for i in range(locked_overlay_nodes.size()):
+		if locked_overlay_nodes[i]:
+			var is_unlocked = i < unlocked_abilities.size() and unlocked_abilities[i]
+			locked_overlay_nodes[i].visible = not is_unlocked
+			
 	# Prepare accent dots/lines (start invisible)
 	for dot in dot_nodes:
 		if dot:
@@ -58,6 +78,11 @@ func _ready():
 	for icon in icon_nodes:
 		if icon:
 			icon.pivot_offset = icon.size / 2.0
+
+	# popup stays hidden until a locked slot is hovered
+	if not_available_rect:
+		not_available_rect.pivot_offset = not_available_rect.size / 2.0
+		not_available_rect.hide()
 		
 	# Setup Label
 	name_label = Label.new()
@@ -113,10 +138,37 @@ func _process(delta):
 	var hovered_index = int(mouse_angle / segment_arc) % icon_nodes.size()
 	_highlight_weapon(hovered_index, delta)
 
+func _is_slot_unlocked(index: int) -> bool:
+	return index >= 0 and index < unlocked_abilities.size() and unlocked_abilities[index]
+
+# shows the popup with a quick pop, hides it instantly
+func _set_not_available_visible(show_it: bool) -> void:
+	if not_available_rect == null:
+		return
+
+	if not_available_tween and not_available_tween.is_valid():
+		not_available_tween.kill()
+
+	if not show_it:
+		not_available_rect.hide()
+		return
+
+	not_available_rect.show()
+	not_available_rect.modulate.a = 0.0
+	not_available_rect.scale = Vector2(0.6, 0.6)
+
+	not_available_tween = create_tween().set_parallel(true)
+	not_available_tween.tween_property(not_available_rect, "modulate:a", 1.0, not_available_fade_duration)
+	not_available_tween.tween_property(not_available_rect, "scale", Vector2.ONE, not_available_pop_duration)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
 func _highlight_weapon(index: int, delta: float):
 	if index != selected_weapon_index:
 		var prev_index = selected_weapon_index
 		selected_weapon_index = index
+
+		# popup only for a real slot that is locked, dead zone and unlocked slots hide it
+		_set_not_available_visible(index != -1 and not _is_slot_unlocked(index))
 		
 		# --- SMOOTH FADE IN ON HOVER CHANGE ---
 		if index != -1:
@@ -128,7 +180,6 @@ func _highlight_weapon(index: int, delta: float):
 				var dot = dot_nodes[index]
 				if dot_tweens[index]: dot_tweens[index].kill()
 				
-				# Start slightly brightened & transparent, then smoothly settle in
 				dot.modulate = Color(1.8, 0.6, 0.6, 0.0)
 				
 				var tween = create_tween()
@@ -136,7 +187,6 @@ func _highlight_weapon(index: int, delta: float):
 					.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 				dot_tweens[index] = tween
 		
-		# Smoothly fade out previously active dots
 		if prev_index != -1 and prev_index < dot_nodes.size() and dot_nodes[prev_index]:
 			var old_dot = dot_nodes[prev_index]
 			if dot_tweens[prev_index]: dot_tweens[prev_index].kill()
@@ -145,6 +195,8 @@ func _highlight_weapon(index: int, delta: float):
 			tween.tween_property(old_dot, "modulate:a", 0.0, dot_fade_out_duration)\
 				.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			dot_tweens[prev_index] = tween
+
+	# Update Name Label, the popup handles the locked message now so this is just the name
 	if index != -1 and index < ability_names.size():
 		name_label.text = ability_names[index]
 	else:
@@ -178,6 +230,14 @@ func close_wheel():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if selected_weapon_index != -1 and selected_weapon_index < icon_nodes.size():
+		# Prevent equipping if the ability is locked
+		if not _is_slot_unlocked(selected_weapon_index):
+			print("Ability is locked! Cannot equip.")
+			# emit before the highlight reset, that call wipes selected_weapon_index
+			locked_ability_selected.emit(selected_weapon_index)
+			_highlight_weapon(-1, 1.0)
+			return
+			
 		var selected_icon = icon_nodes[selected_weapon_index]
 		if selected_icon and selected_icon.texture:
 			ability_meter.set_icon(selected_icon.texture)
@@ -186,4 +246,20 @@ func close_wheel():
 			ability_meter.set_color(ability_colors[selected_weapon_index])
 			
 		weapon_selected.emit(selected_weapon_index)
-		_highlight_weapon(-1, 1.0)
+		
+	_highlight_weapon(-1, 1.0)
+
+# the player calls this whenever a slot changes, the overlay follows the state
+func set_slot_unlocked(index: int, unlocked: bool) -> void:
+	if index < 0 or index >= unlocked_abilities.size():
+		return
+	unlocked_abilities[index] = unlocked
+	if index < locked_overlay_nodes.size() and locked_overlay_nodes[index]:
+		locked_overlay_nodes[index].visible = not unlocked
+
+	# keep the popup honest if the slot changes while the wheel is open and hovered
+	if is_open and index == selected_weapon_index:
+		_set_not_available_visible(not unlocked)
+
+func unlock_ability(index: int) -> void:
+	set_slot_unlocked(index, true)

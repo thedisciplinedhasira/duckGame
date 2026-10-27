@@ -226,7 +226,7 @@ func load_settings() -> void:
 	set_window_mode(mode)
 	set_resolution(res)
 	set_vsync(vsync)
-	set_max_fps(fps)
+	set_max_fps(0)
 	apply_graphics_preset(preset)
 	settings_applied.emit()
 
