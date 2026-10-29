@@ -416,6 +416,7 @@ skeleton = NodePath("../..")
 
 [node name="twhite3" type="MeshInstance3D" parent="." unique_id=1399025612]
 transform = Transform3D(0.623542, 0, -1.90031, 0, 1.25, 0, 1.90031, 0, 0.623542, 5.9157257, -5.983367, -4.3478985)
+visible = false
 material_override = SubResource("ShaderMaterial_m8lnu")
 mesh = SubResource("SphereMesh_cqsu7")
 skeleton = NodePath("../..")
@@ -428,6 +429,7 @@ skeleton = NodePath("../..")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1949347754]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.52535, -2.81729, -3.95825)
+visible = false
 material_override = SubResource("StandardMaterial3D_7m0e1")
 lifetime = 2.43
 speed_scale = 2.0

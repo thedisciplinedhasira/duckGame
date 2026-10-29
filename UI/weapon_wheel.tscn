@@ -1,19 +1,22 @@
 [gd_scene format=3 uid="uid://b55ny2uwrs7n4"]
 
 [ext_resource type="Script" uid="uid://cirh2ihen62ft" path="res://UI/weapon_wheel.gd" id="2_xqp5f"]
-[ext_resource type="Texture2D" uid="uid://744mlksa7bmu" path="res://UI/weaponWheel/highlight_top.png" id="5_eoi1e"]
+[ext_resource type="Texture2D" uid="uid://u64in26g7dj1" path="res://UI/weaponWheel/left.png" id="4_kd65i"]
+[ext_resource type="Texture2D" uid="uid://bm5qms232j43" path="res://UI/weaponWheel/small.png" id="5_kd65i"]
 [ext_resource type="AudioStream" uid="uid://cguc4xxt408n2" path="res://sounds/menuPopup.mp3" id="6_470tc"]
+[ext_resource type="Texture2D" uid="uid://bavc3yb1chx6h" path="res://UI/weaponWheel/right.png" id="6_gv827"]
 [ext_resource type="FontFile" uid="uid://dpjthwy70s54p" path="res://fonts/Haltto-Bold.otf" id="6_inh8t"]
-[ext_resource type="Texture2D" uid="uid://bqihmn7foh7ga" path="res://UI/weaponWheel/highlight_right.png" id="6_jxuko"]
+[ext_resource type="Texture2D" uid="uid://br3wlklyvggn2" path="res://UI/weaponWheel/rock.png" id="6_s22nq"]
 [ext_resource type="Texture2D" uid="uid://d2mrw8bfg75tx" path="res://UI/weaponWheel/base_wheel.png" id="6_yegpy"]
-[ext_resource type="Texture2D" uid="uid://j7wtue82ebtj" path="res://UI/weaponWheel/highlight_left.png" id="7_b71bg"]
 [ext_resource type="Texture2D" uid="uid://fwgamanx5y2h" path="res://UI/weaponWheel/buna.png" id="7_jxuko"]
 [ext_resource type="AudioStream" uid="uid://ceu6bwxcmaeta" path="res://sounds/menuHover.wav" id="7_m7dcl"]
 [ext_resource type="Texture2D" uid="uid://2rkic35jhme6" path="res://UI/weaponWheel/shinkurt.png" id="8_b71bg"]
 [ext_resource type="Texture2D" uid="uid://1m16uvp3y7ic" path="res://UI/weaponWheel/Dots.png" id="8_i582j"]
-[ext_resource type="Texture2D" uid="uid://073v0t57pia6" path="res://UI/weaponWheel/cini.png" id="9_s22nq"]
-[ext_resource type="Texture2D" uid="uid://bcyjmakkvu60d" path="res://UI/UIElements/abilityMeter/wwar.png" id="11_b71bg"]
+[ext_resource type="Texture2D" uid="uid://chxu7kodt8rvq" path="res://UI/weaponWheel/top.png" id="8_r73ga"]
+[ext_resource type="Texture2D" uid="uid://biybra1scatjc" path="res://UI/weaponWheel/butterfly.png" id="9_gv827"]
 [ext_resource type="PackedScene" uid="uid://f2nypdc7ksxt" path="res://UI/AbilityMeter.tscn" id="11_i582j"]
+[ext_resource type="Texture2D" uid="uid://c0sybp5mlkqgn" path="res://UI/weaponWheel/Black cumin.png" id="12_kd65i"]
+[ext_resource type="Texture2D" uid="uid://br7qecsvpci5b" path="res://UI/weaponWheel/noo.png" id="14_kd65i"]
 
 [node name="WeaponWheel" type="CanvasLayer" unique_id=249968041 node_paths=PackedStringArray("icon_nodes", "highlight_nodes", "not_available_rect")]
 scale = Vector2(1.04, 1.04)
@@ -63,31 +66,61 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HighlightLeft" type="TextureRect" parent="CenterControl" unique_id=2098731942]
 layout_mode = 0
-offset_left = -132.92303
-offset_top = -125.15386
-offset_right = 116.11548
-offset_bottom = 123.88465
-texture = ExtResource("7_b71bg")
+offset_left = -105.99992
+offset_top = -51.115356
+offset_right = 107.461624
+offset_bottom = 162.34619
+texture = ExtResource("4_kd65i")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="CenterControl/HighlightLeft" unique_id=274234254]
+layout_mode = 0
+offset_left = -60.576904
+offset_top = 78.84613
+offset_right = -5.7691956
+offset_bottom = 133.65384
+texture = ExtResource("5_kd65i")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="HighlightRight" type="TextureRect" parent="CenterControl" unique_id=1566742733]
 layout_mode = 0
-offset_left = -109.8461
-offset_top = -129.00002
-offset_right = 140.0
-offset_bottom = 120.846085
-texture = ExtResource("6_jxuko")
+offset_left = -95.42305
+offset_top = -36.69232
+offset_right = 102.653885
+offset_bottom = 161.38461
+texture = ExtResource("6_gv827")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="CenterControl/HighlightRight" unique_id=1609622589]
+layout_mode = 0
+offset_left = 190.38464
+offset_top = 107.69232
+offset_right = 232.69232
+offset_bottom = 155.97289
+texture = ExtResource("6_s22nq")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="HighlightTop" type="TextureRect" parent="CenterControl" unique_id=155145541]
 layout_mode = 0
-offset_left = -119.46147
-offset_top = -151.11537
-offset_right = 134.38472
-offset_bottom = 102.73082
-texture = ExtResource("5_eoi1e")
+offset_left = -130.99994
+offset_top = -102.07692
+offset_right = 135.34622
+offset_bottom = 164.26924
+texture = ExtResource("8_r73ga")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="CenterControl/HighlightTop" unique_id=1209363784]
+layout_mode = 0
+offset_left = 111.53845
+offset_top = -73.07695
+offset_right = 167.69226
+offset_bottom = -17.692307
+texture = ExtResource("9_gv827")
 expand_mode = 1
 stretch_mode = 5
 
@@ -103,21 +136,21 @@ stretch_mode = 5
 
 [node name="IconGarlic" type="TextureRect" parent="CenterControl" unique_id=1906261940]
 layout_mode = 0
-offset_left = 37.2693
-offset_top = 20.999996
-offset_right = 77.269295
-offset_bottom = 60.999996
+offset_left = 39.769295
+offset_top = 23.499992
+offset_right = 74.7693
+offset_bottom = 58.5
 texture = ExtResource("8_b71bg")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="IconBuna" type="TextureRect" parent="CenterControl" unique_id=436082410]
 layout_mode = 0
-offset_left = -83.88455
-offset_top = 13.307688
-offset_right = -43.884556
-offset_bottom = 53.307686
-texture = ExtResource("9_s22nq")
+offset_left = -87.34605
+offset_top = 12.730809
+offset_right = -45.423008
+offset_bottom = 54.653843
+texture = ExtResource("12_kd65i")
 expand_mode = 1
 stretch_mode = 5
 
@@ -158,11 +191,11 @@ stretch_mode = 5
 
 [node name="NotAvailable" type="TextureRect" parent="CenterControl" unique_id=349715963]
 layout_mode = 0
-offset_left = -58.884583
-offset_top = -220.34616
-offset_right = 68.03851
-offset_bottom = -116.5
-texture = ExtResource("11_b71bg")
+offset_left = -25.230669
+offset_top = -20.346155
+offset_right = 31.179548
+offset_bottom = 25.807653
+texture = ExtResource("14_kd65i")
 expand_mode = 1
 stretch_mode = 5
 

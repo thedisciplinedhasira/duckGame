@@ -374,10 +374,10 @@ func _ready() -> void:
 	if death_layer and death_background:
 		death_layer.visible = false
 		death_background.modulate.a = 0.0
-	if respawn_button:
-		respawn_button.pressed.connect(_on_respawn_pressed)
-	if quit_button:
-		quit_button.pressed.connect(_on_quit_pressed)
+	#if respawn_button:
+		#respawn_button.pressed.connect(_on_respawn_pressed)
+	#if quit_button:
+		#quit_button.pressed.connect(_on_quit_pressed)
 
 	# wheel mirrors whatever the player says is unlocked
 	# children finish _ready before the parent so the wheel is already set up here
@@ -964,7 +964,7 @@ func _on_kimem_body_entered(_body: Node3D) -> void:
 
 
 # ---------- death ----------
-
+const RESPAWN_DELAY := 3.0
 func die(respawn_pos: Vector3) -> void:
 	if is_dead:
 		return
@@ -997,9 +997,14 @@ func die(respawn_pos: Vector3) -> void:
 		death_tween = _fresh_tween(death_tween)
 		death_tween.tween_property(death_background, "modulate:a", 1.0, DEATH_FADE_IN).set_trans(Tween.TRANS_SINE)
 
+	# wait then respawn on our own
+	await get_tree().create_timer(RESPAWN_DELAY).timeout
+	respawn()
 
-func _on_respawn_pressed() -> void:
-	if not is_dead:
+
+func respawn() -> void:
+	# bail if we already respawned or the player got freed
+	if not is_dead or not is_inside_tree():
 		return
 
 	if death_layer and death_background:
@@ -1011,6 +1016,7 @@ func _on_respawn_pressed() -> void:
 	velocity = Vector3.ZERO
 	is_dead = false
 	set_input_locked(false)
+
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
