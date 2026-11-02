@@ -1,7 +1,7 @@
 extends Control
 
 @onready var video_player: VideoStreamPlayer = $VideoStreamPlayer
-var target_scene: String =  "res://scenes/test_tutorial.scn" #"res://test_open.scn"
+var target_scene: String =  "res://test_open.scn"
 
 
 

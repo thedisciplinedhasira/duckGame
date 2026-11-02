@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://doaq0ai5oj4do"]
 
 [ext_resource type="Script" uid="uid://cu4806fon1tew" path="res://scenes/crosshair.gd" id="1_6blvt"]
-[ext_resource type="Texture2D" uid="uid://72jhl554aqqi" path="res://UI/UIElements/progress_full.svg" id="2_qnjby"]
+[ext_resource type="Texture2D" uid="uid://dpfaavecbc4w" path="res://UI/UIElements/Asset 1.png" id="2_qnjby"]
 [ext_resource type="Texture2D" uid="uid://c22wkjkjluexy" path="res://UI/UIElements/progress_empty.svg" id="3_ihytv"]
 
 [node name="Crosshair" type="CanvasLayer" unique_id=272930342]
@@ -9,17 +9,16 @@ script = ExtResource("1_6blvt")
 
 [node name="Reticle" type="TextureRect" parent="." unique_id=648951436]
 visible = false
-modulate = Color(1, 1, 1, 0.28235295)
-custom_maximum_size = Vector2(20, 20)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.016602
-offset_top = -19.974365
-offset_right = -0.016601563
-offset_bottom = 0.025634766
+custom_maximum_size = Vector2(10, 10)
+anchors_preset = -1
+anchor_left = 0.492
+anchor_top = 0.483
+anchor_right = 0.492
+anchor_bottom = 0.483
+offset_left = -8.0633545
+offset_top = -6.3904724
+offset_right = 6.9366455
+offset_bottom = 8.609528
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_qnjby")

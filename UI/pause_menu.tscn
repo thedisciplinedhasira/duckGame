@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://u7mxidxae82p"]
 
-[ext_resource type="Texture2D" uid="uid://cddt37g42jl11" path="res://UI/pauseMenu/pauseBackground.png" id="1_0b5ob"]
 [ext_resource type="Script" uid="uid://fo6xhcyuhkol" path="res://UI/pause_menu.gd" id="1_nben2"]
 [ext_resource type="Shader" uid="uid://cowxs2bhrffpc" path="res://UI/pause_menu.gdshader" id="2_mxjhc"]
-[ext_resource type="Texture2D" uid="uid://ctylast6g1x7a" path="res://UI/pauseMenu/hoverRiben.png" id="2_nben2"]
 [ext_resource type="Texture2D" uid="uid://dhn3qpy1d0kbv" path="res://UI/pauseMenu/return.png" id="2_pqlge"]
-[ext_resource type="Texture2D" uid="uid://jsa3d00cq38m" path="res://UI/pauseMenu/pause.png" id="2_xv4gp"]
+[ext_resource type="Texture2D" uid="uid://ccwtvdvhddhmw" path="res://UI/pauseMenu/PauseHolder_3.png" id="3_k6dah"]
 [ext_resource type="Texture2D" uid="uid://diewstv6hs3lu" path="res://UI/pauseMenu/option.png" id="3_nben2"]
+[ext_resource type="Texture2D" uid="uid://d0j6ibww163vx" path="res://UI/pauseMenu/actualPause.png" id="4_k6dah"]
 [ext_resource type="Texture2D" uid="uid://dai6sxd1mke42" path="res://UI/pauseMenu/quit.png" id="4_xv4gp"]
+[ext_resource type="Texture2D" uid="uid://crua7y64ekh11" path="res://UI/pauseMenu/clicker.png" id="5_mexjk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xv4gp"]
 shader = ExtResource("2_mxjhc")
@@ -20,7 +20,8 @@ process_mode = 3
 layer = 100
 script = ExtResource("1_nben2")
 ribbon_move_duration = 0.1
-ribbon_x_offset = -80.0
+ribbon_x_offset = -50.0
+settings_scene_path = "uid://bjkfjk005l26k"
 
 [node name="DimOverlay" type="ColorRect" parent="." unique_id=1807497031]
 material = SubResource("ShaderMaterial_xv4gp")
@@ -34,39 +35,39 @@ color = Color(0, 0, 0, 0.41568628)
 [node name="MenuBackground" type="TextureRect" parent="." unique_id=1913202080]
 offset_left = 83.0
 offset_top = 30.0
-offset_right = 607.0
-offset_bottom = 554.0
-texture = ExtResource("1_0b5ob")
+offset_right = 673.0
+offset_bottom = 620.0
+texture = ExtResource("3_k6dah")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="MenuBackground" unique_id=1824276689]
 layout_mode = 0
 offset_left = -17.0
-offset_top = -39.0
-offset_right = 186.0
-offset_bottom = 164.0
-texture = ExtResource("2_xv4gp")
+offset_top = -56.0
+offset_right = 223.0
+offset_bottom = 184.0
+texture = ExtResource("4_k6dah")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="HoverRibbon" type="TextureRect" parent="MenuBackground" unique_id=570485894]
 layout_mode = 0
-offset_left = -15.000008
-offset_top = -61.000008
-offset_right = 461.0
-offset_bottom = 415.0
+offset_left = 26.999996
+offset_top = 182.17328
+offset_right = 72.95232
+offset_bottom = 228.12561
 rotation = -0.024173224
-texture = ExtResource("2_nben2")
+texture = ExtResource("5_mexjk")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="VBoxContainer" type="Control" parent="MenuBackground" unique_id=266775212]
 anchors_preset = 0
 offset_left = 84.0
-offset_top = 146.0
+offset_top = 170.17328
 offset_right = 493.0
-offset_bottom = 373.0
+offset_bottom = 397.17328
 rotation = -0.006821148
 scale = Vector2(0.779, 0.779)
 

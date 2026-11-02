@@ -39,7 +39,7 @@ const HOVER_AUDIO_LOOP_TIME := 25.0
 
 # camera
 const FOV_HOVER := 100 #85.0
-const FOV_GRAB := 60#65.0
+const FOV_GRAB := 90#65.0
 # skip camera rotation updates smaller than this (radians, about 0.006 degrees)
 const ANGLE_EPSILON := 0.0001
 
@@ -54,8 +54,8 @@ const SUPER_RUN_STEP_TIME := 0.15
 # telekinesis
 const HOLD_ADJUST_SPEED := 6.0
 const MIN_HOLD_DISTANCE := 1.5
-const MAX_HOLD_DISTANCE := 25.0
-const GRAB_MAX_DISTANCE := 15.0
+const MAX_HOLD_DISTANCE := 15#25.0
+const GRAB_MAX_DISTANCE := 25#15.0
 const ANGULAR_DAMP_RATE := 6.0
 
 # micro duck settings
@@ -108,6 +108,10 @@ const DEATH_FADE_OUT := 0.5
 @export_range(60.0, 120.0, 1.0) var micro_fov: float = 100.0
 
 @export_category("Telekinesis Settings")
+# plays once when the crosshair turns interactable so the player knows they can grab
+@export var ready_sound: AudioStreamPlayer
+# loops for as long as something is held, the stream itself must have looping turned on
+@export var hold_sound: AudioStreamPlayer
 # cosine is cached in the setter so we dont call cos() every frame while holding
 @export_range(30.0, 120.0) var max_head_look_angle: float = 75.0:
 	set(value):
@@ -374,8 +378,8 @@ func _ready() -> void:
 	if death_layer and death_background:
 		death_layer.visible = false
 		death_background.modulate.a = 0.0
-	#if respawn_button:
-		#respawn_button.pressed.connect(_on_respawn_pressed)
+	if respawn_button:
+		respawn_button.pressed.connect(_on_respawn_pressed)
 	#if quit_button:
 		#quit_button.pressed.connect(_on_quit_pressed)
 
@@ -784,6 +788,9 @@ func try_grab_object() -> void:
 	telekinesis_vfx.restart()
 	head_look.target_node = hold_position.get_path()
 
+	if hold_sound and not hold_sound.playing:
+		hold_sound.play()
+
 func release_object() -> void:
 	if grabbed_object:
 		grabbed_object.gravity_scale = 1.0
@@ -811,6 +818,9 @@ func _end_grab_visuals() -> void:
 	telekinesis_vfx.emitting = false
 	head_look.active = false
 	head_look.target_node = NodePath("")
+	# every way a grab can end goes through here so the loop always stops
+	if hold_sound:
+		hold_sound.stop()
 
 # force only, head look is handled in _process
 func process_telekinesis(delta: float) -> void:
@@ -842,6 +852,12 @@ func _travel_animation_state(state_name: StringName) -> void:
 		state_machine.travel(state_name)
 
 func _update_crosshair() -> void:
+	# while holding, the ray points at whatever is behind the object or at the object
+	# itself as it swings around, so its result means nothing. leave the state alone,
+	# that also means no ready sound on release if you are still aiming at something
+	if grabbed_object:
+		return
+
 	var can_interact := (
 		current_ability == Ability.TELEKINESIS
 		and tele_ray.is_colliding()
@@ -849,11 +865,14 @@ func _update_crosshair() -> void:
 		and not is_ability_exhausted
 	)
 
+	# everything below only runs when the state flips, so the sound plays once per change
 	if can_interact == crosshair_interactable:
 		return
 	crosshair_interactable = can_interact
 	if can_interact:
 		Crosshair.set_state_can_interact()
+		if ready_sound:
+			ready_sound.play()
 	else:
 		Crosshair.set_state_default()
 	
@@ -913,7 +932,6 @@ func equip_ability(ability: Ability, icon: Texture2D, ability_name: String) -> v
 	ability_meter.set_ability_icon(icon)
 	active_ability_icon.texture = icon
 
-
 func toggle_hover() -> void:
 	is_hover_toggled = !is_hover_toggled
 	print("Hover Mode: ON" if is_hover_toggled else "Hover Mode: OFF")
@@ -964,7 +982,22 @@ func _on_kimem_body_entered(_body: Node3D) -> void:
 
 
 # ---------- death ----------
-const RESPAWN_DELAY := 3.0
+
+func _setup_death_ui() -> void:
+	# call this from the end of _ready()
+	assert(death_layer != null, "death_layer missing")
+	assert(death_background != null, "death_background missing")
+	assert(death_texture != null, "death_texture missing")
+	assert(respawn_button != null, "respawn_button missing")
+
+	# recreating a button drops its signals so connect here
+	if not respawn_button.pressed.is_connected(_on_respawn_pressed):
+		respawn_button.pressed.connect(_on_respawn_pressed)
+
+	# start hidden and transparent
+	death_layer.visible = false
+	death_background.modulate.a = 0.0
+
 func die(respawn_pos: Vector3) -> void:
 	if is_dead:
 		return
@@ -988,29 +1021,26 @@ func die(respawn_pos: Vector3) -> void:
 	if death_sound:
 		death_sound.play()
 
-	if death_texture and not death_images.is_empty():
+	# pick the next death image
+	if not death_images.is_empty():
 		death_texture.texture = death_images[death_count % death_images.size()]
 	death_count += 1
 
-	if death_layer and death_background:
-		death_layer.visible = true
-		death_tween = _fresh_tween(death_tween)
-		death_tween.tween_property(death_background, "modulate:a", 1.0, DEATH_FADE_IN).set_trans(Tween.TRANS_SINE)
-
-	# wait then respawn on our own
-	await get_tree().create_timer(RESPAWN_DELAY).timeout
-	respawn()
+	# show the screen and fade it in
+	death_layer.visible = true
+	death_background.modulate.a = 0.0
+	death_tween = _fresh_tween(death_tween)
+	death_tween.tween_property(death_background, "modulate:a", 1.0, DEATH_FADE_IN).set_trans(Tween.TRANS_SINE)
 
 
-func respawn() -> void:
-	# bail if we already respawned or the player got freed
-	if not is_dead or not is_inside_tree():
+func _on_respawn_pressed() -> void:
+	if not is_dead:
 		return
 
-	if death_layer and death_background:
-		death_tween = _fresh_tween(death_tween)
-		death_tween.tween_property(death_background, "modulate:a", 0.0, DEATH_FADE_OUT).set_trans(Tween.TRANS_SINE)
-		death_tween.tween_callback(death_layer.hide)
+	# fade out then hide the layer
+	death_tween = _fresh_tween(death_tween)
+	death_tween.tween_property(death_background, "modulate:a", 0.0, DEATH_FADE_OUT).set_trans(Tween.TRANS_SINE)
+	death_tween.tween_callback(death_layer.hide)
 
 	global_position = current_respawn_pos
 	velocity = Vector3.ZERO

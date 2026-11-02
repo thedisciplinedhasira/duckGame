@@ -55,7 +55,7 @@ func _on_button_focused(btn: TextureButton) -> void:
 	selector.global_position = btn.global_position + offset
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file("res://kebebeOS/os.tscn")
+	get_tree().change_scene_to_file("res://UI/loading_screen.tscn")
 	
 func _on_comic_pressed() -> void:
 	var viewer = COMIC_VIEWER.instantiate()

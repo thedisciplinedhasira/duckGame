@@ -16,10 +16,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -187.5
-offset_top = 223.0
-offset_right = 187.5
-offset_bottom = 470.0
+offset_left = -37.0
+offset_top = 276.0
+offset_right = 338.0
+offset_bottom = 523.0
 grow_horizontal = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background" unique_id=1492003595]
@@ -60,8 +60,17 @@ size_flags_horizontal = 3
 
 [node name="VSyncCheck" type="CheckBox" parent="Background/VBoxContainer" unique_id=1766704038]
 layout_mode = 2
-text = "Enable V-Sync"
+text = "Enable V-Sync (results in lower fps)"
 
 [node name="CloseButton" type="Button" parent="Background/VBoxContainer" unique_id=1235233338]
 layout_mode = 2
 text = "Close"
+
+[node name="Label" type="Label" parent="." unique_id=1153375704]
+layout_mode = 0
+offset_left = 544.0
+offset_top = 501.0
+offset_right = 903.0
+offset_bottom = 524.0
+theme_override_font_sizes/font_size = 13
+text = "*dev didnt have the time to polish this window"
