@@ -54,7 +54,7 @@ const SUPER_RUN_STEP_TIME := 0.15
 # telekinesis
 const HOLD_ADJUST_SPEED := 6.0
 const MIN_HOLD_DISTANCE := 1.5
-const MAX_HOLD_DISTANCE := 15#25.0
+const MAX_HOLD_DISTANCE := 20#25.0
 const GRAB_MAX_DISTANCE := 25#15.0
 const ANGULAR_DAMP_RATE := 6.0
 
@@ -829,10 +829,10 @@ func process_telekinesis(delta: float) -> void:
 
 	var to_target := hold_position.global_position - grabbed_object.global_position
 	var desired_vel := to_target * pull_strength
-
 	grabbed_object.linear_velocity = grabbed_object.linear_velocity.lerp(desired_vel, _smooth(pull_damping, delta))
 	grabbed_object.angular_velocity = grabbed_object.angular_velocity.lerp(Vector3.ZERO, _smooth(ANGULAR_DAMP_RATE, delta))
 	
+
 func _update_head_look() -> void:
 	var forward := -global_transform.basis.z
 	var to_target := hold_position.global_position - global_position
