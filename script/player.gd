@@ -5,6 +5,7 @@ const ACT_SPRINT := &"sprint"
 const ACT_HOVER := &"hover"
 const ACT_GRAB := &"telekinesis_grab"
 const ACT_THROW := &"telekinesis_throw"
+const ACT_MICRO := &"micro"
 const ACT_LEFT := &"move_left"
 const ACT_RIGHT := &"move_right"
 const ACT_FORWARD := &"move_forward"
@@ -36,6 +37,12 @@ const HOVER_SINK_RATE := 3.0
 # hover audio loops on a timer so we never ask the audio server where it is
 const HOVER_AUDIO_START := 5.0
 const HOVER_AUDIO_LOOP_TIME := 25.0
+
+# wind audio, the stream loops on its own so we only fade the volume
+# -60 db is basically inaudible, we stop the player once we get there
+const WIND_SILENT_DB := -60.0
+const WIND_FADE_IN := 0.5
+const WIND_FADE_OUT := 0.7
 
 # camera
 const FOV_HOVER := 100 #85.0
@@ -86,6 +93,10 @@ const DEATH_FADE_OUT := 0.5
 @export var super_run_speed := 19 #15
 @export var super_sprint_delay := 0.5
 @export var super_sprint_fov := 90.0
+# loops while super sprinting, the stream itself must have looping turned on
+@export var wind_sound: AudioStreamPlayer
+# volume the wind fades up to, in db (0 is full, negative is quieter)
+@export_range(-40.0, 6.0, 0.5) var wind_volume_db := -6.0
 
 @export_category("Stamina Settings")
 @export var max_stamina: float = 100.0
@@ -261,6 +272,7 @@ var current_sprint_speed := RUN_SPEED
 var current_stamina: float = 100.0
 var regen_delay_timer := 0.0
 var last_stamina_sent := -1.0
+var wind_tween: Tween
 
 # ability charges
 var current_ability_charges: float = max_ability_charges
@@ -409,7 +421,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(ACT_THROW) and grabbed_object and current_ability == Ability.TELEKINESIS:
 		throw_object()
 
-	if event.is_action_pressed(ACT_GRAB) and current_ability == Ability.MICRO:
+	if event.is_action_pressed(ACT_MICRO) and current_ability == Ability.MICRO:
 		toggle_micro_size()
 
 # gameplay and physics only, this can run several times per frame when fps drops
@@ -668,6 +680,23 @@ func _set_super_sprinting(value: bool) -> void:
 	is_super_sprinting = value
 	if speedline:
 		speedline.visible = value
+	_set_wind(value)
+
+# wind fades in and out instead of cutting, only runs when super sprint flips
+func _set_wind(active: bool) -> void:
+	if wind_sound == null:
+		return
+	wind_tween = _fresh_tween(wind_tween)
+	if active:
+		# start from silent only if it was fully stopped, otherwise fade up from where it is
+		if not wind_sound.playing:
+			wind_sound.volume_db = WIND_SILENT_DB
+			wind_sound.play()
+		wind_tween.tween_property(wind_sound, "volume_db", wind_volume_db, WIND_FADE_IN).set_trans(Tween.TRANS_SINE)
+	else:
+		wind_tween.tween_property(wind_sound, "volume_db", WIND_SILENT_DB, WIND_FADE_OUT).set_trans(Tween.TRANS_SINE)
+		# stop the player once it's quiet so it isn't mixing silence forever
+		wind_tween.tween_callback(wind_sound.stop)
 
 func _update_sprint_speed(delta: float) -> void:
 	var target := super_run_speed if is_super_sprinting else RUN_SPEED
@@ -885,6 +914,10 @@ func set_input_locked(locked: bool) -> void:
 	if locked:
 		velocity.x = 0.0
 		velocity.z = 0.0
+		# movement stops running while locked, so end super sprint here or the wind
+		# (and the speedline) would stay on through death screens and 2d mode
+		sprint_timer = 0.0
+		_set_super_sprinting(false)
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		Crosshair.set_state_default()
 		crosshair_interactable = false

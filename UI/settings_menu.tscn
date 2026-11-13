@@ -74,3 +74,12 @@ offset_right = 903.0
 offset_bottom = 524.0
 theme_override_font_sizes/font_size = 13
 text = "*dev didnt have the time to polish this window"
+
+[node name="Label2" type="Label" parent="." unique_id=2053594250]
+layout_mode = 0
+offset_left = 542.0
+offset_top = 422.0
+offset_right = 901.0
+offset_bottom = 445.0
+theme_override_font_sizes/font_size = 10
+text = "the current setting is set best for your pc"

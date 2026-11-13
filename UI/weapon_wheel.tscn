@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://2rkic35jhme6" path="res://UI/weaponWheel/shinkurt.png" id="8_b71bg"]
 [ext_resource type="Texture2D" uid="uid://1m16uvp3y7ic" path="res://UI/weaponWheel/Dots.png" id="8_i582j"]
 [ext_resource type="Texture2D" uid="uid://chxu7kodt8rvq" path="res://UI/weaponWheel/top.png" id="8_r73ga"]
-[ext_resource type="Texture2D" uid="uid://biybra1scatjc" path="res://UI/weaponWheel/butterfly.png" id="9_gv827"]
+[ext_resource type="Texture2D" uid="uid://batg34nelt457" path="res://UI/weaponWheel/tornado.png" id="9_kd65i"]
 [ext_resource type="PackedScene" uid="uid://f2nypdc7ksxt" path="res://UI/AbilityMeter.tscn" id="11_i582j"]
 [ext_resource type="Texture2D" uid="uid://c0sybp5mlkqgn" path="res://UI/weaponWheel/Black cumin.png" id="12_kd65i"]
 [ext_resource type="Texture2D" uid="uid://br7qecsvpci5b" path="res://UI/weaponWheel/noo.png" id="14_kd65i"]
@@ -120,7 +120,7 @@ offset_left = 111.53845
 offset_top = -73.07695
 offset_right = 167.69226
 offset_bottom = -17.692307
-texture = ExtResource("9_gv827")
+texture = ExtResource("9_kd65i")
 expand_mode = 1
 stretch_mode = 5
 
@@ -201,11 +201,11 @@ stretch_mode = 5
 
 [node name="PopupSound" type="AudioStreamPlayer" parent="." unique_id=693887593]
 stream = ExtResource("6_470tc")
-volume_db = -16.482
+volume_db = -25.0
 
 [node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=657413284]
 stream = ExtResource("7_m7dcl")
-volume_db = -7.646
+volume_db = -10.0
 
 [node name="AbilityMeter" parent="." unique_id=1069792125 instance=ExtResource("11_i582j")]
 anchors_preset = 2

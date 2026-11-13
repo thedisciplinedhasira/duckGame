@@ -2,6 +2,7 @@
 
 [ext_resource type="VideoStream" uid="uid://d2h4ssgm4o0i7" path="res://UI/UIElements/loadinScreen.ogv" id="1_1j043"]
 [ext_resource type="Script" uid="uid://6vlye311o705" path="res://UI/loading_screen.gd" id="1_pnnle"]
+[ext_resource type="FontFile" uid="uid://bjeuc5iodrgq2" path="res://fonts/Haltto-Light.otf" id="3_vvjaa"]
 
 [node name="LoadingScreen" type="Control" unique_id=1070989232]
 layout_mode = 3
@@ -22,3 +23,18 @@ grow_vertical = 2
 stream = ExtResource("1_1j043")
 autoplay = true
 expand = true
+
+[node name="Label" type="Label" parent="." unique_id=700092489]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_vvjaa")
+text = "This window might look stuck, Dont panic, just wait a sec :)"
+horizontal_alignment = 1
+vertical_alignment = 2
